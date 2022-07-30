@@ -969,7 +969,7 @@ body {
   line-height: 0.1em;
 }
 .post .posttitle:before {
-  content: "\1F6EB";
+  content: "\1F342";
 }
 #footer-post {
   position: fixed;
