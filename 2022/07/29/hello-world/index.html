@@ -67,6 +67,7 @@
   <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
   <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
   <a id="top-icon-tablet" href="#" aria-label="Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+
   <span id="menu">
     <span id="nav">
       <ul>
@@ -76,8 +77,6 @@
        --><li><a href="/archives/">Writing</a></li><!--
      --><!--
        --><li><a href="/categories/">Categories</a></li><!--
-     --><!--
-       --><li><a href="/tags/">Tags</a></li><!--
      --><!--
        --><li><a href="/about/">About</a></li><!--
      --><!--
@@ -91,11 +90,16 @@
         
         
         <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="Switch the theme">
+          <i class="fas fa-lightbulb" aria-hidden="true" onmouseover="$('#i-switch').toggle()" onmouseout="$('#i-switch').toggle()" onclick="switchNightMode()"></i>
+        </a>
+        </li>
         <li><a class="icon" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
       </ul>
       <span id="i-prev" class="info" style="display:none;">Previous post</span>
       <span id="i-next" class="info" style="display:none;">Next post</span>
       <span id="i-top" class="info" style="display:none;">Back to top</span>
+      <span id="i-switch" class="info" style="display:none;">Switch the theme</span>
       <span id="i-share" class="info" style="display:none;">Share post</span>
     </span>
     <br/>
@@ -120,6 +124,26 @@
     </div>
   </span>
 </div>
+<script src="/js/switch.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
+<script>
+  const darkmode_options = {
+  bottom: '64px', // default: '32px'
+  right: 'unset', // default: '32px'
+  left: '32px', // default: 'unset'
+  time: '0.5s', // default: '0.3s'
+  mixColor: '#fff', // default: '#fff'
+  backgroundColor: '#fff',  // default: '#fff'
+  buttonColorDark: '#100f2c',  // default: '#100f2c'
+  buttonColorLight: '#fff', // default: '#fff'
+  saveInCookies: false, // default: true,
+  label: '🌓', // default: ''
+  autoMatchOsTheme: true // default: true
+}
+  const darkmode = new Darkmode(darkmode_options);
+  darkmode.showWidget();
+</script> -->
+
 
     
     <div class="content index py4">
@@ -217,6 +241,18 @@
 
 
 
+<div id="tcomment"></div>
+<script src="https://cdn.staticfile.org/twikoo/1.6.0/twikoo.all.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/gh/zhheo/twikoo@dev/dist/twikoo.all.min.js"></script> -->
+<script>
+twikoo.init({
+  envId: 'https://twikoo-fshen0.vercel.app/', // 腾讯云环境填 envId；Vercel 环境填地址（https://xxx.vercel.app）
+  el: '#tcomment', // 容器元素
+  // region: 'ap-guangzhou', // 环境地域，默认为 ap-shanghai，腾讯云环境填 ap-shanghai 或 ap-guangzhou；Vercel 环境不填
+  // path: location.pathname, // 用于区分不同文章的自定义 js 路径，如果您的文章路径不是 location.pathname，需传此参数
+  lang: 'zh-CN', // 用于手动设定评论区语言，支持的语言列表 https://github.com/imaegoo/twikoo/blob/main/src/client/utils/i18n/index.js
+})
+</script>
 
         
           <div id="footer-post-container">
@@ -230,8 +266,6 @@
           <li><a href="/archives/">Writing</a></li>
          
           <li><a href="/categories/">Categories</a></li>
-         
-          <li><a href="/tags/">Tags</a></li>
          
           <li><a href="/about/">About</a></li>
          
@@ -306,8 +340,6 @@
      --><!--
        --><li><a href="/categories/">Categories</a></li><!--
      --><!--
-       --><li><a href="/tags/">Tags</a></li><!--
-     --><!--
        --><li><a href="/about/">About</a></li><!--
      --><!--
        --><li><a href="/search/">Search</a></li><!--
@@ -358,7 +390,12 @@
   </script>
 
 
+
 <script src="/js/main.js"></script>
+
+<!-- 
+<script src="/js/switch.js"></script>
+ -->
 
 <!-- search -->
 
@@ -379,5 +416,8 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
   
+
+
+
 </body>
 </html>
