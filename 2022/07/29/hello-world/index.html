@@ -124,25 +124,27 @@
     </div>
   </span>
 </div>
+<div id="switch_for_phone" onclick="switchNightMode()">
+  <i class="fas fa-lightbulb" aria-hidden="true"></i>
+</div>
 <script src="/js/switch.js"></script>
-<!-- <script src="https://cdn.jsdelivr.net/npm/darkmode-js@1.5.7/lib/darkmode-js.min.js"></script>
-<script>
-  const darkmode_options = {
-  bottom: '64px', // default: '32px'
-  right: 'unset', // default: '32px'
-  left: '32px', // default: 'unset'
-  time: '0.5s', // default: '0.3s'
-  mixColor: '#fff', // default: '#fff'
-  backgroundColor: '#fff',  // default: '#fff'
-  buttonColorDark: '#100f2c',  // default: '#100f2c'
-  buttonColorLight: '#fff', // default: '#fff'
-  saveInCookies: false, // default: true,
-  label: '🌓', // default: ''
-  autoMatchOsTheme: true // default: true
+<style>
+  #switch_for_phone {
+    width: 3rem;
+    height: 3rem;
+    cursor: pointer;
+    position: fixed;
+    left: 4px;
+    bottom: 61.8px;
+    z-index: 1;
+    background: rgba(255,255,255,0);
+    border-radius: 50%;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
-  const darkmode = new Darkmode(darkmode_options);
-  darkmode.showWidget();
-</script> -->
+</style>
 
 
     
@@ -201,9 +203,9 @@
 
 </article>
 
-<div id="copyright">
-  
-<div class="post-copyright-information">
+
+
+<div id="copyright" class="post-copyright-information">
     <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
 
   <!-- JS库 sweetalert 可修改路径 -->
@@ -237,7 +239,7 @@
 </div>
 
 
-</div>
+
 
 
 
@@ -301,9 +303,9 @@ twikoo.init({
         <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> Share</a>
         <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> Top</a>
     </div>
-
   </div>
 </div>
+
 
         
         <footer id="footer">
@@ -347,6 +349,7 @@ twikoo.init({
       </ul>
     </nav>
   </div>
+
 </footer>
 
     </div>
@@ -415,7 +418,7 @@ twikoo.init({
 <!-- FancyBox -->
 
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
-  
+
 
 
 

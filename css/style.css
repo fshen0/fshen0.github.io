@@ -419,7 +419,7 @@ body table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 14px;
+  font-size: 12px;
   overflow: auto;
   display: block;
 }
@@ -428,7 +428,7 @@ body th {
   border-bottom: 1px dashed #908d8d;
   color: #eee;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 13px;
 }
 body td {
   padding: 0 8px;
@@ -482,7 +482,7 @@ body {
   color: #c9cacc;
   font-display: swap;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 14px;
   font-family: "Menlo", "Meslo LG", monospace;
   line-height: 1.725;
   text-rendering: geometricPrecision;
@@ -891,6 +891,9 @@ body {
   }
 }
 @media screen and (min-width: 1199px) {
+  #switch_for_phone {
+    display: none;
+  }
   #header-post #actions {
     width: auto;
   }
@@ -913,8 +916,21 @@ body {
     display: none;
   }
 }
-.copyright {
-  margin-top: 10px;
+#darkmode-toggle {
+  background: #100f2c;
+  width: 3rem;
+  height: 3rem;
+  position: fixed;
+  border-radius: 50%;
+  border: none;
+  right: 32px;
+  bottom: 32px;
+  left: unset;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .post-copyright-information pyright-information#easter-egg {
   border: none;
@@ -939,6 +955,7 @@ body {
   line-height: 1.6em;
   word-break: break-all;
   background: #1d1f21;
+  margin: 10px auto;
 }
 .post-copyright-information blockquote {
   -webkit-text-size-adjust: 100%;
@@ -949,20 +966,17 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-wrap: break-word;
   box-sizing: border-box;
-  margin: 1rem 10px;
+  margin: 1rem;
   background: inherit;
-  color: rgba(34,238,238,0.867);
+  color: #2bbc8a;
   quotes: "\201C" "\201D" "\2018" "\2019";
   font-weight: 700;
   padding: 0;
   display: block;
-  margin-block-start: 1em;
-  margin-block-end: 1em;
-  margin-inline-start: 20px;
 }
 .post-copyright-information blockquote:before {
   margin-right: 0.25em;
-  color: rgba(34,238,238,0.867);
+  color: #2bbc8a;
   content: "\201C";
   vertical-align: -0.4em;
   font-size: 2em;
@@ -1479,7 +1493,7 @@ article .content .caption {
   color: #1d1f21;
   font-display: swap;
   font-weight: 400;
-  font-size: 12.8px;
+  font-size: 11.200000000000001px;
   font-family: "Menlo", "Meslo LG", monospace;
   line-height: 1.725;
   text-rendering: geometricPrecision;
