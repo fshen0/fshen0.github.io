@@ -19,6 +19,6 @@ function switchToLight() {
         t[e].setAttribute("href", "/css/style-light.css");
 }
 null == localStorage.getItem("light")
-? localStorage.setItem("light", "true")
-: ("false" == localStorage.getItem("light") ? switchToDark : switchToLight)();
+? localStorage.setItem("light", "false")
+: ("true" == localStorage.getItem("light") ? switchToLight: switchToDark)();
 
