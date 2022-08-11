@@ -339,11 +339,11 @@ body .h2 {
   text-transform: none;
   letter-spacing: normal;
   font-weight: bold;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 body h3 {
   color: #eee;
-  text-decoration: underline;
+  text-decoration: none;
   font-weight: bold;
   font-size: 0.9rem;
 }
@@ -419,7 +419,7 @@ body table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 12px;
+  font-size: 14px;
   overflow: auto;
   display: block;
 }
@@ -428,7 +428,7 @@ body th {
   border-bottom: 1px dashed #908d8d;
   color: #eee;
   font-weight: bold;
-  font-size: 13px;
+  font-size: 15px;
 }
 body td {
   padding: 0 8px;
@@ -482,7 +482,7 @@ body {
   color: #c9cacc;
   font-display: swap;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
   font-family: "Menlo", "Meslo LG", monospace;
   line-height: 1.725;
   text-rendering: geometricPrecision;
@@ -574,7 +574,7 @@ body {
   }
 }
 .max-width {
-  max-width: 57rem;
+  max-width: 61.8rem;
 }
 @media (max-width: 480px) {
   .px3 {
@@ -958,7 +958,7 @@ body {
   line-height: 1.6em;
   word-break: break-all;
   background: #1d1f21;
-  margin: 10px auto;
+  margin: 2em auto;
 }
 .post-copyright-information blockquote {
   -webkit-text-size-adjust: 100%;
@@ -1185,13 +1185,24 @@ article header .postdate {
   display: inline;
 }
 article .content h2:before {
-  position: absolute;
-  top: -4px;
-  left: -1rem;
+  position: relative;
+  top: 0px;
+  left: 0rem;
   color: #2bbc8a;
   content: "#";
   font-weight: bold;
   font-size: 1.2rem;
+  padding-right: 6px;
+}
+article .content h3:before {
+  position: relative;
+  top: 0px;
+  left: 0rem;
+  color: #2bbc8a;
+  content: "#";
+  font-weight: bold;
+  font-size: 1.2rem;
+  padding-right: 6px;
 }
 article .content img,
 article .content video {
@@ -1339,7 +1350,6 @@ article .content .caption {
 }
 #twikoo .tk-comments .tk-submit .tk-input .el-textarea__inner {
   background-position-y: top;
-  background-image: url("https://s2.loli.net/2022/07/30/7eNIHPC8JWnyUEA.png");
 }
 @media screen and (max-width: 480px) {
   #twikoo .tk-comments .tk-submit .tk-input .el-textarea__inner {
@@ -1496,7 +1506,7 @@ article .content .caption {
   color: #1d1f21;
   font-display: swap;
   font-weight: 400;
-  font-size: 11.200000000000001px;
+  font-size: 12.8px;
   font-family: "Menlo", "Meslo LG", monospace;
   line-height: 1.725;
   text-rendering: geometricPrecision;
