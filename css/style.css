@@ -2434,6 +2434,12 @@ body {
   background-size: 100% 6px;
   background-repeat: repeat-x;
 }
+.content #writing .h2 {
+  margin-top: 1em;
+}
+.content #writing .tagcloud a {
+  background: none;
+}
 @media (min-width: 540px) {
   .image-wrap {
     flex-direction: row;
@@ -2568,6 +2574,7 @@ body {
     text-align: right;
     padding: 1rem 0;
     margin: 0;
+    margin-left: -3px;
   }
   #header #nav ul.responsive li:not(:first-child) a {
     font-size: 11px;
@@ -3102,12 +3109,12 @@ article .content .video-container embed {
   height: 100%;
 }
 article .content blockquote {
-  margin: 1rem 10px;
+  margin: 0.5rem 10px;
   padding: 0.5em 10px;
   background: inherit;
   color: #ccffb6;
   quotes: "\201C" "\201D" "\2018" "\2019";
-  font-weight: bold;
+  font-weight: 600;
 }
 article .content blockquote p {
   margin: 0;
@@ -3117,7 +3124,7 @@ article .content blockquote:before {
   color: #ccffb6;
   content: "\201C";
   vertical-align: -0.4em;
-  font-size: 2em;
+  font-size: 1em;
   line-height: 0.1em;
 }
 article .content blockquote footer {
