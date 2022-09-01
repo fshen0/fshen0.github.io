@@ -2051,25 +2051,6 @@
     </div>
   </span>
 </div>
-<div id="switch_for_phone" onclick="switchNightMode()">
-  <i class="fas fa-lightbulb" aria-hidden="true"></i>
-</div>
-<script src="/js/switch.js"></script>
-<style>
-  #switch_for_phone {
-    width: 3rem;
-    height: 3rem;
-    cursor: pointer;
-    position: fixed;
-    left: 4px;
-    bottom: 61.8px;
-    z-index: 1;
-    background: rgba(255,255,255,0);
-    border-radius: 50%;
-    border: none;
-    justify-content: center;
-    align-items: center;
-}
 </style>
 
 
@@ -2245,7 +2226,7 @@ twikoo.init({
     Copyright &copy;
     
     
-    2020-2022
+    2022
     Shen Feng
 
   <span>&nbsp;</span>
@@ -2342,5 +2323,26 @@ twikoo.init({
 
 
 
+    <div id="switch_for_phone_index" onclick="switchNightMode()">
+    <i class="fas fa-lightbulb" aria-hidden="true"></i>
+  </div>
+  <script src="/js/switch.js"></script>
+  <style>
+    #switch_for_phone_index {
+      width: 3rem;
+      height: 3rem;
+      cursor: pointer;
+      position: fixed;
+      display: flex;
+      left: 4px;
+      bottom: 61.8px;
+      z-index: 1;
+      background: rgba(255,255,255,0);
+      border-radius: 50%;
+      border: none;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
 </body>
 </html>
