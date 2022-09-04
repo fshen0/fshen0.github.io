@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html  lang=en >
+
 <head>
     <!-- so meta -->
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-  
+    <script type="text/javascript" src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.js"></script>
+    
     <meta name="description" content="Sow nothing, reap nothing.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Shen Feng">
@@ -17,7 +19,6 @@
 <meta property="article:author" content="Shen Feng">
 <meta name="twitter:card" content="summary">
 
-    
     
     
       
@@ -1987,9 +1988,25 @@
     }
   }
 </script>
-<body class="max-width mx-auto px3 ltr">
-    
-    <div class="content index py4">
+<link rel="stylesheet" href="/js/dist/APlayer.min.css">
+<div class="no-destroy" id="aplayer">
+     <meting-js
+        server="netease"
+        type="playlist"
+        id="7465212579"
+        fixed="true"
+        volume="0.4"
+        order="random"
+        preload="auto"
+    ></meting-js>
+</div>
+<script src="/js/dist/APlayer.min.js"></script>
+<script src="/js/dist/Meting.js"></script>
+
+<body class="max-width mx-auto px3 ltr" >
+  
+
+    <div class="content index py4" id="pjax-container" >
         
           <header id="header">
   <a href="/">
@@ -2018,7 +2035,6 @@
       
         <li><a href="/search/">Search</a></li>
       
-      <!-- <li><i class="fa fa-search" aria-hidden="true"></i><a href="/search">Search</a></li> -->
       <li>
         <div><i class="fa fa-star-half-empty" aria-hidden="true"></i></div>
       </li>
@@ -2028,6 +2044,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css" />
   
 </header>
+
 
         
         <section id="about">
@@ -2127,8 +2144,7 @@
 
 
 
-</style>
-        
+
         <footer id="footer">
   <div class="footer-left">
     Copyright &copy;
@@ -2160,10 +2176,18 @@
       </ul>
     </nav>
   </div>
-
+  
 </footer>
-
+<script type="text/javascript">
+    $("#footer").hover(function(){
+      $(".aplayer-lrc-contents").css("opacity","0");
+    })
+    $("#footer").mouseleave(function(){
+      $(".aplayer-lrc-contents").css("opacity","1");
+    })
+</script>
     </div>
+    
     <!-- styles -->
 
 
@@ -2205,38 +2229,15 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
 
-
-
-
-    <div id="switch_for_phone_index" onclick="switchNightMode()">
-    <i class="fas fa-lightbulb" aria-hidden="true"></i>
-  </div>
-  <script src="/js/switch.js"></script>
-  <style>
-    #switch_for_phone_index {
-      width: 3rem;
-      height: 3rem;
-      cursor: pointer;
-      position: fixed;
-      display: flex;
-      left: 25px;
-      bottom: 40px;
-      z-index: 1;
-      background: rgba(255,255,255,0);
-      border-radius: 50%;
-      border: none;
-      justify-content: center;
-      align-items: center;
-    }
-
-
-    /* @media screen and (min-width: 480px){
-      #switch_for_phone_index {
-        display: none;
-      }
-    } */
-     
-
-  </style>
+<script src="https://cdn.jsdelivr.net/npm/pjax/pjax.js"></script>
+<script>
+  var pjax = new Pjax({
+    elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"])',   // 拦截正常带链接的 a 标签
+    // elements: 'a[href]:not([href="javascript:void(0)"])', 
+    // elements: 'a[href]:not([href^="/p"])',
+    selectors: ["#pjax-container","#search"]                   // 根据实际需要确认重载区域
+});
+</script>
 </body>
+
 </html>
