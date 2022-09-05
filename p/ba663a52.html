@@ -2256,12 +2256,12 @@
         repo: 'www.tinkun.top',
         owner: 'fshen0',
         admin: 'fshen0',
-        id: 'md5(location.pathname)',      
+        id: md5(location.pathname),      
         labels: 'Gitalk'.split(',').filter(l => l),
-        perPage: '10',
+        perPage: 10,
         pagerDirection: 'last',
-        createIssueManually:' true',
-        distractionFreeMode: 'true'
+        createIssueManually: true,
+        distractionFreeMode: true
       })
       gitalk.render('gitalk-container')
 </script>
