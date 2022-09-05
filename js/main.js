@@ -147,3 +147,4 @@ function switchToLight() {
 null == localStorage.getItem("light")
 ? localStorage.setItem("light", "false")
 : ("true" == localStorage.getItem("light") ? switchToLight: switchToDark)();
+
