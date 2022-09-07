@@ -2246,21 +2246,30 @@
 
 
 
- <div id="comment_twikoo">
-    <p style="font-size: 1.5em; font-weight:700;">📝 Comment</p>
-    <div id="tcomment"></div>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+<script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+
+
+<div id="comment_twikoo">
+    <div id="gitalk-container"></div>
 </div>
-<script src="https://cdn.staticfile.org/twikoo/1.6.0/twikoo.all.min.js"></script>
-<!-- <script src="https://cdn.jsdelivr.net/gh/zhheo/twikoo@dev/dist/twikoo.all.min.js"></script> -->
+
+
 <script>
-twikoo.init({
-    envId: 'https://twikoo-fshen0.vercel.app/', // 腾讯云环境填 envId；Vercel 环境填地址（https://xxx.vercel.app）
-    el: '#tcomment', // 容器元素
-    // region: 'ap-guangzhou', // 环境地域，默认为 ap-shanghai，腾讯云环境填 ap-shanghai 或 ap-guangzhou；Vercel 环境不填
-    // path: 'window.TWIKOO_MAGIC_PATH||window.location.pathname', // 用于区分不同文章的自定义 js 路径，如果您的文章路径不是 location.pathname，需传此参数
-    lang: 'zh-CN', // 用于手动设定评论区语言，支持的语言列表 https://github.com/imaegoo/twikoo/blob/main/src/client/utils/i18n/index.js
-})
+    var gitalk = new Gitalk({
+    clientID: '37aa963463a974f338bd', //Client ID
+    clientSecret: '2dc9e5ef7ed915ee6c7bee00b90f299aa489deff', //Client Secret
+    repo: 'fshen0.github.io',//仓库名称
+    owner: 'fshen0',//仓库拥有者
+    admin: ['fshen0'],
+    id: location.href,      // Ensure uniqueness and length less than 50
+    distractionFreeMode: false  // Facebook-like distraction free mode
+    })
+
+    gitalk.render('gitalk-container')
 </script>
+
+
 
 
         <footer id="footer">
@@ -2274,16 +2283,6 @@ twikoo.init({
   <span>&nbsp;</span>
     <span> 
       
-      <!-- 不蒜子统计 -->
-      <span id="busuanzi_container_site_pv">
-        <i class="fa fa-eye" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_pv"></span>
-      </span>
-      <span class="post-meta-divider">|</span>
-      <span id="busuanzi_container_site_uv" style='display:none'>
-        <i class="fa fa-user" aria-hidden="true"></i>&nbsp;<span id="busuanzi_value_site_uv"></span>
-      </span>
-    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-    
     </span>
   </div>
 
@@ -2371,4 +2370,6 @@ twikoo.init({
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
 
 
-<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
+</body>
+
+</html>

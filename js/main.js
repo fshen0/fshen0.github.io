@@ -127,9 +127,7 @@ function switchNightMode() {
   // setTimeout("loadingout()", 0)
   $("#loading-box").fadeOut();
 }
-// function loadingout(){
-//     $("#loading-box").fadeOut();
-// }
+
 function switchToDark() {
   for (var t = document.getElementsByTagName("link"), e = 0; e < t.length; e++)
       t[e] &&
