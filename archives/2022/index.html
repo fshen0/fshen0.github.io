@@ -10,9 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <script type="text/javascript" src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.js"></script>
     
+    <!-- 消除 pjax失效问题 -->
     <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
     <script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
     <script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+    
 
     <meta name="description" content="Sow nothing, reap nothing.">
 <meta property="og:type" content="website">
@@ -2014,7 +2016,7 @@
     <div class="content index py4" id="pjax-container">
         
           <header id="header">
-  <a href="/">
+  <a href="#" onclick="switchNightMode()" onmouseover="">
   
     
       <div id="logo" style="background-image: url(/images/avatar.jpg);"></div>
@@ -2026,9 +2028,6 @@
   </a>
   <div id="nav">
     <ul>
-      <li class="icon">
-        <a href="#" aria-label="Menu"><i class="fas fa-bars fa-2x"></i></a>
-      </li>
       
         <li><a href="/">Home</a></li>
       
@@ -2040,9 +2039,6 @@
       
         <li><a href="/search/">Search</a></li>
       
-      <li>
-        <div><i class="fa fa-star-half-empty" aria-hidden="true"></i></div>
-      </li>
     </ul>
   </div>
   
@@ -2167,8 +2163,8 @@
 <script src="/js/main.js"></script>
 
 
-
 <!-- search -->
+
 
 <!-- Google Analytics -->
 

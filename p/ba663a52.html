@@ -10,9 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <script type="text/javascript" src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.js"></script>
     
+    <!-- 消除 pjax失效问题 -->
     <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
     <script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
     <script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+    
 
     <meta name="description" content="​	黄初三年，余朝京师，还济洛川。古人有言，斯水之神，名曰宓妃。感宋玉对楚王神女之事，遂作斯赋。其辞曰： ​	余从京域，言归东藩。背伊阙，越轘辕，经通谷，陵景山。日既西倾，车殆马烦。尔乃税驾乎蘅皋，秣驷乎芝田，容与乎阳林，流眄乎洛川。于是精移神骇，忽焉思散。俯则末察，仰以殊观，睹一丽人，于岩之畔。乃援御者而告之曰：“尔有觌于彼者乎?彼何人斯?若此之艳也!”御者对曰：“臣闻河洛之神，名曰宓妃。然则君">
 <meta property="og:type" content="article">
@@ -2064,12 +2066,12 @@
     <li><a data-pjax class="icon pjax" href="/search"><i class="fa fa-search" aria-hidden="true"></i></a></li>
     <li><a class="icon" href="#" onclick="$('#toc').toggle();return false;"><i class="fa fa-bars" aria-hidden="true"></i></a></li>
     
+    <li><a class="icon" aria-label="Previous post" href="/p/4a17b156.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
     
-    <li><a class="icon" aria-label="Next post" href="/p/4a17b156.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
     
     <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
     <li><a class="icon" id="share_do" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
-    <li><a class="icon" href="#" onclick="switchNightMode()"><i class="fas fa-lightbulb" aria-hidden="true"></i></a</li>
+    <li><a class="icon" href="#" onclick="switchNightMode()"><i class="fas fa-lightbulb" aria-hidden="true"></i></a></li>
 </div>
 <div id="share" style="display: none">
 <ul>
@@ -2253,6 +2255,11 @@
     <p style="font-size: 1.5em; font-weight:700;">📝 Comment</p>
     <div id="gitalk-container"></div>
 </div>
+<style>
+    #gitalk-container a{
+        background-image: none;
+    }
+</style>
 
 <script type="text/javascript">
       var gitalk = new Gitalk({
@@ -2351,8 +2358,8 @@
 <script src="/js/main.js"></script>
 
 
-
 <!-- search -->
+
 
 <!-- Google Analytics -->
 
