@@ -9,6 +9,10 @@
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <script type="text/javascript" src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.js"></script>
+    
+    <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+    <script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
 
     <meta name="description" content="​	黄初三年，余朝京师，还济洛川。古人有言，斯水之神，名曰宓妃。感宋玉对楚王神女之事，遂作斯赋。其辞曰： ​	余从京域，言归东藩。背伊阙，越轘辕，经通谷，陵景山。日既西倾，车殆马烦。尔乃税驾乎蘅皋，秣驷乎芝田，容与乎阳林，流眄乎洛川。于是精移神骇，忽焉思散。俯则末察，仰以殊观，睹一丽人，于岩之畔。乃援御者而告之曰：“尔有觌于彼者乎?彼何人斯?若此之艳也!”御者对曰：“臣闻河洛之神，名曰宓妃。然则君">
 <meta property="og:type" content="article">
@@ -2010,7 +2014,7 @@
 <body class="max-width mx-auto px3 ltr" >
   
 
-    <div class="content index py4" id="pjax-container" >
+    <div class="content index py4" id="pjax-container">
         
         <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
   <header>
@@ -2245,17 +2249,14 @@
 
 
 
-
-<link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
-<script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
-<script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
-
 <div id="comment_twikoo">
+    <p style="font-size: 1.5em; font-weight:700;">📝 Comment</p>
     <div id="gitalk-container"></div>
 </div>
 
 <script type="text/javascript">
       var gitalk = new Gitalk({
+        proxy: 'https://vercel.prohibitorum.top/github_access_token',
         clientID: '37aa963463a974f338bd',
         clientSecret: '2dc9e5ef7ed915ee6c7bee00b90f299aa489deff',
         repo: 'fshen0.github.io',
@@ -2306,7 +2307,6 @@
     })
 </script>
     </div>
-    
     <!-- styles -->
 
 
@@ -2372,6 +2372,12 @@
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
 
 
-</body>
-
-</html>
+<script src="https://cdn.jsdelivr.net/npm/pjax/pjax.js"></script>
+<script>
+  var pjax = new Pjax({
+    elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"])',   // 拦截正常带链接的 a 标签
+    selectors: ["#pjax-container","title","#search"]                         // 根据实际需要确认重载区域
+});
+</script>
+   
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>

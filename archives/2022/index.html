@@ -9,6 +9,10 @@
     <meta http-equiv="Access-Control-Allow-Origin" content="*">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
     <script type="text/javascript" src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.js"></script>
+    
+    <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+    <script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
 
     <meta name="description" content="Sow nothing, reap nothing.">
 <meta property="og:type" content="website">
@@ -2007,7 +2011,7 @@
 <body class="max-width mx-auto px3 ltr" >
   
 
-    <div class="content index py4" id="pjax-container" >
+    <div class="content index py4" id="pjax-container">
         
           <header id="header">
   <a href="/">
@@ -2142,7 +2146,6 @@
     })
 </script>
     </div>
-    
     <!-- styles -->
 
 
@@ -2185,6 +2188,12 @@
   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
 
 
-</body>
-
-</html>
+<script src="https://cdn.jsdelivr.net/npm/pjax/pjax.js"></script>
+<script>
+  var pjax = new Pjax({
+    elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"])',   // 拦截正常带链接的 a 标签
+    selectors: ["#pjax-container","title","#search"]                         // 根据实际需要确认重载区域
+});
+</script>
+   
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>
