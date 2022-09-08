@@ -2357,7 +2357,7 @@ body {
   font-display: swap;
   font-weight: 500;
   font-size: 18px;
-  font-family: "Times New Roman","楷体","Menlo", "Meslo LG", monospace;
+  font-family: "Menlo","楷体", "Meslo LG", monospace;
   line-height: 1.725;
   text-rendering: geometricPrecision;
   flex: 1;
@@ -2868,7 +2868,7 @@ body {
 .post-copyright-information blockquote {
   -webkit-text-size-adjust: 100%;
   font-size: 14px;
-  font-family: "Times New Roman","楷体","Menlo", "Meslo LG", monospace;
+  font-family: "Menlo", "楷体","Meslo LG", monospace;
   line-height: 1.725;
   text-rendering: geometricPrecision;
   -webkit-font-smoothing: antialiased;
@@ -3527,7 +3527,7 @@ article .content .caption {
   font-display: swap;
   font-weight: 400;
   font-size: 13.600000000000001px;
-  font-family: "Times New Roman","楷体", "Menlo", "Meslo LG", monospace;
+  font-family: "Menlo","楷体", "Meslo LG", monospace;
   line-height: 1.725;
   text-rendering: geometricPrecision;
   text-align: center;
@@ -3701,7 +3701,7 @@ pre {
   border: 1px dotted #666;
   border-radius: 4px;
   font-size: 16px;
-  font-family: "Times New Roman","楷体", "Menlo", "Meslo LG", monospace;
+  font-family: "Menlo", "楷体", "Meslo LG", monospace;
   line-height: 22px;
   -webkit-border-radius: 4px;
 }
@@ -3722,7 +3722,7 @@ code {
   padding: 10px 15px;
   border-radius: 4px;
   background: #f5f5f5;
-  font-family: "Times New Roman","楷体", "Menlo", "Meslo LG", monospace;
+  font-family: "Menlo", "楷体", "Meslo LG", monospace;
   -webkit-border-radius: 4px;
 }
 .highlight figcaption {
