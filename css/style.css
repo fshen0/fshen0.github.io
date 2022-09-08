@@ -2606,7 +2606,7 @@ body {
 }
 .post-copyright-information blockquote {
   -webkit-text-size-adjust: 100%;
-  font-size: 16px;
+  font-size: 14px;
   font-family: "楷体", "Menlo", "Meslo LG", monospace;
   line-height: 1.725;
   text-rendering: geometricPrecision;
@@ -3289,6 +3289,9 @@ article .content .caption {
 .highlight .code .deletion,
 .highlight .code .meta {
   color: #75715e;
+}
+blockquote {
+  font-size: 14px;
 }
 pre {
   overflow-x: auto;
