@@ -2371,6 +2371,11 @@ body {
   min-height: 100%;
   overflow-wrap: break-word;
 }
+.content article.post {
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 10px rgb(240, 240, 240)
+}
 .content p {
   hyphens: auto;
   -moz-hyphens: auto;
@@ -2442,7 +2447,7 @@ body {
 }
 .content #writing .tagcloud {
   display: inline-flex;
-  border: #a5a5a5 solid 1px;
+  box-shadow: 0 0 7px 7px rgb(240, 240, 240);
   border-radius: 5px;
 }
 .content #writing .tagcloud a {
@@ -2463,7 +2468,7 @@ body {
   }
 }
 .max-width {
-  max-width: 60.1rem;
+  max-width: 61.8rem;
 }
 @media (max-width: 480px) {
   .px3 {
@@ -2840,6 +2845,13 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+#archive,#copyright{
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 10px rgb(240, 240, 240);
+}
+
 .post-copyright-information pyright-information#easter-egg {
   border: none;
   padding: 10px 0;
@@ -3250,6 +3262,11 @@ article .content .caption {
     text-align: left;
   }
 }
+#comment_twikoo{
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 10px rgb(240, 240, 240);
+}
 .twikoo {
   margin-top: 1rem;
 }
@@ -3385,6 +3402,8 @@ article .content .caption {
   vertical-align: top;
   text-align: center;
   font-size: 12px;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 #footer ul {
   margin: 0;

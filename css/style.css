@@ -2364,12 +2364,22 @@ body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
 }
+#archive {
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 10px #19191e;
+}
 .content {
   position: relative;
   display: flex;
   flex-direction: column;
   min-height: 100%;
   overflow-wrap: break-word;
+}
+.content article.post {
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 10px #19191e;
 }
 .content p {
   hyphens: auto;
@@ -2442,7 +2452,7 @@ body {
 }
 .content #writing .tagcloud {
   display: inline-flex;
-  border: #a5a5a5 solid 1px;
+  box-shadow: 0 0 7px 7px #19191e;
   border-radius: 5px;
 }
 .content #writing .tagcloud a {
@@ -2463,7 +2473,7 @@ body {
   }
 }
 .max-width {
-  max-width: 60.1rem;
+  max-width: 61.8rem;
 }
 @media (max-width: 480px) {
   .px3 {
@@ -2578,6 +2588,11 @@ body {
     font-size: 10px;
     font-weight: 700;
   }
+}
+#copyright {
+  border-radius: 10px;
+  padding: 10px;
+  box-shadow: 0 0 10px 10px #19191e;
 }
 .post-copyright-information pyright-information#easter-egg {
   border: none;
@@ -2849,131 +2864,10 @@ article .content .caption {
     text-align: left;
   }
 }
-.twikoo {
-  margin-top: 1rem;
-}
-@media screen and (max-width: 480px) {
-  #twikoo .tk-comments .tk-submit .tk-input .el-textarea__inner {
-    background-image: none;
-  }
-}
-.tk-input .el-textarea__inner {
-  height: 150px !important;
-}
-.tk-input .el-textarea__inner:focus {
-  background-image: none !important;
-}
-.tk-replies {
-  left: -55px;
-  width: calc(100% + 50px);
-}
-.tk-replies .tk-avatar {
-  width: 2.5rem !important;
-  height: 2.5rem !important;
-}
-.tk-replies .tk-avatar img {
-  width: 2.5rem !important;
-  height: 2.5rem !important;
-}
-.tk-comments-container .tk-submit {
-  position: relative;
-  left: -70px;
-}
-.tk-content {
-  background: #00a6ff; /*默认模式访客气泡配色*/
-  padding: 10px;
-  color: #fff; /*默认模式访客气泡字体配色*/
+#comment_twikoo {
   border-radius: 10px;
-  font-size: 16px !important;
-  width: fit-content;
-  max-width: 100%;
-  position: relative !important;
-  overflow: visible !important;
-  max-height: none !important;
-}
-.tk-content img {
-  max-width: 100% !important;
-}
-.tk-content pre {
-  white-space: pre-wrap;
-  word-wrap: break-word;
-}
-.tk-content a {
-  color: #eeecaa; /*默认模式超链接配色*/
-}
-.tk-content::before {
-  content: '';
-  width: 0;
-  height: 0;
-  position: absolute;
-  top: 20px;
-  left: -13px;
-  border-top: 2px solid transparent;
-  border-bottom: 20px solid transparent;
-  border-right: 15px solid #00a6ff; /*默认模式访客气泡小三角配色*/
-  border-left: 0px solid transparent;
-}
-.tk-master .tk-content {
-  background: #fd8b00; /*默认模式博主气泡配色*/
-  color: #fff; /*默认模式博主气泡字体配色*/
-  width: fit-content;
-  max-width: 100%;
-}
-.tk-master .tk-content a {
-  color: #eeecaa;
-}
-.tk-master .tk-content::before {
-  content: '';
-  width: 0;
-  height: 0;
-  position: absolute;
-  top: 20px;
-  left: -13px;
-  border-top: 2px solid transparent;
-  border-bottom: 20px solid transparent;
-  border-right: 15px solid #fd8b00; /*默认模式博主气泡小三角配色*/
-  border-left: 0px solid transparent;
-}
-.tk-row[data-v-d82ce9a0] {
-  max-width: 100%;
-  width: fit-content;
-}
-.tk-avatar {
-  border-radius: 50%;
-  margin-top: 10px;
-}
-@media screen and (min-width: 1024px) {
-  .tk-content {
-    max-width: 50%;
-    width: fit-content;
-  }
-  .tk-master .tk-content {
-    width: 50%;
-    left: calc(40% + 30px);
-  }
-  .tk-master .tk-content::before {
-    left: 100%;
-    border-left: 15px solid #fd8b00;
-    border-right: 0px solid transparent;
-  }
-  .tk-master .tk-avatar {
-    position: relative;
-    left: calc(95%);
-    margin-top: 10px;
-  }
-  .tk-main .tk-row {
-    justify-content: start;
-  }
-  .tk-master .tk-main .tk-extras {
-    width: 95%;
-    justify-content: end;
-  }
-  .tk-master .tk-row {
-    position: relative;
-    top: 0px;
-    right: 4em;
-    justify-content: end;
-  }
+  padding: 10px;
+  box-shadow: 0 0 10px 10px #19191e;
 }
 #footer {
   position: absolute;
@@ -2984,6 +2878,8 @@ article .content .caption {
   vertical-align: top;
   text-align: center;
   font-size: 12px;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 #footer ul {
   margin: 0;
