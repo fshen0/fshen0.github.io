@@ -2567,12 +2567,20 @@ body {
     display: table-cell;
     vertical-align: middle;
   }
+  #header #nav{
+    margin-left: 70px;
+  }
+  
   #header #nav ul a:hover {
     background: none;
   }
   #header #nav ul li {
-    display: none;
-    border-right: 0;
+    display: inline-block;
+    margin-left: 0px;
+    margin-right: -5px;
+    padding: 0;
+    border-right: none;
+    vertical-align: middle;
   }
   #header #nav ul li.icon {
     position: absolute;

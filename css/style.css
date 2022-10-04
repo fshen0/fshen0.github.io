@@ -2562,7 +2562,7 @@ body {
 #header #nav ul li:last-child a {
   margin-right: 0;
 }
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 510px) {
   #header #title {
     display: table;
     margin-right: 5rem;
@@ -2571,6 +2571,9 @@ body {
   #header #title h1 {
     display: table-cell;
     vertical-align: middle;
+  }
+  #header #nav {
+    margin-left: 70px;
   }
   #header #nav ul {
     text-align: left;
