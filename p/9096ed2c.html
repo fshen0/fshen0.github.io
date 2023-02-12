@@ -16,15 +16,20 @@
     <script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
     
 
-    <meta name="description" content="Sow nothing, reap nothing.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Meow Mii">
-<meta property="og:url" content="https://blog.yiochin.top/archives/index.html">
+    <meta name="description" content="MySQL InnoDB锁的基本类型共享锁Shared Locks（共享锁），在获取了一行数据的读锁以后，可以用来读取数据，所以它也叫做读锁。用select ...... lock in share mode;的方式手动加上一把锁。使用begin开启事务，而不关闭事务，这样做是用来测试，因为提交事务或回滚事务就会释放锁。 共享锁的行不可以被修改；共享锁的行可以不加任何锁读取；共享锁的行可以加读锁读">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL学习笔记Ⅳ-锁">
+<meta property="og:url" content="https://blog.yiochin.top/p/9096ed2c.html">
 <meta property="og:site_name" content="Meow Mii">
-<meta property="og:description" content="Sow nothing, reap nothing.">
+<meta property="og:description" content="MySQL InnoDB锁的基本类型共享锁Shared Locks（共享锁），在获取了一行数据的读锁以后，可以用来读取数据，所以它也叫做读锁。用select ...... lock in share mode;的方式手动加上一把锁。使用begin开启事务，而不关闭事务，这样做是用来测试，因为提交事务或回滚事务就会释放锁。 共享锁的行不可以被修改；共享锁的行可以不加任何锁读取；共享锁的行可以加读锁读">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090101844.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090101726.png">
+<meta property="article:published_time" content="2023-02-12T06:37:10.376Z">
+<meta property="article:modified_time" content="2023-02-12T06:48:11.565Z">
 <meta property="article:author" content="Meow Mii">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090101844.png">
 
     
     
@@ -47,7 +52,7 @@
       
     
     <!-- title -->
-    <title>Writing</title>
+    <title>MySQL学习笔记Ⅳ-锁</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -2015,300 +2020,285 @@
 
     <div class="content index py4" id="pjax-container">
         
-          <header id="header">
-  <a href="#" onclick="switchNightMode()" onmouseover="">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        MySQL学习笔记Ⅳ-锁
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name" id="post-author" style="cursor: pointer;">
+          <a href="/">Meow Mii </a>
+        </span>
+      </span>
+    
+      
+    <div class="postdate">
+      
+        <time datetime="2023-02-12T06:37:10.376Z" itemprop="datePublished">2023-02-12</time>
+        
+        (Updated: <time datetime="2023-02-12T06:48:11.565Z" itemprop="dateModified">2023-02-12</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/MySQL/">MySQL</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
   
-    
-      <div id="logo" style="background-image: url(/images/avatar.jpg);"></div>
-    
-  
-    <div id="title">
-      <h1>Meow Mii</h1>
-    </div>
-  </a>
-  <div id="nav">
-    <ul>
-      
-        <li><a href="/">Home</a></li>
-      
-        <li><a href="/archives/">Writing</a></li>
-      
-        <li><a href="/categories/">Category</a></li>
-      
-        <li><a href="/about/">About</a></li>
-      
-        <li><a href="/search/">Search</a></li>
-      
-    </ul>
-  </div>
-  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css" />
-  
-</header>
 
-
-        
-        <div id="archive">
-  <ul class="post-list">
+  <div id="post_options">
+    <li><a class="icon" href="/"><i class="fa fa-paw" aria-hidden="true"></i></a></li>
+    <li><a data-pjax class="icon pjax" href="/search"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+    <li><a class="icon" href="#" onclick="$('#toc').toggle();return false;"><i class="fa fa-bars" aria-hidden="true"></i></a></li>
+    
+    <li><a class="icon" aria-label="Previous post" href="/p/ef2788f.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
     
     
+    <li><a class="icon" aria-label="Next post" href="/p/99746608.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
     
-    
-      
-      
-      
-      
-        <li class="post-year"><h2>2023</h2></li>
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:16.976Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/e911dea2.html">Redis缓存穿透和雪崩</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:12.950Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/c328eac5.html">Redis主从复制</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:08.939Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/bf72778.html">Redis发布订阅</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:04.800Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/815cc3a1.html">Redis配置</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:48:20.446Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/ef2788f.html">MySQL学习笔记Ⅴ-优化</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:48:11.565Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/9096ed2c.html">MySQL学习笔记Ⅳ-锁</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:48:03.376Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/e791ddba.html">MySQL学习笔记Ⅲ-事务</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:47:58.312Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/7e988c00.html">MySQL学习笔记Ⅱ-索引</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:47:52.988Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/99fbc96.html">MySQL学习笔记Ⅰ-存储引擎</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:44:29.013Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/99746608.html">Java邮件发送</a>
-    
-
-
-</span>
-      </li>
-    
-  </ul>
-  
-    <div class="pagination">
-        
-        <span class="page-number">Page 1 of 2</span>
-        
-            <a href="/archives/page/2/"><i class="fas fa-angle-right"></i>
-            </a>
-        
-    </div>
-
+    <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+    <li><a class="icon" id="share_do" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+    <li><a class="icon" href="#" onclick="switchNightMode()"><i class="fas fa-lightbulb" aria-hidden="true"></i></a></li>
+</div>
+<div id="share" style="display: none">
+<ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/9096ed2c.html&text=MySQL学习笔记Ⅳ-锁"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MySQL学习笔记Ⅳ-锁&body=Check out this article: https://blog.yiochin.top/p/9096ed2c.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/9096ed2c.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/9096ed2c.html&title=MySQL学习笔记Ⅳ-锁"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/9096ed2c.html&is_video=false&description=MySQL学习笔记Ⅳ-锁"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=MySQL学习笔记Ⅳ-锁&body=Check out this article: https://blog.yiochin.top/p/9096ed2c.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/9096ed2c.html&title=MySQL学习笔记Ⅳ-锁"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/9096ed2c.html&title=MySQL学习笔记Ⅳ-锁"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/9096ed2c.html&title=MySQL学习笔记Ⅳ-锁"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/9096ed2c.html&title=MySQL学习笔记Ⅳ-锁"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/9096ed2c.html&name=MySQL学习笔记Ⅳ-锁&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/9096ed2c.html&t=MySQL学习笔记Ⅳ-锁"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
 
 </div>
+<div id="share" style="display: none">
+    <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/9096ed2c.html&text=MySQL学习笔记Ⅳ-锁"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MySQL学习笔记Ⅳ-锁&body=Check out this article: https://blog.yiochin.top/p/9096ed2c.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/9096ed2c.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/9096ed2c.html&title=MySQL学习笔记Ⅳ-锁"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/9096ed2c.html&is_video=false&description=MySQL学习笔记Ⅳ-锁"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=MySQL学习笔记Ⅳ-锁&body=Check out this article: https://blog.yiochin.top/p/9096ed2c.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/9096ed2c.html&title=MySQL学习笔记Ⅳ-锁"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/9096ed2c.html&title=MySQL学习笔记Ⅳ-锁"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/9096ed2c.html&title=MySQL学习笔记Ⅳ-锁"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/9096ed2c.html&title=MySQL学习笔记Ⅳ-锁"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/9096ed2c.html&name=MySQL学习笔记Ⅳ-锁&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/9096ed2c.html&t=MySQL学习笔记Ⅳ-锁"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
+
+</div>
+<div id="toc" style="display: none">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL-InnoDB%E9%94%81%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">MySQL InnoDB锁的基本类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B1%E4%BA%AB%E9%94%81"><span class="toc-number">1.1.</span> <span class="toc-text">共享锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8E%92%E4%BB%96%E9%94%81"><span class="toc-number">1.2.</span> <span class="toc-text">排他锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%84%8F%E5%90%91%E9%94%81"><span class="toc-number">1.3.</span> <span class="toc-text">意向锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%8C%E9%94%81%E7%9A%84%E5%8E%9F%E7%90%86"><span class="toc-number">1.4.</span> <span class="toc-text">行锁的原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%94%81%E7%9A%84%E7%AE%97%E6%B3%95"><span class="toc-number">1.5.</span> <span class="toc-text">锁的算法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AE%B0%E5%BD%95%E9%94%81"><span class="toc-number">1.5.1.</span> <span class="toc-text">记录锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%97%B4%E9%9A%99%E9%94%81"><span class="toc-number">1.5.2.</span> <span class="toc-text">间隙锁</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%B4%E9%94%AE%E9%94%81"><span class="toc-number">1.5.3.</span> <span class="toc-text">临键锁</span></a></li></ol></li></ol></li></ol>
+</div>
+
+
+<style>
+#post_options{
+    border-radius: 10px;
+    background-color: #ffffff33;
+    position: fixed;
+    right: 1%;
+    bottom: 10%;
+    z-index: 99;
+}
+#post_options li{
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
+    /* outline-style: solid;
+    outline-color: grey; */
+        /* display: inline; */
+}
+
+#share{
+    position: fixed;
+    right: 5%;
+    bottom: 3%;
+    z-index: 1;
+    text-align: center;
+}
+@media screen and ( max-width: 500px) {
+    #share{
+        right: 10%;
+    }
+    #toc{
+        margin-right: 20px;
+        padding-left: 0px;
+    }
+
+}
+
+@media screen and (min-width: 900px){
+    .post #toc{
+        right: 4.5%;
+    }
+    .post #share{
+        right: 4.5%;
+    }
+}
+
+#share li{
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
+}
+#toc{
+    border-radius: 6px;
+    font-weight: 700;
+    background-color: rgba(80, 90, 100, 0.4);
+    font-size: 12px;
+    position: fixed;
+    right: 5%;
+    bottom: 25%;
+    z-index: 1;
+    margin-bottom: 18px;
+}
+#toc li{
+    list-style: none;
+}
+
+#toc .toc{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+#toc .toc .toc-child{
+    padding-left: 12px;
+}
+
+</style>
+<script>
+
+</script>
+  <div class="content" itemprop="articleBody">
+    <h2 id="MySQL-InnoDB锁的基本类型"><a href="#MySQL-InnoDB锁的基本类型" class="headerlink" title="MySQL InnoDB锁的基本类型"></a>MySQL InnoDB锁的基本类型</h2><h3 id="共享锁"><a href="#共享锁" class="headerlink" title="共享锁"></a>共享锁</h3><p>Shared Locks（共享锁），在获取了一行数据的读锁以后，可以用来读取数据，所以它也叫做读锁。用<code>select ...... lock in share mode;</code>的方式手动加上一把锁。使用begin开启事务，而不关闭事务，这样做是用来测试，因为<strong>提交事务</strong>或<strong>回滚事务</strong>就会释放锁。</p>
+<p>共享锁的行不可以被修改；共享锁的行可以不加任何锁读取；共享锁的行可以加读锁读取。</p>
+<h3 id="排他锁"><a href="#排他锁" class="headerlink" title="排他锁"></a>排他锁</h3><p>Exclusive Locks（排他锁），他是用来操作数据的，所以又叫做写锁。只要一个事务获取了一行数据的排它锁，其他的事务就不能再获取这一行数据的共享锁和排它锁。释放锁的方式和共享锁一样。手工加锁，用<code>FOR UPDATE</code>给一行数据加上一个排它锁，这个在代码或者操作数据的工具里都比较常用。</p>
+<p>增删改，都会默认加上一个排他锁。select语句默认不会加任何锁类型，如果加排它锁可以使用<code>select ... for update</code>。加过排他锁的数据行在其他事务中是不能修改数据也不能通过for update和lock in share mode锁的方式查询数据。但可以直接通过<code>select ...  from ...</code>查询数据，因为普通查询没有任何锁机制。</p>
+<p>排他锁的行不可以再加排他锁；排他锁的行可以不加读锁；1+2&#x3D;排他锁的行不可以再加任何锁；排他锁的行可以普通读取。</p>
+<p>不用锁的查询可以读取加锁（共享锁、排他锁）的同一行数据</p>
+<h3 id="意向锁"><a href="#意向锁" class="headerlink" title="意向锁"></a>意向锁</h3><p>在我们给一行数据加上共享&#x2F;排他锁之前，数据库会自动在这张表上加一个意向共享&#x2F;排他锁。</p>
+<p>反过来说，如果一张表上至少有一个意向共享&#x2F;排他锁，说明有其他事务给其中的某些数据行加上了共享&#x2F;排他锁。</p>
+<h3 id="行锁的原理"><a href="#行锁的原理" class="headerlink" title="行锁的原理"></a>行锁的原理</h3><p>InnoDB的行锁，就是通过锁住索引记录来实现的（？）索引为什么可以被锁住？从<code>information_schema.innodb_locks</code>可以看到锁住的是索引。那么：</p>
+<ul>
+<li><p>为什么表里面没有索引的时候，锁住一行数据会导致锁表？or如果锁住的是索引，一张表没有索引怎么办？</p>
+<p>那么一张表有没有可能没有索引？【不会的】</p>
+<ol>
+<li>如果我们定义了主键那么InnoDB会选择主键作为聚集索引</li>
+<li>如果没有显式定义主键，则InnoDB会选择第一个不包含NULL值的唯一索引作为主键索引。 </li>
+<li>如果也没有这样的唯一索引，则InnoDB会选择内置<strong>6字节</strong>长的ROWID作为隐藏的聚集索引，它会随着行记录的写入而主键递增。</li>
+</ol>
+</li>
+<li><p>为什么通过唯一索引给数据行加锁，主键索引也会被锁住？</p>
+<p>在InnoDB里面，当我们使用辅助索引的时候，辅助索引的叶子结点存储的是二级索引和主键的值，比如name&#x3D;4，存储的是name的索引和主键id的值4.</p>
+<p>而主键索引里面除了索引之外，还存储了完整的数据。所以我们通过辅助索引锁定一行数据的时候，它跟我们检索数据的步骤是一样的，会通过主键值找到主键索引，然后也锁定。</p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090101844.png" alt="image-20230207231939646"></p>
+</li>
+</ul>
+<h3 id="锁的算法"><a href="#锁的算法" class="headerlink" title="锁的算法"></a>锁的算法</h3><p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090101726.png" alt="image-20230207232129301"></p>
+<p>间隙（Gap）连同它左边的记录（Record）被称之为临键的区间。他是一个左开右闭的区间。</p>
+<h4 id="记录锁"><a href="#记录锁" class="headerlink" title="记录锁"></a>记录锁</h4><p>当对于唯一性的索引（包括唯一索引和主键索引）使用等值查询，精准匹配到一条记录的时候，使用的就是<strong>记录锁</strong>。比如<code>where id = 1/4/7/10</code></p>
+<h4 id="间隙锁"><a href="#间隙锁" class="headerlink" title="间隙锁"></a>间隙锁</h4><p>当我们查询的记录不存在时，没有命中任何一个record，无论使用等值查询还是范围查询，使用的都是<strong>间隙锁</strong>。比如<code>where id&gt;4 and id&lt;7， where id = 6</code></p>
+<p>间隙锁主要是阻塞插入insert。相同的间隙锁之间不冲突。</p>
+<p>Gap Lock只在RR（可重复读）中存在，如果要关闭间隙锁，就是把事务隔离级别设置成RC（已提交读），并且把<code>innodb_locks_unsafe_for_binlog设置成ON</code>。这种情况下除了外键约束和唯一性检查会加间隙锁，其他情况都不会用间隙锁。</p>
+<h4 id="临键锁"><a href="#临键锁" class="headerlink" title="临键锁"></a>临键锁</h4><p>当使用了范围查询，不仅命中Record记录，而且包含了gap间隙，在这种情况下使用的就是临键锁，他是MySQL里面默认的行锁算法，相当于记录锁加上间隙锁。临键锁，锁住最后一个key的下一个左开右闭的区间。</p>
+
+  </div>
+
+</article>
+
+
+<div id="copyright" class="post-copyright-information">
+    <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+    <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ 
+  <!-- 结束语 -->
+    <p id="easter-egg"></p>
+ 
+  <!-- post-copyright-information -->
+
+    <blockquote style="padding:0">
+        <p>作者：
+            Meow Mii
+        </p>
+        <p>本文链接：
+            
+                <a href="/p/9096ed2c.html" target="_blank" title="MySQL学习笔记Ⅳ-锁">
+                https://blog.yiochin.top/p/9096ed2c.html</a>
+            
+        </p>
+        <p>版权声明： 本博客所有文章除特别声明外,均采用
+             <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" 
+             target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">
+             CC BY-NC-ND 4.0
+            </a> 许可协议，转载请注明出处！
+        </p>
+    </blockquote>
+    <hr>
+</div>
+
+
+
+
+
+
+<div id="comment_twikoo">
+    <p style="font-size: 1.5em; font-weight:700;">📝 Comment</p>
+    <div id="gitalk-container"></div>
+</div>
+<style>
+    #gitalk-container a{
+        background-image: none;
+    }
+</style>
+
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        proxy: 'https://vercel.prohibitorum.top/github_access_token',
+        clientID: '37aa963463a974f338bd',
+        clientSecret: '2dc9e5ef7ed915ee6c7bee00b90f299aa489deff',
+        repo: 'fshen0.github.io',
+        owner: 'fshen0',
+        admin: 'fshen0',
+        id: md5(location.pathname),      
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: true
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+
 
 
         <footer id="footer">
@@ -2358,6 +2348,29 @@
 
 
 <!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
 
 
 

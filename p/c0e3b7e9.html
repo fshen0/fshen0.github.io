@@ -1,0 +1,2762 @@
+<!DOCTYPE html>
+<html lang=en>
+
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <script type="text/javascript" src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.js"></script>
+    
+    <!-- 消除 pjax失效问题 -->
+    <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+    <script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+    
+
+    <meta name="description" content="Docker Compose简介 https:&#x2F;&#x2F;docs.docker.com&#x2F;get-started&#x2F;08_using_compose&#x2F;  是一个定义和运行多个容器的工具，使用YAML配置文件。Compose是Docker官方的开源项目，需要我们自己安装使用。服务、应用是一个个容器，Compose将关联容器组成一个Project来运行。 Docker-Compose将所管理的容器分为三层：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker Compose">
+<meta property="og:url" content="https://blog.yiochin.top/p/c0e3b7e9.html">
+<meta property="og:site_name" content="Meow Mii">
+<meta property="og:description" content="Docker Compose简介 https:&#x2F;&#x2F;docs.docker.com&#x2F;get-started&#x2F;08_using_compose&#x2F;  是一个定义和运行多个容器的工具，使用YAML配置文件。Compose是Docker官方的开源项目，需要我们自己安装使用。服务、应用是一个个容器，Compose将关联容器组成一个Project来运行。 Docker-Compose将所管理的容器分为三层：">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090103966.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090103967.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090103968.png">
+<meta property="article:published_time" content="2023-02-12T06:34:12.911Z">
+<meta property="article:modified_time" content="2023-02-12T06:47:20.451Z">
+<meta property="article:author" content="Meow Mii">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090103966.png">
+
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.png">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon.png" sizes="192x192">
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/1c0ccb80f18de6871d3fd37b97cd3594?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Docker Compose</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.2.0"><link rel="alternate" href="/atom.xml" title="Meow Mii" type="application/atom+xml">
+</head>
+
+<!-- loading  -->
+<div id="loading-box">
+    <div class="loading-left-bg"></div>
+    <div class="loading-right-bg"></div>
+    <div class="wizard-scene">
+      <div class="wizard-objects">
+        <div class="wizard-square"></div>
+        <div class="wizard-circle"></div>
+        <div class="wizard-triangle"></div>
+      </div>
+      <div class="wizard">
+        <div class="wizard-body"></div>
+        <div class="wizard-right-arm">
+          <div class="wizard-right-hand"></div>
+        </div>
+        <div class="wizard-left-arm">
+          <div class="wizard-left-hand"></div>
+        </div>
+        <div class="wizard-head">
+          <div class="wizard-beard"></div>
+          <div class="wizard-face">
+            <div class="wizard-adds"></div>
+          </div>
+          <div class="wizard-hat">
+            <div class="wizard-hat-of-the-hat"></div>
+            <div class="wizard-four-point-star --first"></div>
+            <div class="wizard-four-point-star --second"></div>
+            <div class="wizard-four-point-star --third"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+  <!-- 
+<link rel="stylesheet" href="/css/style.css">
+ -->
+<style>
+    #loading-box  {
+	 position: fixed;
+	 left: 0;
+	 z-index: 1000;
+	 width: 100%;
+	 /* height: 100%; */
+	 margin: 0;
+	 padding-left: -2em;
+	 background: black;
+	}
+	#loading-box .loading-left-bg {
+		left: 0;
+	}
+	#loading-box .loading-right-bg {
+		right: 0;
+	}
+	#loading-box.loaded {
+		z-index: -1000;
+	}
+	#loading-box.loaded .loading-left-bg {
+		transition: all 1s;
+		transform: translate(-100%, 0);
+	}
+	#loading-box.loaded .loading-right-bg {
+		transition: all 1s;
+		transform: translate(100%, 0);
+	}
+	#loading-box {
+		position: fixed;
+		z-index: 1000;
+		display: -webkit-box;
+		display: flex;
+		-webkit-box-align: center;
+		align-items: center;
+		-webkit-box-pack: center;
+		justify-content: center;
+		-webkit-box-orient: vertical;
+		-webkit-box-direction: normal;
+		flex-direction: column;
+		flex-wrap: wrap;
+		width: 100vw;
+		height: 100vh;
+		overflow: hidden;
+	}
+	#loading-box.loaded .wizard-scene {
+		display: none;
+	}
+	.wizard-scene {
+		position: fixed;
+		z-index: 1001;
+		display: -webkit-box;
+		display: flex;
+	}
+	.wizard {
+		position: relative;
+		width: 190px;
+		height: 240px;
+	}
+	.wizard-body {
+		position: absolute;
+		bottom: 0;
+		left: 68px;
+		height: 100px;
+		width: 60px;
+		background: #3f64ce;
+	}
+	.wizard-body::after {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		left: 20px;
+		height: 100px;
+		width: 60px;
+		background: #3f64ce;
+		-webkit-transform: skewX(14deg);
+		transform: skewX(14deg);
+	}
+	.wizard-right-arm {
+		position: absolute;
+		bottom: 74px;
+		left: 110px;
+		height: 44px;
+		width: 90px;
+		background: #3f64ce;
+		border-radius: 22px;
+		-webkit-transform-origin: 16px 22px;
+		transform-origin: 16px 22px;
+		-webkit-transform: rotate(70deg);
+		transform: rotate(70deg);
+		-webkit-animation: right_arm 10s ease-in-out infinite;
+		animation: right_arm 10s ease-in-out infinite;
+	}
+	.wizard-right-arm .right-hand {
+		position: absolute;
+		right: 8px;
+		bottom: 8px;
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+		background: #f1c5b4;
+		-webkit-transform-origin: center center;
+		transform-origin: center center;
+		-webkit-transform: rotate(-40deg);
+		transform: rotate(-40deg);
+		-webkit-animation: right_hand 10s ease-in-out infinite;
+		animation: right_hand 10s ease-in-out infinite;
+	}
+	.wizard-right-arm .wizard-right-hand::after {
+		content: "";
+		position: absolute;
+		right: 0px;
+		top: -8px;
+		width: 15px;
+		height: 30px;
+		border-radius: 10px;
+		background: #f1c5b4;
+		-webkit-transform: translateY(16px);
+		transform: translateY(16px);
+		-webkit-animation: right_finger 10s ease-in-out infinite;
+		animation: right_finger 10s ease-in-out infinite;
+	}
+	.wizard-left-arm {
+		position: absolute;
+		bottom: 74px;
+		left: 26px;
+		height: 44px;
+		width: 70px;
+		background: #3f64ce;
+		border-bottom-left-radius: 8px;
+		-webkit-transform-origin: 60px 26px;
+		transform-origin: 60px 26px;
+		-webkit-transform: rotate(-70deg);
+		transform: rotate(-70deg);
+		-webkit-animation: left_arm 10s ease-in-out infinite;
+		animation: left_arm 10s ease-in-out infinite;
+	}
+	.wizard-left-arm .wizard-left-hand {
+		position: absolute;
+		left: -18px;
+		top: 0;
+		width: 18px;
+		height: 30px;
+		border-top-left-radius: 35px;
+		border-bottom-left-radius: 35px;
+		background: #f1c5b4;
+	}
+	.wizard-left-arm .wizard-left-hand::after {
+		content: "";
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 30px;
+		height: 15px;
+		border-radius: 20px;
+		background: #f1c5b4;
+		-webkit-transform-origin: right bottom;
+		transform-origin: right bottom;
+		-webkit-transform: scaleX(0);
+		transform: scaleX(0);
+		-webkit-animation: left_finger 10s ease-in-out infinite;
+		animation: left_finger 10s ease-in-out infinite;
+	}
+	.wizard-head {
+		position: absolute;
+		top: 0;
+		left: 14px;
+		width: 160px;
+		height: 210px;
+		-webkit-transform-origin: center center;
+		transform-origin: center center;
+		-webkit-transform: rotate(-3deg);
+		transform: rotate(-3deg);
+		-webkit-animation: head 10s ease-in-out infinite;
+		animation: head 10s ease-in-out infinite;
+	}
+	.wizard-head .wizard-beard {
+		position: absolute;
+		bottom: 0;
+		left: 38px;
+		height: 106px;
+		width: 80px;
+		border-bottom-right-radius: 55%;
+		background: #fff;
+	}
+	.wizard-head .wizard-beard::after {
+		content: "";
+		position: absolute;
+		top: 16px;
+		left: -10px;
+		width: 40px;
+		height: 20px;
+		border-radius: 20px;
+		background: #fff;
+	}
+	.wizard-head .wizard-face {
+		position: absolute;
+		bottom: 76px;
+		left: 38px;
+		height: 30px;
+		width: 60px;
+		background: #f1c5b4;
+	}
+	.wizard-head .wizard-face::before {
+		content: "";
+		position: absolute;
+		top: 0px;
+		left: 40px;
+		width: 20px;
+		height: 40px;
+		border-bottom-right-radius: 20px;
+		border-bottom-left-radius: 20px;
+		background: #f1c5b4;
+	}
+	.wizard-head .wizard-face::after {
+		content: "";
+		position: absolute;
+		top: 16px;
+		left: -10px;
+		width: 50px;
+		height: 20px;
+		border-radius: 20px;
+		border-bottom-right-radius: 0px;
+		background: #fff;
+	}
+	.wizard-head .wizard-face .wizard-adds {
+		position: absolute;
+		top: 0px;
+		left: -10px;
+		width: 40px;
+		height: 20px;
+		border-radius: 20px;
+		background: #f1c5b4;
+	}
+	.wizard-head .wizard-face .wizard-adds::after {
+		content: "";
+		position: absolute;
+		top: 5px;
+		left: 80px;
+		width: 15px;
+		height: 20px;
+		border-bottom-right-radius: 20px;
+		border-top-right-radius: 20px;
+		background: #f1c5b4;
+	}
+	.wizard-head .wizard-hat {
+		position: absolute;
+		bottom: 106px;
+		left: 0;
+		width: 160px;
+		height: 20px;
+		border-radius: 20px;
+		background: #3f64ce;
+	}
+	.wizard-head .wizard-hat::before {
+		content: "";
+		position: absolute;
+		top: -70px;
+		left: 50%;
+		-webkit-transform: translatex(-50%);
+		transform: translatex(-50%);
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 0 34px 70px 50px;
+		border-color: transparent transparent #3f64ce transparent;
+	}
+	.wizard-head .wizard-hat::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 160px;
+		height: 20px;
+		background: #3f64ce;
+		border-radius: 20px;
+	}
+	.wizard-head .wizard-hat .wizard-hat-of-the-hat {
+		position: absolute;
+		bottom: 78px;
+		left: 79px;
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 0 25px 25px 19px;
+		border-color: transparent transparent #3f64ce transparent;
+	}
+	.wizard-head .wizard-hat .wizard-hat-of-the-hat::after {
+		content: "";
+		position: absolute;
+		top: 6px;
+		left: -4px;
+		width: 35px;
+		height: 10px;
+		border-radius: 10px;
+		border-bottom-left-radius: 0px;
+		background: #3f64ce;
+		-webkit-transform: rotate(40deg);
+		transform: rotate(40deg);
+	}
+	.wizard-head .wizard-hat .wizard-four-point-star {
+		position: absolute;
+		width: 12px;
+		height: 12px;
+	}
+	.wizard-head .wizard-hat .wizard-four-point-star::after {
+		-webkit-transform: rotate(156.66deg) skew(45deg);
+		transform: rotate(156.66deg) skew(45deg);
+	}
+	.wizard-head .wizard-hat .wizard-four-point-star.--first {
+		bottom: 28px;
+		left: 46px;
+	}
+	.wizard-head .wizard-hat .wizard-four-point-star.--second {
+		bottom: 40px;
+		left: 80px;
+	}
+	.wizard-head .wizard-hat .wizard-four-point-star.--third {
+		bottom: 15px;
+		left: 108px;
+	}
+	.wizard-head .wizard-hat .wizard-four-point-star::after, .wizard-head .wizard-hat .wizard-four-point-star::before {
+		content: "";
+		position: absolute;
+		background: #fff;
+		display: block;
+		left: 0;
+		width: 141.4213%;
+		top: 0;
+		bottom: 0;
+		border-radius: 10%;
+		-webkit-transform: rotate(66.66deg) skewX(45deg);
+		transform: rotate(66.66deg) skewX(45deg);
+	}
+	.wizard-objects {
+		position: relative;
+		width: 200px;
+		height: 240px;
+	}
+	.wizard-square {
+		position: absolute;
+		bottom: -60px;
+		left: -5px;
+		width: 120px;
+		height: 120px;
+		border-radius: 50%;
+		-webkit-transform: rotate(-360deg);
+		transform: rotate(-360deg);
+		-webkit-animation: path_square 10s ease-in-out infinite;
+		animation: path_square 10s ease-in-out infinite;
+	}
+	.wizard-square::after {
+		content: "";
+		position: absolute;
+		top: 10px;
+		left: 0;
+		width: 50px;
+		height: 50px;
+		background: #9ab3f5;
+	}
+	.wizard-circle {
+		position: absolute;
+		bottom: 10px;
+		left: 0;
+		width: 100px;
+		height: 100px;
+		border-radius: 50%;
+		-webkit-transform: rotate(-360deg);
+		transform: rotate(-360deg);
+		-webkit-animation: path_circle 10s ease-in-out infinite;
+		animation: path_circle 10s ease-in-out infinite;
+	}
+	.wizard-circle::after {
+		content: "";
+		position: absolute;
+		bottom: -10px;
+		left: 25px;
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		background: #c56183;
+	}
+	.wizard-triangle {
+		position: absolute;
+		bottom: -62px;
+		left: -10px;
+		width: 110px;
+		height: 110px;
+		border-radius: 50%;
+		-webkit-transform: rotate(-360deg);
+		transform: rotate(-360deg);
+		-webkit-animation: path_triangle 10s ease-in-out infinite;
+		animation: path_triangle 10s ease-in-out infinite;
+	}
+	.wizard-triangle::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		right: -10px;
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 0 28px 48px 28px;
+		border-color: transparent transparent #89beb3 transparent;
+	}
+	/** 10s animation - 10% = 1s */
+	@-webkit-keyframes right_arm {
+		0% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+		10% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		15% {
+			-webkit-transform: rotate(20deg);
+			transform: rotate(20deg);
+		}
+		20% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		25% {
+			-webkit-transform: rotate(26deg);
+			transform: rotate(26deg);
+		}
+		30% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		35% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		40% {
+			-webkit-transform: rotate(9deg);
+			transform: rotate(9deg);
+		}
+		45% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		50% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		58% {
+			-webkit-transform: rotate(74deg);
+			transform: rotate(74deg);
+		}
+		62% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+	}
+	@-webkit-keyframes left_arm {
+		0% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+		10% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		15% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		20% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		25% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		30% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		35% {
+			-webkit-transform: rotate(-17deg);
+			transform: rotate(-17deg);
+		}
+		40% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		45% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		50% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		58% {
+			-webkit-transform: rotate(-74deg);
+			transform: rotate(-74deg);
+		}
+		62% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+	}
+	@-webkit-keyframes right_hand {
+		0% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		10% {
+			-webkit-transform: rotate(-20deg);
+			transform: rotate(-20deg);
+		}
+		15% {
+			-webkit-transform: rotate(-5deg);
+			transform: rotate(-5deg);
+		}
+		20% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		25% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		30% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		35% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		40% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		45% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		50% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		60% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+	}
+	@-webkit-keyframes right_finger {
+		0% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+		10% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		50% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		60% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+	}
+	@-webkit-keyframes left_finger {
+		0% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+		10% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		15% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		20% {
+			-webkit-transform: scaleX(1) rotate(8deg);
+			transform: scaleX(1) rotate(8deg);
+		}
+		25% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		30% {
+			-webkit-transform: scaleX(1) rotate(7deg);
+			transform: scaleX(1) rotate(7deg);
+		}
+		35% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		40% {
+			-webkit-transform: scaleX(1) rotate(5deg);
+			transform: scaleX(1) rotate(5deg);
+		}
+		45% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		50% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		58% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+	}
+	@-webkit-keyframes head {
+		0% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+		10% {
+			-webkit-transform: translatex(10px) rotate(7deg);
+			transform: translatex(10px) rotate(7deg);
+		}
+		50% {
+			-webkit-transform: translatex(0px) rotate(0deg);
+			transform: translatex(0px) rotate(0deg);
+		}
+		56% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+	}
+	/** 10s animation - 10% = 1s */
+	@-webkit-keyframes path_circle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-100px) rotate(-5deg);
+			transform: translateY(-100px) rotate(-5deg);
+		}
+		55% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		58% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-webkit-keyframes path_square {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(10deg);
+			transform: translateY(-155px) translatex(-15px) rotate(10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		57% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-webkit-keyframes path_triangle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-10deg);
+			transform: translateY(-172px) translatex(10px) rotate(-10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		58% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-moz-keyframes right_arm {
+		0% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+		10% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		15% {
+			-webkit-transform: rotate(20deg);
+			transform: rotate(20deg);
+		}
+		20% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		25% {
+			-webkit-transform: rotate(26deg);
+			transform: rotate(26deg);
+		}
+		30% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		35% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		40% {
+			-webkit-transform: rotate(9deg);
+			transform: rotate(9deg);
+		}
+		45% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		50% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		58% {
+			-webkit-transform: rotate(74deg);
+			transform: rotate(74deg);
+		}
+		62% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+	}
+	@-webkit-keyframes right_arm {
+		0% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+		10% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		15% {
+			-webkit-transform: rotate(20deg);
+			transform: rotate(20deg);
+		}
+		20% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		25% {
+			-webkit-transform: rotate(26deg);
+			transform: rotate(26deg);
+		}
+		30% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		35% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		40% {
+			-webkit-transform: rotate(9deg);
+			transform: rotate(9deg);
+		}
+		45% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		50% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		58% {
+			-webkit-transform: rotate(74deg);
+			transform: rotate(74deg);
+		}
+		62% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+	}
+	@-o-keyframes right_arm {
+		0% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+		10% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		15% {
+			-webkit-transform: rotate(20deg);
+			transform: rotate(20deg);
+		}
+		20% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		25% {
+			-webkit-transform: rotate(26deg);
+			transform: rotate(26deg);
+		}
+		30% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		35% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		40% {
+			-webkit-transform: rotate(9deg);
+			transform: rotate(9deg);
+		}
+		45% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		50% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		58% {
+			-webkit-transform: rotate(74deg);
+			transform: rotate(74deg);
+		}
+		62% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+	}
+	@keyframes right_arm {
+		0% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+		10% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		15% {
+			-webkit-transform: rotate(20deg);
+			transform: rotate(20deg);
+		}
+		20% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		25% {
+			-webkit-transform: rotate(26deg);
+			transform: rotate(26deg);
+		}
+		30% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		35% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		40% {
+			-webkit-transform: rotate(9deg);
+			transform: rotate(9deg);
+		}
+		45% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		50% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		58% {
+			-webkit-transform: rotate(74deg);
+			transform: rotate(74deg);
+		}
+		62% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+	}
+	@-moz-keyframes left_arm {
+		0% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+		10% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		15% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		20% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		25% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		30% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		35% {
+			-webkit-transform: rotate(-17deg);
+			transform: rotate(-17deg);
+		}
+		40% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		45% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		50% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		58% {
+			-webkit-transform: rotate(-74deg);
+			transform: rotate(-74deg);
+		}
+		62% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+	}
+	@-webkit-keyframes left_arm {
+		0% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+		10% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		15% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		20% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		25% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		30% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		35% {
+			-webkit-transform: rotate(-17deg);
+			transform: rotate(-17deg);
+		}
+		40% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		45% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		50% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		58% {
+			-webkit-transform: rotate(-74deg);
+			transform: rotate(-74deg);
+		}
+		62% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+	}
+	@-o-keyframes left_arm {
+		0% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+		10% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		15% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		20% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		25% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		30% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		35% {
+			-webkit-transform: rotate(-17deg);
+			transform: rotate(-17deg);
+		}
+		40% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		45% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		50% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		58% {
+			-webkit-transform: rotate(-74deg);
+			transform: rotate(-74deg);
+		}
+		62% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+	}
+	@keyframes left_arm {
+		0% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+		10% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		15% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		20% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		25% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		30% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		35% {
+			-webkit-transform: rotate(-17deg);
+			transform: rotate(-17deg);
+		}
+		40% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		45% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		50% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		58% {
+			-webkit-transform: rotate(-74deg);
+			transform: rotate(-74deg);
+		}
+		62% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+	}
+	@-moz-keyframes right_hand {
+		0% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		10% {
+			-webkit-transform: rotate(-20deg);
+			transform: rotate(-20deg);
+		}
+		15% {
+			-webkit-transform: rotate(-5deg);
+			transform: rotate(-5deg);
+		}
+		20% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		25% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		30% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		35% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		40% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		45% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		50% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		60% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+	}
+	@-webkit-keyframes right_hand {
+		0% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		10% {
+			-webkit-transform: rotate(-20deg);
+			transform: rotate(-20deg);
+		}
+		15% {
+			-webkit-transform: rotate(-5deg);
+			transform: rotate(-5deg);
+		}
+		20% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		25% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		30% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		35% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		40% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		45% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		50% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		60% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+	}
+	@-o-keyframes right_hand {
+		0% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		10% {
+			-webkit-transform: rotate(-20deg);
+			transform: rotate(-20deg);
+		}
+		15% {
+			-webkit-transform: rotate(-5deg);
+			transform: rotate(-5deg);
+		}
+		20% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		25% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		30% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		35% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		40% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		45% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		50% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		60% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+	}
+	@keyframes right_hand {
+		0% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		10% {
+			-webkit-transform: rotate(-20deg);
+			transform: rotate(-20deg);
+		}
+		15% {
+			-webkit-transform: rotate(-5deg);
+			transform: rotate(-5deg);
+		}
+		20% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		25% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		30% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		35% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		40% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		45% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		50% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		60% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+	}
+	@-moz-keyframes right_finger {
+		0% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+		10% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		50% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		60% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+	}
+	@-webkit-keyframes right_finger {
+		0% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+		10% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		50% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		60% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+	}
+	@-o-keyframes right_finger {
+		0% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+		10% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		50% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		60% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+	}
+	@keyframes right_finger {
+		0% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+		10% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		50% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		60% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+	}
+	@-moz-keyframes left_finger {
+		0% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+		10% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		15% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		20% {
+			-webkit-transform: scaleX(1) rotate(8deg);
+			transform: scaleX(1) rotate(8deg);
+		}
+		25% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		30% {
+			-webkit-transform: scaleX(1) rotate(7deg);
+			transform: scaleX(1) rotate(7deg);
+		}
+		35% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		40% {
+			-webkit-transform: scaleX(1) rotate(5deg);
+			transform: scaleX(1) rotate(5deg);
+		}
+		45% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		50% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		58% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+	}
+	@-webkit-keyframes left_finger {
+		0% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+		10% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		15% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		20% {
+			-webkit-transform: scaleX(1) rotate(8deg);
+			transform: scaleX(1) rotate(8deg);
+		}
+		25% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		30% {
+			-webkit-transform: scaleX(1) rotate(7deg);
+			transform: scaleX(1) rotate(7deg);
+		}
+		35% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		40% {
+			-webkit-transform: scaleX(1) rotate(5deg);
+			transform: scaleX(1) rotate(5deg);
+		}
+		45% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		50% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		58% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+	}
+	@-o-keyframes left_finger {
+		0% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+		10% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		15% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		20% {
+			-webkit-transform: scaleX(1) rotate(8deg);
+			transform: scaleX(1) rotate(8deg);
+		}
+		25% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		30% {
+			-webkit-transform: scaleX(1) rotate(7deg);
+			transform: scaleX(1) rotate(7deg);
+		}
+		35% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		40% {
+			-webkit-transform: scaleX(1) rotate(5deg);
+			transform: scaleX(1) rotate(5deg);
+		}
+		45% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		50% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		58% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+	}
+	@keyframes left_finger {
+		0% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+		10% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		15% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		20% {
+			-webkit-transform: scaleX(1) rotate(8deg);
+			transform: scaleX(1) rotate(8deg);
+		}
+		25% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		30% {
+			-webkit-transform: scaleX(1) rotate(7deg);
+			transform: scaleX(1) rotate(7deg);
+		}
+		35% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		40% {
+			-webkit-transform: scaleX(1) rotate(5deg);
+			transform: scaleX(1) rotate(5deg);
+		}
+		45% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		50% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		58% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+	}
+	@-moz-keyframes head {
+		0% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+		10% {
+			-webkit-transform: translatex(10px) rotate(7deg);
+			transform: translatex(10px) rotate(7deg);
+		}
+		50% {
+			-webkit-transform: translatex(0px) rotate(0deg);
+			transform: translatex(0px) rotate(0deg);
+		}
+		56% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+	}
+	@-webkit-keyframes head {
+		0% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+		10% {
+			-webkit-transform: translatex(10px) rotate(7deg);
+			transform: translatex(10px) rotate(7deg);
+		}
+		50% {
+			-webkit-transform: translatex(0px) rotate(0deg);
+			transform: translatex(0px) rotate(0deg);
+		}
+		56% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+	}
+	@-o-keyframes head {
+		0% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+		10% {
+			-webkit-transform: translatex(10px) rotate(7deg);
+			transform: translatex(10px) rotate(7deg);
+		}
+		50% {
+			-webkit-transform: translatex(0px) rotate(0deg);
+			transform: translatex(0px) rotate(0deg);
+		}
+		56% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+	}
+	@keyframes head {
+		0% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+		10% {
+			-webkit-transform: translatex(10px) rotate(7deg);
+			transform: translatex(10px) rotate(7deg);
+		}
+		50% {
+			-webkit-transform: translatex(0px) rotate(0deg);
+			transform: translatex(0px) rotate(0deg);
+		}
+		56% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+	}
+	@-moz-keyframes path_circle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-100px) rotate(-5deg);
+			transform: translateY(-100px) rotate(-5deg);
+		}
+		55% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		58% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-webkit-keyframes path_circle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-100px) rotate(-5deg);
+			transform: translateY(-100px) rotate(-5deg);
+		}
+		55% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		58% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-o-keyframes path_circle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-100px) rotate(-5deg);
+			transform: translateY(-100px) rotate(-5deg);
+		}
+		55% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		58% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@keyframes path_circle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-100px) rotate(-5deg);
+			transform: translateY(-100px) rotate(-5deg);
+		}
+		55% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		58% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-moz-keyframes path_square {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(10deg);
+			transform: translateY(-155px) translatex(-15px) rotate(10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		57% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-webkit-keyframes path_square {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(10deg);
+			transform: translateY(-155px) translatex(-15px) rotate(10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		57% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-o-keyframes path_square {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(10deg);
+			transform: translateY(-155px) translatex(-15px) rotate(10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		57% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@keyframes path_square {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(10deg);
+			transform: translateY(-155px) translatex(-15px) rotate(10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		57% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-moz-keyframes path_triangle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-10deg);
+			transform: translateY(-172px) translatex(10px) rotate(-10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		58% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-webkit-keyframes path_triangle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-10deg);
+			transform: translateY(-172px) translatex(10px) rotate(-10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		58% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-o-keyframes path_triangle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-10deg);
+			transform: translateY(-172px) translatex(10px) rotate(-10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		58% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@keyframes path_triangle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-10deg);
+			transform: translateY(-172px) translatex(10px) rotate(-10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		58% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+</style>
+
+<script>
+  document.onreadystatechange=function(){
+    // console.log(document.readyState);
+    if(document.readyState=="complete"){
+      $("#loading-box").fadeOut();
+    }
+  }
+</script>
+<link rel="stylesheet" href="/js/dist/APlayer.min.css">
+<div class="no-destroy" id="aplayer">
+     <meting-js
+        server="netease"
+        type="playlist"
+        id="7465212579"
+        fixed="true"
+        volume="0.4"
+        order="random"
+        preload="auto"
+    ></meting-js>
+</div>
+<script src="/js/dist/APlayer.min.js"></script>
+<script src="/js/dist/Meting.js"></script>
+
+<body class="max-width mx-auto px3 ltr" >
+  
+
+    <div class="content index py4" id="pjax-container">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Docker Compose
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name" id="post-author" style="cursor: pointer;">
+          <a href="/">Meow Mii </a>
+        </span>
+      </span>
+    
+      
+    <div class="postdate">
+      
+        <time datetime="2023-02-12T06:34:12.911Z" itemprop="datePublished">2023-02-12</time>
+        
+        (Updated: <time datetime="2023-02-12T06:47:20.451Z" itemprop="dateModified">2023-02-12</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Docker/">Docker</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div id="post_options">
+    <li><a class="icon" href="/"><i class="fa fa-paw" aria-hidden="true"></i></a></li>
+    <li><a data-pjax class="icon pjax" href="/search"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+    <li><a class="icon" href="#" onclick="$('#toc').toggle();return false;"><i class="fa fa-bars" aria-hidden="true"></i></a></li>
+    
+    <li><a class="icon" aria-label="Previous post" href="/p/f5f9fa9b.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+    
+    
+    <li><a class="icon" aria-label="Next post" href="/p/316feddf.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+    
+    <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+    <li><a class="icon" id="share_do" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+    <li><a class="icon" href="#" onclick="switchNightMode()"><i class="fas fa-lightbulb" aria-hidden="true"></i></a></li>
+</div>
+<div id="share" style="display: none">
+<ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/c0e3b7e9.html&text=Docker Compose"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Docker Compose&body=Check out this article: https://blog.yiochin.top/p/c0e3b7e9.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/c0e3b7e9.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/c0e3b7e9.html&title=Docker Compose"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/c0e3b7e9.html&is_video=false&description=Docker Compose"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=Docker Compose&body=Check out this article: https://blog.yiochin.top/p/c0e3b7e9.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/c0e3b7e9.html&title=Docker Compose"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/c0e3b7e9.html&title=Docker Compose"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/c0e3b7e9.html&title=Docker Compose"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/c0e3b7e9.html&title=Docker Compose"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/c0e3b7e9.html&name=Docker Compose&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/c0e3b7e9.html&t=Docker Compose"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
+
+</div>
+<div id="share" style="display: none">
+    <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/c0e3b7e9.html&text=Docker Compose"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Docker Compose&body=Check out this article: https://blog.yiochin.top/p/c0e3b7e9.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/c0e3b7e9.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/c0e3b7e9.html&title=Docker Compose"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/c0e3b7e9.html&is_video=false&description=Docker Compose"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=Docker Compose&body=Check out this article: https://blog.yiochin.top/p/c0e3b7e9.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/c0e3b7e9.html&title=Docker Compose"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/c0e3b7e9.html&title=Docker Compose"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/c0e3b7e9.html&title=Docker Compose"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/c0e3b7e9.html&title=Docker Compose"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/c0e3b7e9.html&name=Docker Compose&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/c0e3b7e9.html&t=Docker Compose"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
+
+</div>
+<div id="toc" style="display: none">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker-Compose"><span class="toc-number">1.</span> <span class="toc-text">Docker Compose</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-number">1.1.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-number">1.2.</span> <span class="toc-text">安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BADockerfile%E6%96%87%E4%BB%B6"><span class="toc-number">1.3.</span> <span class="toc-text">创建Dockerfile文件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA-docker-compose-yml"><span class="toc-number">1.4.</span> <span class="toc-text">创建 docker-compose.yml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8-Compose-%E5%91%BD%E4%BB%A4%E6%9E%84%E5%BB%BA%E5%92%8C%E8%BF%90%E8%A1%8C%E6%82%A8%E7%9A%84%E5%BA%94%E7%94%A8"><span class="toc-number">1.5.</span> <span class="toc-text">使用 Compose 命令构建和运行您的应用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E4%B8%80%E4%B8%8B%E7%BD%91%E7%BB%9C"><span class="toc-number">1.6.</span> <span class="toc-text">查看一下网络</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#YAML%E8%A7%84%E5%88%99"><span class="toc-number">2.</span> <span class="toc-text">YAML规则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E9%94%AE%E9%83%A8%E7%BD%B2WP%E5%8D%9A%E5%AE%A2"><span class="toc-number">2.1.</span> <span class="toc-text">一键部署WP博客</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E4%BB%8B-1"><span class="toc-number">2.2.</span> <span class="toc-text">简介</span></a></li><li class="toc-item toc-level-3"><a class="toc-link"><span class="toc-number">2.3.</span> <span class="toc-text"></span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">3.</span> <span class="toc-text">使用</span></a></li></ol>
+</div>
+
+
+<style>
+#post_options{
+    border-radius: 10px;
+    background-color: #ffffff33;
+    position: fixed;
+    right: 1%;
+    bottom: 10%;
+    z-index: 99;
+}
+#post_options li{
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
+    /* outline-style: solid;
+    outline-color: grey; */
+        /* display: inline; */
+}
+
+#share{
+    position: fixed;
+    right: 5%;
+    bottom: 3%;
+    z-index: 1;
+    text-align: center;
+}
+@media screen and ( max-width: 500px) {
+    #share{
+        right: 10%;
+    }
+    #toc{
+        margin-right: 20px;
+        padding-left: 0px;
+    }
+
+}
+
+@media screen and (min-width: 900px){
+    .post #toc{
+        right: 4.5%;
+    }
+    .post #share{
+        right: 4.5%;
+    }
+}
+
+#share li{
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
+}
+#toc{
+    border-radius: 6px;
+    font-weight: 700;
+    background-color: rgba(80, 90, 100, 0.4);
+    font-size: 12px;
+    position: fixed;
+    right: 5%;
+    bottom: 25%;
+    z-index: 1;
+    margin-bottom: 18px;
+}
+#toc li{
+    list-style: none;
+}
+
+#toc .toc{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+#toc .toc .toc-child{
+    padding-left: 12px;
+}
+
+</style>
+<script>
+
+</script>
+  <div class="content" itemprop="articleBody">
+    <h2 id="Docker-Compose"><a href="#Docker-Compose" class="headerlink" title="Docker Compose"></a>Docker Compose</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://docs.docker.com/get-started/08_using_compose/">https://docs.docker.com/get-started/08_using_compose/</a></p>
+</blockquote>
+<p>是一个定义和运行多个容器的工具，使用YAML配置文件。Compose是Docker官方的开源项目，需要我们自己安装使用。服务、应用是一个个容器，Compose将关联容器组成一个Project来运行。</p>
+<p>Docker-Compose将所管理的容器分为三层：</p>
+<ul>
+<li>工程（project）：由一组关联的应用容器组成的一个完成业务单元，在docker-compose.yml中定义。即是 Compose的一个配置文件可以解析为一个项目，Compose通过分析指定配置文件，得出配置文件所需完成的所 有容器管理与部署操作。</li>
+<li>服务（service）：一个应用的容器，实际上可以包括若干运行相同镜像的容器实例。每个服务都有自己的名 字、使用的镜像、挂载的数据卷、所属的网络、依赖哪些其他服务等等，即以容器为粒度，用户需要Compose 所完成的任务。</li>
+<li>容器(container)</li>
+</ul>
+<p>一个工程当中可包含多个服务，每个服务中定义了容器运行的镜像，参数，依赖。一个服务当中可包括多个容器实例。</p>
+<p>Compose 使用的三个步骤：</p>
+<ul>
+<li>使用 Dockerfile 定义应用程序的环境。</li>
+<li>使用 docker-compose.yml 定义构成应用程序的服务，这样它们可以在隔离环境中一起运行。</li>
+<li>最后，执行 docker-compose up 命令来启动并运行整个应用程序。</li>
+</ul>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><ol>
+<li><p>下载</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -L <span class="string">&quot;https://get.daocloud.io/docker/compose/releases/download/v2.6.1/docker-compose-<span class="subst">$(uname -s)</span>-<span class="subst">$(uname -m)</span>&quot;</span>  -o /usr/local/bin/docker-compose</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>授权</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@io bin]<span class="comment"># chmod +x docker-compose </span></span><br><span class="line">[root@io bin]<span class="comment"># docker-compose version</span></span><br><span class="line">Docker Compose version v2.6.1</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>体验</p>
+<ul>
+<li><p><strong>准备</strong></p>
+<p>创建一个测试目录：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ <span class="built_in">mkdir</span> composetest</span><br><span class="line">$ <span class="built_in">cd</span> composetest</span><br></pre></td></tr></table></figure>
+
+<p>在测试目录中创建一个名为 app.py 的文件，并复制粘贴以下内容：</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> redis</span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"><span class="comment">#host 域名</span></span><br><span class="line">cache = redis.Redis(host=<span class="string">&#x27;redis&#x27;</span>, port=<span class="number">6379</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">get_hit_count</span>():</span><br><span class="line">    retries = <span class="number">5</span></span><br><span class="line">    <span class="keyword">while</span> <span class="literal">True</span>:</span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> cache.incr(<span class="string">&#x27;hits&#x27;</span>)</span><br><span class="line">        <span class="keyword">except</span> redis.exceptions.ConnectionError <span class="keyword">as</span> exc:</span><br><span class="line">            <span class="keyword">if</span> retries == <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">raise</span> exc</span><br><span class="line">            retries -= <span class="number">1</span></span><br><span class="line">            time.sleep(<span class="number">0.5</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/&#x27;</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">hello</span>():</span><br><span class="line">    count = get_hit_count()</span><br><span class="line">    <span class="keyword">return</span> <span class="string">&#x27;Hello World! I have been seen &#123;&#125; times.\n&#x27;</span>.<span class="built_in">format</span>(count)</span><br></pre></td></tr></table></figure>
+
+
+
+<p>在此示例中，redis 是应用程序网络上的 redis 容器的主机名，该主机使用的端口为 6379。</p>
+<p>在 composetest 目录中创建另一个名为 <strong>requirements.txt</strong> 的文件，内容如下：</p>
+<figure class="highlight txt"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">flask</span><br><span class="line">redis</span><br></pre></td></tr></table></figure>
+</li>
+<li><h3 id="创建Dockerfile文件"><a href="#创建Dockerfile文件" class="headerlink" title="创建Dockerfile文件"></a><strong>创建Dockerfile文件</strong></h3><p>在 composetest 目录中，创建一个名为 <strong>Dockerfile</strong> 的文件，内容如下：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">FROM</span> python:<span class="number">3.7</span>-alpine</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> /code</span></span><br><span class="line"><span class="keyword">ENV</span> FLASK_APP app.py</span><br><span class="line"><span class="keyword">ENV</span> FLASK_RUN_HOST <span class="number">0.0</span>.<span class="number">0.0</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> apk add --no-cache gcc musl-dev linux-headers</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> requirements.txt requirements.txt</span></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> pip install -r requirements.txt</span></span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> . .</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> [<span class="string">&quot;flask&quot;</span>, <span class="string">&quot;run&quot;</span>]</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p><strong>Dockerfile 内容解释：</strong></p>
+<ul>
+<li><p><strong>FROM python:3.7-alpine</strong>: 从 Python 3.7 映像开始构建镜像。</p>
+</li>
+<li><p><strong>WORKDIR &#x2F;code</strong>: 将工作目录设置为 &#x2F;code。</p>
+</li>
+<li><pre><code>ENV FLASK_APP app.py
+ENV FLASK_RUN_HOST 0.0.0.0
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  设置 flask 命令使用的环境变量。</span><br><span class="line"></span><br><span class="line">- **RUN apk add --no-cache gcc musl-dev linux-headers**: 安装 gcc，以便诸如 MarkupSafe 和 SQLAlchemy 之类的 Python 包可以编译加速。</span><br><span class="line"></span><br><span class="line">- ```</span><br><span class="line">  COPY requirements.txt requirements.txt</span><br><span class="line">  RUN pip install -r requirements.txt</span><br></pre></td></tr></table></figure>
+
+复制 requirements.txt 并安装 Python 依赖项。
+</code></pre>
+</li>
+<li><p><strong>COPY . .</strong>: 将 . 项目中的当前目录复制到 . 镜像中的工作目录。</p>
+</li>
+<li><p><strong>CMD [“flask”, “run”]</strong>: 容器提供默认的执行命令为：flask run。</p>
+</li>
+</ul>
+</blockquote>
+</li>
+<li><h3 id="创建-docker-compose-yml"><a href="#创建-docker-compose-yml" class="headerlink" title="创建 docker-compose.yml"></a>创建 docker-compose.yml</h3><figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># yaml 配置</span></span><br><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">web:</span></span><br><span class="line">    <span class="attr">build:</span> <span class="string">.</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">     <span class="bullet">-</span> <span class="string">&quot;5000:5000&quot;</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">&quot;redis:alpine&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>该 Compose 文件定义了两个服务：web 和 redis。</p>
+<ul>
+<li><strong>web</strong>：该 web 服务使用从 Dockerfile 当前目录中构建的镜像。然后，它将容器和主机绑定到暴露的端口 5000。此示例服务使用 Flask Web 服务器的默认端口 5000 。</li>
+<li><strong>redis</strong>：该 redis 服务使用 Docker Hub 的公共 Redis 映像。</li>
+</ul>
+</li>
+<li><h3 id="使用-Compose-命令构建和运行您的应用"><a href="#使用-Compose-命令构建和运行您的应用" class="headerlink" title="使用 Compose 命令构建和运行您的应用"></a>使用 Compose 命令构建和运行您的应用</h3><p>在测试目录中，执行以下命令来启动应用程序：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up</span><br></pre></td></tr></table></figure>
+
+<p>如果你想在后台执行该服务可以加上 <strong>-d</strong> 参数：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<p>查看结果</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[root@io yio]<span class="comment"># curl localhost:5000</span></span><br><span class="line">Hello World! I have been seen 13 <span class="built_in">times</span>.</span><br></pre></td></tr></table></figure>
+
+<p>关闭服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker compose down</span><br></pre></td></tr></table></figure>
+</li>
+<li><h3 id="查看一下网络"><a href="#查看一下网络" class="headerlink" title="查看一下网络"></a>查看一下网络</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker network inspect composetest_default</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090103966.png" alt="image-20220719212835052"></p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="YAML规则"><a href="#YAML规则" class="headerlink" title="YAML规则"></a>YAML规则</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.runoob.com/docker/docker-compose.html">菜鸟教程yyds</a></p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 3层</span></span><br><span class="line"></span><br><span class="line"><span class="attr">version:</span> <span class="string">&#x27;&#x27;</span> <span class="comment">#版本</span></span><br><span class="line"><span class="attr">service:</span> <span class="comment">#服务</span></span><br><span class="line">	<span class="attr">service_name1:</span> <span class="comment">#服务名 </span></span><br><span class="line">	</span><br><span class="line">		<span class="attr">build:</span> <span class="comment">#指定为构建镜像上下文路径：例如 webapp 服务，指定为从上下文                #路径 ./dir/Dockerfile 所构建的镜像</span></span><br><span class="line">			   <span class="comment">#或者，作为具有在上下文指定的路径context的对象，以及可选的                #Dockerfile ；添加构建参数，这是只能在构建过程中访问的环境                #变量args；labels：设置构建镜像的标签</span></span><br><span class="line">			   <span class="comment">#target：多层构建，可以指定构建哪一层</span></span><br><span class="line">	    <span class="attr">images:</span> <span class="comment">#镜像</span></span><br><span class="line">	    <span class="attr">depends on:</span></span><br><span class="line">	    	<span class="bullet">-</span> <span class="string">service_name2</span> <span class="comment"># 先启动</span></span><br><span class="line">	    	<span class="bullet">-</span> <span class="string">service_name3</span></span><br><span class="line">	    <span class="attr">volumes:</span>  <span class="comment">#挂载</span></span><br><span class="line">	    <span class="attr">network:</span>  <span class="comment">#网络</span></span><br><span class="line">	    <span class="attr">configs:</span></span><br><span class="line">	    <span class="attr">deploy:</span>   <span class="comment">#部署</span></span><br><span class="line">	    	<span class="attr">replicas:</span> <span class="number">6</span>  <span class="comment">#副本</span></span><br><span class="line">	    	<span class="string">·····</span></span><br><span class="line">	    <span class="attr">environment:</span></span><br><span class="line">	    	<span class="attr">MYSQL_HOST:</span> <span class="string">mysql</span></span><br><span class="line">       		<span class="attr">MYSQL_USER:</span> <span class="string">root</span></span><br><span class="line">       		<span class="attr">MYSQL_PASSWORD:</span> <span class="string">secret</span></span><br><span class="line">       		<span class="attr">MYSQL_DB:</span> <span class="string">todos</span></span><br><span class="line">	    <span class="attr">expose:</span></span><br><span class="line">	    	<span class="bullet">-</span> <span class="string">&#x27;8080&#x27;</span></span><br><span class="line">	    	<span class="bullet">-</span> <span class="string">&#x27;3000&#x27;</span></span><br><span class="line">	    	</span><br><span class="line">	 <span class="attr">service_name2:</span> <span class="comment">#服务名    	</span></span><br><span class="line">     	</span><br><span class="line">     <span class="attr">service_name3:</span> <span class="comment">#服务名 </span></span><br><span class="line">     </span><br><span class="line">     <span class="attr">service_name4:</span> <span class="comment">#服务名</span></span><br><span class="line">     </span><br><span class="line"><span class="attr">volumes:</span> <span class="comment">#项目挂载</span></span><br></pre></td></tr></table></figure>
+
+<p>多看多想，看官网，开源项目</p>
+<h3 id="一键部署WP博客"><a href="#一键部署WP博客" class="headerlink" title="一键部署WP博客"></a>一键部署WP博客</h3><blockquote>
+<p><a target="_blank" rel="noopener" href="https://docs.docker.com/samples/wordpress/">https://docs.docker.com/samples/wordpress/</a></p>
+</blockquote>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">db:</span></span><br><span class="line">    <span class="comment"># We use a mariadb image which supports both amd64 &amp; arm64 architecture</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mariadb:latest</span></span><br><span class="line">    <span class="comment"># If you really want to use MySQL, uncomment the following line</span></span><br><span class="line">    <span class="comment">#image: mysql:8.0.27</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">&#x27;--default-authentication-plugin=mysql_native_password&#x27;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db_data:/var/lib/mysql</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_ROOT_PASSWORD=123456</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_DATABASE=wordpress</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_USER=wordpress</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">MYSQL_PASSWORD=123</span></span><br><span class="line">    <span class="attr">expose:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">3306</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">33060</span></span><br><span class="line">  <span class="attr">wordpress:</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">db</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">wordpress:latest</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">80</span><span class="string">:80</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">WORDPRESS_DB_HOST=db</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">WORDPRESS_DB_USER=wordpress</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">WORDPRESS_DB_PASSWORD=123</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">WORDPRESS_DB_NAME=wordpress</span></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">db_data:</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p>##Docker Swarm</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/swarm/">Docker Swarm</a></p>
+</blockquote>
+<h3 id="简介-1"><a href="#简介-1" class="headerlink" title="简介"></a>简介</h3><h3 id=""><a href="#" class="headerlink" title=""></a><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090103967.png" alt="image-20220719225931176"></h3><p>如下图所示，swarm 集群由管理节点（manager）和工作节点（work node）构成，<code>A given Docker host can be a manager, a worker, or perform both roles</code>，如果一个Worker挂掉了，这个Worker中的task就会被交给其他的Worker执行，每个task都不是以一个独立的容器运行的。</p>
+<ul>
+<li><strong>swarm mananger</strong>：负责整个集群的管理工作包括集群配置、服务管理等所有跟集群有关的工作，manage node也可以执行服务，但是可以自己配置它只运行管理工作。</li>
+<li><strong>worker node</strong>：即图中的 available node，主要负责运行相应的服务来执行任务（task）。</li>
+</ul>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090103968.png" alt="img"></p>
+<p>一些优点：Swarm支持我们自定义服务的配置，并且自动生效。集群中的node仍然可以运行一个独立的容器，Swarm中的容器<strong>只</strong>会被Swarm Manager管理控制，这是与独立的容器之间的区别。</p>
+<p>###Raft一致性协议</p>
+<blockquote>
+<p>Raft协议是一种基于日志复制的一致性算法，通过选举领袖的方式来实现的。</p>
+<p><a href="https://link.zhihu.com/?target=https://web.stanford.edu/~ouster/cgi-bin/papers/raft-atc14">论文</a></p>
+</blockquote>
+<p>基本概念：</p>
+<ul>
+<li><p>复制状态机(Replicated state machines)</p>
+<p>将集群中的每个服务器看做一个状态机, 它们接收外部的指令, 进行状态的改变。只要初始状态和接收到的指令是确定的, 那么它任意时刻的状态也是确定的, 这样以来, 所谓保持分布式一致性即是保证集群中所有状态机的状态一致性</p>
+</li>
+<li><p>领导人(leader)、跟随者(follower) 和 候选人(candidate)</p>
+<p>raft 将所有服务器结点划分为 3 个互不相交的子集, 任何一个结点都隶属于某一个集合, 其中地位最高的结点称为领导人(leader), 它负责接收来自客户端的调用, 组织日志复制给其它结点, 统筹管理整个计算机集群, raft 保证集群中在任意时刻至多有一个领导人, 跟随者(follower)接收来自领导人(leader)的复制日志, 按照领导人(leader)的要求进行相应的动作。领导人(leader)持续地向集群中的所有其它结点发送心跳包, 以此宣告“你们的皇帝还活着”。一旦跟随者(follower)在给定的时间内没有收到来自领导人(follower)的心跳包, 它便认为领导人出了故障, 于是转变自己的身份为候选人(candidate)进行领导人的竞选。</p>
+</li>
+<li><p>任期(term)</p>
+<p>raft 将系统时间划分为一个个逻辑段, 每个逻辑段的时间长度是不一致的, 可以是任意长度, <strong>每一个逻辑段称为一个任期(term)</strong>, raft 对每一个任期都设置一个整型编号, 称为任期号（类似皇帝的年号或者说最后的庙号）, 每一个任期可以进一步划分为两个子段, 其中第一个子段是选举期, 第二个子段是任职期, 选举期将竞选产生集群的领导人, 若领导人选举成功, 则进入了任职期, 在任职期内只要领导人持续保持健康状态(即持续不间断地向其他跟随者发送心跳包), 则这个时期可以无限期地持续, 当然在 raft 中选举不一定都是成功的, 可能存在某个 term 中的选举期没有任何候选人胜出, 这样 raft 会进行下一个 term, 重新进行选举, 直到有新的领导人胜出, 从而进入任职期,  raft 采用了特别的机制来尽可能地避免一个 term 中没有任何候选人竞选成功的情形出现。</p>
+</li>
+<li><p>日志(log)与日志复制(log replication)</p>
+<p>raft 将集群中的所有服务器看做若干个状态机, 状态机接收指令进行状态的变更, <strong>在 raft 协议中, 指令是以日志的形式的传递的</strong>, 虽然集群中有N个结点, 但只有一个结点(领导人)接收客户端的请求, 其它所有结点接收来自领导人的复制日志(Replicated log), 进行解析、和执行, 从而进行状态的变更, 所有服务器结点按序执行相同的日志(指令), 从而保持状态一致性。（Hadoop的集群）</p>
+</li>
+<li><p>日志提交(commit)</p>
+<p>领导人在接收到客户端请求之后, 会产生一个相应的日志项(log entry), 日志项中包含了指令, 领导人不会立即执行这个指令, 它首先会进行日志项复制, 当日志项被成功地复制到集群中的大多数结点（超多半数，一半以上不包括一半）后, 领导人会提交(commit)这个日志项, 并执行其中的指令(即将该日志应用(apply)到状态机中)</p>
+</li>
+</ul>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><ol>
+<li><p>Docker Machine 创建Docker主机</p>
+<ul>
+<li><p>安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ sudo curl -L https://github.com/docker/machine/releases/download/v0.13.0/docker-machine-`<span class="built_in">uname</span> -s`-`<span class="built_in">uname</span> -m` &gt; /usr/local/bin/docker-machine</span><br><span class="line">$ sudo <span class="built_in">chmod</span> +x /usr/local/bin/docker-machine</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建四个主机</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">docker-machine create -d virtualbox manager1 &amp;&amp; </span><br><span class="line">docker-machine create -d virtualbox manager2 &amp;&amp; </span><br><span class="line">docker-machine create -d virtualbox worker1 &amp;&amp; </span><br><span class="line">docker-machine create -d virtualbox worker2</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看主机信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-machine <span class="built_in">ls</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>Docker Swarm 配置集群节点</p>
+<ul>
+<li><p>创建管理节点（初始化）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#在manager1主机上，创建一个 Docker Swarm 管理节点（初始化集群的时候，会自动把当前节点设置为管理节点）</span></span><br><span class="line">docker-machine ssh manager1 <span class="string">&quot;docker swarm init --advertise-addr 192.168.99.100&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建工作节点并加入到集群</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1</span></span><br><span class="line">docker-machine ssh worker1 <span class="string">&quot;docker swarm join --token SWMTKN-1-5uwpqibnvmho1png8zmhcw8274yanohee32jyrcjlait9djhsk-envtxo4dl6df2ar3qldcccfdg 192.168.99.100:2377&quot;</span></span><br><span class="line">This node joined a swarm as a worker.</span><br><span class="line"><span class="comment">#2</span></span><br><span class="line">docker-machine ssh worker2 <span class="string">&quot;docker swarm join --token SWMTKN-1-5uwpqibnvmho1png8zmhcw8274yanohee32jyrcjlait9djhsk-envtxo4dl6df2ar3qldcccfdg 192.168.99.100:2377&quot;</span></span><br><span class="line">This node joined a swarm as a worker.</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>另一个管理节点</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#先在manager1主机上，获取管理节点对应的token，然后再配置为管理节点</span></span><br><span class="line">[user]docker-machine ssh manager1 <span class="string">&quot;docker swarm join-token manager&quot;</span></span><br><span class="line">+To add a manager to this swarm, run the +following <span class="built_in">command</span>:</span><br><span class="line">+</span><br><span class="line">+    docker swarm <span class="built_in">join</span> --token SWMTKN-1-5uwpqibnvmho1png8zmhcw8274yanohee32jyrcjlait9djhsk-0koz1b98sco8r5cn3g61eahnu 192.168.99.100:2377</span><br><span class="line"></span><br><span class="line">[user] docker-machine ssh manager2 <span class="string">&quot;docker swarm join --token SWMTKN-1-5uwpqibnvmho1png8zmhcw8274yanohee32jyrcjlait9djhsk-0koz1b98sco8r5cn3g61eahnu 192.168.99.100:2377&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看集群信息</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#进入manager1内</span></span><br><span class="line">[user]docker node <span class="built_in">ls</span></span><br><span class="line">ID                            HOSTNAME            STATUS              AVAILABILITY        MANAGER STATUS</span><br><span class="line">n0ub7dpn90rxjq97dr0g8we0w *   manager1            Ready               Active              Leader</span><br><span class="line">t4cy67qp0bf2spgabsutwxnzt     manager2            Ready               Active              Reachable</span><br><span class="line">if0kmzp4ww3oy57y7cha7v36t     worker1             Ready               Active              </span><br><span class="line">jgg61cujzaeb3du5796fm0x2g     worker2             Ready               Active       </span><br><span class="line"><span class="comment">#Leader表示领导者，Reachable表示候选人，头一挂掉它就顶上去了，可以不指定，会选举。</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>Docker Service 部署单个集群服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># --replicas 4  表示四个副本 实际上这个副本可以更多 每个容器中可以多跑几个服务来分配</span></span><br><span class="line">docker service create --replicas 4 -p 8088:80 --name nginx 192.168.99.1:5000/nginx:latest</span><br><span class="line"></span><br><span class="line"><span class="comment">#此时四个docker任意一个ip都可以访问服务</span></span><br><span class="line"><span class="comment">#也可以手动设置实例个数</span></span><br><span class="line">docker service scale nginx=4</span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#查看服务</span></span><br><span class="line">$ docker service <span class="built_in">ls</span></span><br><span class="line">ID                  NAME                MODE                REPLICAS            IMAGE                            PORTS</span><br><span class="line">ap8h8srb8yh3        nginx               replicated          4/4                 192.168.99.1:5000/nginx:latest   *:8080-&gt;8080/tcp</span><br><span class="line"></span><br><span class="line">$ docker service ps nginx</span><br><span class="line">ID                  NAME                IMAGE                            NODE                DESIRED STATE       CURRENT STATE                ERROR               PORTS</span><br><span class="line">l2rdrwzs5zog        nginx.1             192.168.99.1:5000/nginx:latest   manager1            Running             Running about a minute ago                       </span><br><span class="line">vsfczzbwanx3        nginx.2             192.168.99.1:5000/nginx:latest   manager2            Running             Running about a minute ago                           </span><br><span class="line">qtbgw5h6dsi9        nginx.3             192.168.99.1:5000/nginx:latest   worker              Running             Running about a minute ago                           </span><br><span class="line">za2ejnvb3n6z        nginx.4             192.168.99.1:5000/nginx:latest   worker2             Running             Running about a minute ago</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>Docker Stack 部署多个集群服务</p>
+<blockquote>
+<p>以后可以使用k8s了</p>
+</blockquote>
+<p>使用<code>docker stack</code>进行多服务编排部署，使用的同样是<code>docker-compose.yml</code>配置文件</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&quot;3&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">nginx:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="number">192.168</span><span class="number">.99</span><span class="number">.1</span><span class="string">:5000/nginx:latest</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">8088</span><span class="string">:80</span></span><br><span class="line">    <span class="attr">deploy:</span></span><br><span class="line">      <span class="attr">mode:</span> <span class="string">replicated</span></span><br><span class="line">      <span class="attr">replicas:</span> <span class="number">4</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">visualizer:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="number">192.168</span><span class="number">.99</span><span class="number">.1</span><span class="string">:5000/dockersamples/visualizer:latest</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8080:8080&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;/var/run/docker.sock:/var/run/docker.sock&quot;</span></span><br><span class="line">    <span class="attr">deploy:</span></span><br><span class="line">      <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">      <span class="attr">placement:</span></span><br><span class="line">        <span class="attr">constraints:</span> [<span class="string">node.role</span> <span class="string">==</span> <span class="string">manager</span>]</span><br><span class="line"></span><br><span class="line">  <span class="attr">portainer:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="number">192.168</span><span class="number">.99</span><span class="number">.1</span><span class="string">:5000/portainer/portainer:latest</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;9000:9000&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;/var/run/docker.sock:/var/run/docker.sock&quot;</span></span><br><span class="line">    <span class="attr">deploy:</span></span><br><span class="line">      <span class="attr">replicas:</span> <span class="number">1</span></span><br><span class="line">      <span class="attr">placement:</span></span><br><span class="line">        <span class="attr">constraints:</span> [<span class="string">node.role</span> <span class="string">==</span> <span class="string">manager</span>]</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#部署</span></span><br><span class="line"> docker stack deploy -c docker-compose.yml deploy-demo</span><br><span class="line"><span class="comment">#查看</span></span><br><span class="line">docker stack <span class="built_in">ls</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#去浏览器看</span></span><br><span class="line">http://192.168.99.100:8080/</span><br><span class="line">http://192.168.99.100:9000/</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>常用命令</p>
+</li>
+</ol>
+<ul>
+<li><p><code>docker-machine</code></p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>docker-machine create</td>
+<td>创建一个 Docker 主机（常用<code>-d virtualbox</code>）</td>
+</tr>
+<tr>
+<td>docker-machine ls</td>
+<td>查看所有的 Docker 主机</td>
+</tr>
+<tr>
+<td>docker-machine ssh</td>
+<td>SSH 到主机上执行命令</td>
+</tr>
+<tr>
+<td>docker-machine env</td>
+<td>显示连接到某个主机需要的环境变量</td>
+</tr>
+<tr>
+<td>docker-machine inspect</td>
+<td>输出主机更多信息</td>
+</tr>
+<tr>
+<td>docker-machine kill</td>
+<td>停止某个主机</td>
+</tr>
+<tr>
+<td>docker-machine restart</td>
+<td>重启某台主机</td>
+</tr>
+<tr>
+<td>docker-machine rm</td>
+<td>删除某台主机</td>
+</tr>
+<tr>
+<td>docker-machine scp</td>
+<td>在主机之间复制文件</td>
+</tr>
+<tr>
+<td>docker-machine start</td>
+<td>启动一个主机</td>
+</tr>
+<tr>
+<td>docker-machine status</td>
+<td>查看主机状态</td>
+</tr>
+<tr>
+<td>docker-machine stop</td>
+<td>停止一个主机</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><code>docker swarm</code></p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>docker swarm init</td>
+<td>初始化集群</td>
+</tr>
+<tr>
+<td>docker swarm join-token worker</td>
+<td>查看工作节点的 token</td>
+</tr>
+<tr>
+<td>docker swarm join-token manager</td>
+<td>查看管理节点的 token</td>
+</tr>
+<tr>
+<td>docker swarm join</td>
+<td>加入集群中</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><code>docker node</code></p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>docker node ls</td>
+<td>查看所有集群节点</td>
+</tr>
+<tr>
+<td>docker node rm</td>
+<td>删除某个节点（<code>-f</code>强制删除）</td>
+</tr>
+<tr>
+<td>docker node inspect</td>
+<td>查看节点详情</td>
+</tr>
+<tr>
+<td>docker node demote</td>
+<td>节点降级，由管理节点降级为工作节点</td>
+</tr>
+<tr>
+<td>docker node promote</td>
+<td>节点升级，由工作节点升级为管理节点</td>
+</tr>
+<tr>
+<td>docker node update</td>
+<td>更新节点</td>
+</tr>
+<tr>
+<td>docker node ps</td>
+<td>查看节点中的 Task 任务</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><code>docker service</code></p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>docker service create</td>
+<td>部署服务</td>
+</tr>
+<tr>
+<td>docker service inspect</td>
+<td>查看服务详情</td>
+</tr>
+<tr>
+<td>docker service logs</td>
+<td>查看某个服务日志</td>
+</tr>
+<tr>
+<td>docker service ls</td>
+<td>查看所有服务详情</td>
+</tr>
+<tr>
+<td>docker service rm</td>
+<td>删除某个服务（<code>-f</code>强制删除）</td>
+</tr>
+<tr>
+<td>docker service scale</td>
+<td>设置某个服务个数</td>
+</tr>
+<tr>
+<td>docker service update</td>
+<td>更新某个服务</td>
+</tr>
+</tbody></table>
+</li>
+<li><p><code>docker stack</code></p>
+<table>
+<thead>
+<tr>
+<th>命令</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>docker stack deploy</td>
+<td>部署新的堆栈或更新现有堆栈</td>
+</tr>
+<tr>
+<td>docker stack ls</td>
+<td>列出现有堆栈</td>
+</tr>
+<tr>
+<td>docker stack ps</td>
+<td>列出堆栈中的任务</td>
+</tr>
+<tr>
+<td>docker stack rm</td>
+<td>删除堆栈</td>
+</tr>
+<tr>
+<td>docker stack services</td>
+<td>列出堆栈中的服务</td>
+</tr>
+<tr>
+<td>docker stack down</td>
+<td>移除某个堆栈（不会删除数据）</td>
+</tr>
+</tbody></table>
+</li>
+</ul>
+<blockquote>
+<p><code>docker secret</code> <code>docker config</code>·····</p>
+</blockquote>
+
+  </div>
+
+</article>
+
+
+<div id="copyright" class="post-copyright-information">
+    <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+    <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ 
+  <!-- 结束语 -->
+    <p id="easter-egg"></p>
+ 
+  <!-- post-copyright-information -->
+
+    <blockquote style="padding:0">
+        <p>作者：
+            Meow Mii
+        </p>
+        <p>本文链接：
+            
+                <a href="/p/c0e3b7e9.html" target="_blank" title="Docker Compose">
+                https://blog.yiochin.top/p/c0e3b7e9.html</a>
+            
+        </p>
+        <p>版权声明： 本博客所有文章除特别声明外,均采用
+             <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" 
+             target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">
+             CC BY-NC-ND 4.0
+            </a> 许可协议，转载请注明出处！
+        </p>
+    </blockquote>
+    <hr>
+</div>
+
+
+
+
+
+
+<div id="comment_twikoo">
+    <p style="font-size: 1.5em; font-weight:700;">📝 Comment</p>
+    <div id="gitalk-container"></div>
+</div>
+<style>
+    #gitalk-container a{
+        background-image: none;
+    }
+</style>
+
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        proxy: 'https://vercel.prohibitorum.top/github_access_token',
+        clientID: '37aa963463a974f338bd',
+        clientSecret: '2dc9e5ef7ed915ee6c7bee00b90f299aa489deff',
+        repo: 'fshen0.github.io',
+        owner: 'fshen0',
+        admin: 'fshen0',
+        id: md5(location.pathname),      
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: true
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+
+
+
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    Meow Mii
+
+  <span>&nbsp;</span>
+    <span> 
+      
+    </span>
+  </div>
+
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li><li><a href="/archives/">Writing</a></li><li><a href="/categories/">Category</a></li><li><a href="/about/">About</a></li><li><a href="/search/">Search</a></li>
+      </ul>
+    </nav>
+  </div>
+  
+</footer>
+<script type="text/javascript">
+    $("#footer").hover(function(){
+      $(".aplayer-lrc-contents").css("opacity","0");
+    })
+    $("#footer").mouseleave(function(){
+      $(".aplayer-lrc-contents").css("opacity","1");
+    })
+</script>
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+
+<script src="/js/main.js"></script>
+
+
+<!-- search -->
+
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+
+<!-- FancyBox -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax/pjax.js"></script>
+<script>
+  var pjax = new Pjax({
+    elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"])',   // 拦截正常带链接的 a 标签
+    selectors: ["#pjax-container","title","#search"]                         // 根据实际需要确认重载区域
+});
+</script>
+   
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>

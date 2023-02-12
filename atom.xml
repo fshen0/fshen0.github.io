@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Meow Mii</title>
-  <icon>https://www.tinkun.top/icon.png</icon>
+  <icon>https://blog.yiochin.top/icon.png</icon>
   
-  <link href="https://www.tinkun.top/atom.xml" rel="self"/>
+  <link href="https://blog.yiochin.top/atom.xml" rel="self"/>
   
-  <link href="https://www.tinkun.top/"/>
-  <updated>2022-09-05T03:00:04.049Z</updated>
-  <id>https://www.tinkun.top/</id>
+  <link href="https://blog.yiochin.top/"/>
+  <updated>2023-02-12T06:49:12.950Z</updated>
+  <id>https://blog.yiochin.top/</id>
   
   <author>
     <name>Meow Mii</name>
@@ -17,30 +17,363 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Hello World</title>
-    <link href="https://www.tinkun.top/p/4a17b156.html"/>
-    <id>https://www.tinkun.top/p/4a17b156.html</id>
-    <published>2022-09-07T12:38:46.017Z</published>
-    <updated>2022-09-05T03:00:04.049Z</updated>
+    <title>Redis主从复制</title>
+    <link href="https://blog.yiochin.top/p/c328eac5.html"/>
+    <id>https://blog.yiochin.top/p/c328eac5.html</id>
+    <published>2023-02-12T06:39:37.472Z</published>
+    <updated>2023-02-12T06:49:12.950Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot;&gt;documentation&lt;/a&gt;</summary>
+    <summary type="html">&lt;h2 id=&quot;Redis主从复制的概念&quot;&gt;&lt;a href=&quot;#Redis主从复制的概念&quot; class=&quot;headerlink&quot; title=&quot;Redis主从复制的概念&quot;&gt;&lt;/a&gt;Redis主从复制的概念&lt;/h2&gt;&lt;p&gt;&lt;img</summary>
         
       
     
     
+    
+    <category term="Redis" scheme="https://blog.yiochin.top/categories/Redis/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Redis配置</title>
+    <link href="https://blog.yiochin.top/p/815cc3a1.html"/>
+    <id>https://blog.yiochin.top/p/815cc3a1.html</id>
+    <published>2023-02-12T06:39:37.456Z</published>
+    <updated>2023-02-12T06:49:04.800Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;Redis-conf详解&quot;&gt;&lt;a href=&quot;#Redis-conf详解&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Redis" scheme="https://blog.yiochin.top/categories/Redis/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Redis发布订阅</title>
+    <link href="https://blog.yiochin.top/p/bf72778.html"/>
+    <id>https://blog.yiochin.top/p/bf72778.html</id>
+    <published>2023-02-12T06:39:37.456Z</published>
+    <updated>2023-02-12T06:49:08.939Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;Redis发布订阅&quot;&gt;&lt;a href=&quot;#Redis发布订阅&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Redis" scheme="https://blog.yiochin.top/categories/Redis/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Redis缓存穿透和雪崩</title>
+    <link href="https://blog.yiochin.top/p/e911dea2.html"/>
+    <id>https://blog.yiochin.top/p/e911dea2.html</id>
+    <published>2023-02-12T06:39:37.456Z</published>
+    <updated>2023-02-12T06:49:16.976Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;缓存穿透&quot;&gt;&lt;a href=&quot;#缓存穿透&quot; class=&quot;headerlink&quot; title=&quot;缓存穿透&quot;&gt;&lt;/a&gt;缓存穿透&lt;/h2&gt;&lt;h3 id=&quot;概念&quot;&gt;&lt;a href=&quot;#概念&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Redis" scheme="https://blog.yiochin.top/categories/Redis/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL学习笔记Ⅰ-存储引擎</title>
+    <link href="https://blog.yiochin.top/p/99fbc96.html"/>
+    <id>https://blog.yiochin.top/p/99fbc96.html</id>
+    <published>2023-02-12T06:37:10.392Z</published>
+    <updated>2023-02-12T06:47:52.988Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;存储引擎&quot;&gt;&lt;a href=&quot;#存储引擎&quot; class=&quot;headerlink&quot; title=&quot;存储引擎&quot;&gt;&lt;/a&gt;存储引擎&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;InnoDB&lt;/strong&gt;： MySQL</summary>
+        
+      
+    
+    
+    
+    <category term="MySQL" scheme="https://blog.yiochin.top/categories/MySQL/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL学习笔记Ⅲ-事务</title>
+    <link href="https://blog.yiochin.top/p/e791ddba.html"/>
+    <id>https://blog.yiochin.top/p/e791ddba.html</id>
+    <published>2023-02-12T06:37:10.376Z</published>
+    <updated>2023-02-12T06:48:03.376Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;事务&quot;&gt;&lt;a href=&quot;#事务&quot; class=&quot;headerlink&quot; title=&quot;事务&quot;&gt;&lt;/a&gt;事务&lt;/h2&gt;&lt;p&gt;wiki：事务是数据库管理系统（DBMS）执行过程中的一个逻辑单位，有一个有限的数据库操作序列构成。InnoDB支持事务。&lt;/p&gt;
+&lt;h2</summary>
+        
+      
+    
+    
+    
+    <category term="MySQL" scheme="https://blog.yiochin.top/categories/MySQL/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL学习笔记Ⅱ-索引</title>
+    <link href="https://blog.yiochin.top/p/7e988c00.html"/>
+    <id>https://blog.yiochin.top/p/7e988c00.html</id>
+    <published>2023-02-12T06:37:10.376Z</published>
+    <updated>2023-02-12T06:47:58.312Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;索引是什么&quot;&gt;&lt;a href=&quot;#索引是什么&quot; class=&quot;headerlink&quot; title=&quot;索引是什么&quot;&gt;&lt;/a&gt;索引是什么&lt;/h2&gt;&lt;h3 id=&quot;索引图解&quot;&gt;&lt;a href=&quot;#索引图解&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="MySQL" scheme="https://blog.yiochin.top/categories/MySQL/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL学习笔记Ⅴ-优化</title>
+    <link href="https://blog.yiochin.top/p/ef2788f.html"/>
+    <id>https://blog.yiochin.top/p/ef2788f.html</id>
+    <published>2023-02-12T06:37:10.376Z</published>
+    <updated>2023-02-12T06:48:20.446Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;优化思路&quot;&gt;&lt;a href=&quot;#优化思路&quot; class=&quot;headerlink&quot; title=&quot;优化思路&quot;&gt;&lt;/a&gt;优化思路&lt;/h2&gt;&lt;p&gt;&lt;img</summary>
+        
+      
+    
+    
+    
+    <category term="MySQL" scheme="https://blog.yiochin.top/categories/MySQL/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>MySQL学习笔记Ⅳ-锁</title>
+    <link href="https://blog.yiochin.top/p/9096ed2c.html"/>
+    <id>https://blog.yiochin.top/p/9096ed2c.html</id>
+    <published>2023-02-12T06:37:10.376Z</published>
+    <updated>2023-02-12T06:48:11.565Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;MySQL-InnoDB锁的基本类型&quot;&gt;&lt;a href=&quot;#MySQL-InnoDB锁的基本类型&quot; class=&quot;headerlink&quot; title=&quot;MySQL InnoDB锁的基本类型&quot;&gt;&lt;/a&gt;MySQL InnoDB锁的基本类型&lt;/h2&gt;&lt;h3</summary>
+        
+      
+    
+    
+    
+    <category term="MySQL" scheme="https://blog.yiochin.top/categories/MySQL/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Java邮件发送</title>
+    <link href="https://blog.yiochin.top/p/99746608.html"/>
+    <id>https://blog.yiochin.top/p/99746608.html</id>
+    <published>2023-02-12T06:35:25.657Z</published>
+    <updated>2023-02-12T06:44:29.013Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;传输协议&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;SMTP协议（Simple Mail Transfer</summary>
+        
+      
+    
+    
+    
+    <category term="Java" scheme="https://blog.yiochin.top/categories/Java/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Java文件传输和上传</title>
+    <link href="https://blog.yiochin.top/p/48dafabf.html"/>
+    <id>https://blog.yiochin.top/p/48dafabf.html</id>
+    <published>2023-02-12T06:35:25.657Z</published>
+    <updated>2023-02-12T06:44:29.013Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;blockquote&gt;
+&lt;p&gt;用到的包：common-io、common-fileload&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;文件上传调优（注意事项）：&quot;&gt;&lt;a href=&quot;#文件上传调优（注意事项）：&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Java" scheme="https://blog.yiochin.top/categories/Java/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Docker网络</title>
+    <link href="https://blog.yiochin.top/p/3849e8ae.html"/>
+    <id>https://blog.yiochin.top/p/3849e8ae.html</id>
+    <published>2023-02-12T06:34:12.927Z</published>
+    <updated>2023-02-12T06:47:27.067Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;基础知识&quot;&gt;&lt;a href=&quot;#基础知识&quot; class=&quot;headerlink&quot; title=&quot;基础知识&quot;&gt;&lt;/a&gt;基础知识&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Docker容器的本质是</summary>
+        
+      
+    
+    
+    
+    <category term="Docker" scheme="https://blog.yiochin.top/categories/Docker/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>DockerFile</title>
+    <link href="https://blog.yiochin.top/p/f5f9fa9b.html"/>
+    <id>https://blog.yiochin.top/p/f5f9fa9b.html</id>
+    <published>2023-02-12T06:34:12.911Z</published>
+    <updated>2023-02-12T06:47:35.698Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;初识DockerFile&quot;&gt;&lt;a href=&quot;#初识DockerFile&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="Docker" scheme="https://blog.yiochin.top/categories/Docker/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Docker Compose</title>
+    <link href="https://blog.yiochin.top/p/c0e3b7e9.html"/>
+    <id>https://blog.yiochin.top/p/c0e3b7e9.html</id>
+    <published>2023-02-12T06:34:12.911Z</published>
+    <updated>2023-02-12T06:47:20.451Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;Docker-Compose&quot;&gt;&lt;a href=&quot;#Docker-Compose&quot; class=&quot;headerlink&quot; title=&quot;Docker Compose&quot;&gt;&lt;/a&gt;Docker Compose&lt;/h2&gt;&lt;h3 id=&quot;简介&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="Docker" scheme="https://blog.yiochin.top/categories/Docker/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Docker相关</title>
+    <link href="https://blog.yiochin.top/p/316feddf.html"/>
+    <id>https://blog.yiochin.top/p/316feddf.html</id>
+    <published>2023-02-12T06:34:12.911Z</published>
+    <updated>2023-02-12T06:48:44.066Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;将docker装入指定文件夹&quot;&gt;&lt;a href=&quot;#将docker装入指定文件夹&quot; class=&quot;headerlink&quot; title=&quot;将docker装入指定文件夹&quot;&gt;&lt;/a&gt;将docker装入指定文件夹&lt;/h2&gt;&lt;p&gt;修改配置文件&lt;/p&gt;
+&lt;figure</summary>
+        
+      
+    
+    
+    
+    <category term="Docker" scheme="https://blog.yiochin.top/categories/Docker/"/>
     
     
   </entry>
   
   <entry>
     <title>洛神赋</title>
-    <link href="https://www.tinkun.top/p/ba663a52.html"/>
-    <id>https://www.tinkun.top/p/ba663a52.html</id>
+    <link href="https://blog.yiochin.top/p/ba663a52.html"/>
+    <id>https://blog.yiochin.top/p/ba663a52.html</id>
     <published>2022-09-07T12:38:46.017Z</published>
     <updated>2022-09-05T02:58:38.608Z</updated>
     
@@ -56,10 +389,10 @@
     
     
     
-    <category term="古诗文" scheme="https://www.tinkun.top/categories/%E5%8F%A4%E8%AF%97%E6%96%87/"/>
+    <category term="古诗文" scheme="https://blog.yiochin.top/categories/%E5%8F%A4%E8%AF%97%E6%96%87/"/>
     
     
-    <category term="赋" scheme="https://www.tinkun.top/tags/%E8%B5%8B/"/>
+    <category term="赋" scheme="https://blog.yiochin.top/tags/%E8%B5%8B/"/>
     
   </entry>
   

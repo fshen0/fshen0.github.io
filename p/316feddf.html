@@ -1,0 +1,2428 @@
+<!DOCTYPE html>
+<html lang=en>
+
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <script type="text/javascript" src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.js"></script>
+    
+    <!-- 消除 pjax失效问题 -->
+    <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+    <script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+    
+
+    <meta name="description" content="将docker装入指定文件夹修改配置文件 123456vim &#x2F;etc&#x2F;docker&#x2F;daemon.json&amp;#123;	&quot;registry-mirrors&quot;: [&quot;http:&#x2F;&#x2F;hub-mirror.c.163.com&quot;],	&quot;graph&quot;:&quot;&#x2F;opt&#x2F;docker&quot; &#x2F;&#x2F;指定文件夹&amp;#125;  然后安装即可 使用">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Docker相关">
+<meta property="og:url" content="https://blog.yiochin.top/p/316feddf.html">
+<meta property="og:site_name" content="Meow Mii">
+<meta property="og:description" content="将docker装入指定文件夹修改配置文件 123456vim &#x2F;etc&#x2F;docker&#x2F;daemon.json&amp;#123;	&quot;registry-mirrors&quot;: [&quot;http:&#x2F;&#x2F;hub-mirror.c.163.com&quot;],	&quot;graph&quot;:&quot;&#x2F;opt&#x2F;docker&quot; &#x2F;&#x2F;指定文件夹&amp;#125;  然后安装即可 使用">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2023-02-12T06:34:12.911Z">
+<meta property="article:modified_time" content="2023-02-12T06:48:44.066Z">
+<meta property="article:author" content="Meow Mii">
+<meta name="twitter:card" content="summary">
+
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.png">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon.png" sizes="192x192">
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/1c0ccb80f18de6871d3fd37b97cd3594?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Docker相关</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.2.0"><link rel="alternate" href="/atom.xml" title="Meow Mii" type="application/atom+xml">
+</head>
+
+<!-- loading  -->
+<div id="loading-box">
+    <div class="loading-left-bg"></div>
+    <div class="loading-right-bg"></div>
+    <div class="wizard-scene">
+      <div class="wizard-objects">
+        <div class="wizard-square"></div>
+        <div class="wizard-circle"></div>
+        <div class="wizard-triangle"></div>
+      </div>
+      <div class="wizard">
+        <div class="wizard-body"></div>
+        <div class="wizard-right-arm">
+          <div class="wizard-right-hand"></div>
+        </div>
+        <div class="wizard-left-arm">
+          <div class="wizard-left-hand"></div>
+        </div>
+        <div class="wizard-head">
+          <div class="wizard-beard"></div>
+          <div class="wizard-face">
+            <div class="wizard-adds"></div>
+          </div>
+          <div class="wizard-hat">
+            <div class="wizard-hat-of-the-hat"></div>
+            <div class="wizard-four-point-star --first"></div>
+            <div class="wizard-four-point-star --second"></div>
+            <div class="wizard-four-point-star --third"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+  <!-- 
+<link rel="stylesheet" href="/css/style.css">
+ -->
+<style>
+    #loading-box  {
+	 position: fixed;
+	 left: 0;
+	 z-index: 1000;
+	 width: 100%;
+	 /* height: 100%; */
+	 margin: 0;
+	 padding-left: -2em;
+	 background: black;
+	}
+	#loading-box .loading-left-bg {
+		left: 0;
+	}
+	#loading-box .loading-right-bg {
+		right: 0;
+	}
+	#loading-box.loaded {
+		z-index: -1000;
+	}
+	#loading-box.loaded .loading-left-bg {
+		transition: all 1s;
+		transform: translate(-100%, 0);
+	}
+	#loading-box.loaded .loading-right-bg {
+		transition: all 1s;
+		transform: translate(100%, 0);
+	}
+	#loading-box {
+		position: fixed;
+		z-index: 1000;
+		display: -webkit-box;
+		display: flex;
+		-webkit-box-align: center;
+		align-items: center;
+		-webkit-box-pack: center;
+		justify-content: center;
+		-webkit-box-orient: vertical;
+		-webkit-box-direction: normal;
+		flex-direction: column;
+		flex-wrap: wrap;
+		width: 100vw;
+		height: 100vh;
+		overflow: hidden;
+	}
+	#loading-box.loaded .wizard-scene {
+		display: none;
+	}
+	.wizard-scene {
+		position: fixed;
+		z-index: 1001;
+		display: -webkit-box;
+		display: flex;
+	}
+	.wizard {
+		position: relative;
+		width: 190px;
+		height: 240px;
+	}
+	.wizard-body {
+		position: absolute;
+		bottom: 0;
+		left: 68px;
+		height: 100px;
+		width: 60px;
+		background: #3f64ce;
+	}
+	.wizard-body::after {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		left: 20px;
+		height: 100px;
+		width: 60px;
+		background: #3f64ce;
+		-webkit-transform: skewX(14deg);
+		transform: skewX(14deg);
+	}
+	.wizard-right-arm {
+		position: absolute;
+		bottom: 74px;
+		left: 110px;
+		height: 44px;
+		width: 90px;
+		background: #3f64ce;
+		border-radius: 22px;
+		-webkit-transform-origin: 16px 22px;
+		transform-origin: 16px 22px;
+		-webkit-transform: rotate(70deg);
+		transform: rotate(70deg);
+		-webkit-animation: right_arm 10s ease-in-out infinite;
+		animation: right_arm 10s ease-in-out infinite;
+	}
+	.wizard-right-arm .right-hand {
+		position: absolute;
+		right: 8px;
+		bottom: 8px;
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+		background: #f1c5b4;
+		-webkit-transform-origin: center center;
+		transform-origin: center center;
+		-webkit-transform: rotate(-40deg);
+		transform: rotate(-40deg);
+		-webkit-animation: right_hand 10s ease-in-out infinite;
+		animation: right_hand 10s ease-in-out infinite;
+	}
+	.wizard-right-arm .wizard-right-hand::after {
+		content: "";
+		position: absolute;
+		right: 0px;
+		top: -8px;
+		width: 15px;
+		height: 30px;
+		border-radius: 10px;
+		background: #f1c5b4;
+		-webkit-transform: translateY(16px);
+		transform: translateY(16px);
+		-webkit-animation: right_finger 10s ease-in-out infinite;
+		animation: right_finger 10s ease-in-out infinite;
+	}
+	.wizard-left-arm {
+		position: absolute;
+		bottom: 74px;
+		left: 26px;
+		height: 44px;
+		width: 70px;
+		background: #3f64ce;
+		border-bottom-left-radius: 8px;
+		-webkit-transform-origin: 60px 26px;
+		transform-origin: 60px 26px;
+		-webkit-transform: rotate(-70deg);
+		transform: rotate(-70deg);
+		-webkit-animation: left_arm 10s ease-in-out infinite;
+		animation: left_arm 10s ease-in-out infinite;
+	}
+	.wizard-left-arm .wizard-left-hand {
+		position: absolute;
+		left: -18px;
+		top: 0;
+		width: 18px;
+		height: 30px;
+		border-top-left-radius: 35px;
+		border-bottom-left-radius: 35px;
+		background: #f1c5b4;
+	}
+	.wizard-left-arm .wizard-left-hand::after {
+		content: "";
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 30px;
+		height: 15px;
+		border-radius: 20px;
+		background: #f1c5b4;
+		-webkit-transform-origin: right bottom;
+		transform-origin: right bottom;
+		-webkit-transform: scaleX(0);
+		transform: scaleX(0);
+		-webkit-animation: left_finger 10s ease-in-out infinite;
+		animation: left_finger 10s ease-in-out infinite;
+	}
+	.wizard-head {
+		position: absolute;
+		top: 0;
+		left: 14px;
+		width: 160px;
+		height: 210px;
+		-webkit-transform-origin: center center;
+		transform-origin: center center;
+		-webkit-transform: rotate(-3deg);
+		transform: rotate(-3deg);
+		-webkit-animation: head 10s ease-in-out infinite;
+		animation: head 10s ease-in-out infinite;
+	}
+	.wizard-head .wizard-beard {
+		position: absolute;
+		bottom: 0;
+		left: 38px;
+		height: 106px;
+		width: 80px;
+		border-bottom-right-radius: 55%;
+		background: #fff;
+	}
+	.wizard-head .wizard-beard::after {
+		content: "";
+		position: absolute;
+		top: 16px;
+		left: -10px;
+		width: 40px;
+		height: 20px;
+		border-radius: 20px;
+		background: #fff;
+	}
+	.wizard-head .wizard-face {
+		position: absolute;
+		bottom: 76px;
+		left: 38px;
+		height: 30px;
+		width: 60px;
+		background: #f1c5b4;
+	}
+	.wizard-head .wizard-face::before {
+		content: "";
+		position: absolute;
+		top: 0px;
+		left: 40px;
+		width: 20px;
+		height: 40px;
+		border-bottom-right-radius: 20px;
+		border-bottom-left-radius: 20px;
+		background: #f1c5b4;
+	}
+	.wizard-head .wizard-face::after {
+		content: "";
+		position: absolute;
+		top: 16px;
+		left: -10px;
+		width: 50px;
+		height: 20px;
+		border-radius: 20px;
+		border-bottom-right-radius: 0px;
+		background: #fff;
+	}
+	.wizard-head .wizard-face .wizard-adds {
+		position: absolute;
+		top: 0px;
+		left: -10px;
+		width: 40px;
+		height: 20px;
+		border-radius: 20px;
+		background: #f1c5b4;
+	}
+	.wizard-head .wizard-face .wizard-adds::after {
+		content: "";
+		position: absolute;
+		top: 5px;
+		left: 80px;
+		width: 15px;
+		height: 20px;
+		border-bottom-right-radius: 20px;
+		border-top-right-radius: 20px;
+		background: #f1c5b4;
+	}
+	.wizard-head .wizard-hat {
+		position: absolute;
+		bottom: 106px;
+		left: 0;
+		width: 160px;
+		height: 20px;
+		border-radius: 20px;
+		background: #3f64ce;
+	}
+	.wizard-head .wizard-hat::before {
+		content: "";
+		position: absolute;
+		top: -70px;
+		left: 50%;
+		-webkit-transform: translatex(-50%);
+		transform: translatex(-50%);
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 0 34px 70px 50px;
+		border-color: transparent transparent #3f64ce transparent;
+	}
+	.wizard-head .wizard-hat::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 160px;
+		height: 20px;
+		background: #3f64ce;
+		border-radius: 20px;
+	}
+	.wizard-head .wizard-hat .wizard-hat-of-the-hat {
+		position: absolute;
+		bottom: 78px;
+		left: 79px;
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 0 25px 25px 19px;
+		border-color: transparent transparent #3f64ce transparent;
+	}
+	.wizard-head .wizard-hat .wizard-hat-of-the-hat::after {
+		content: "";
+		position: absolute;
+		top: 6px;
+		left: -4px;
+		width: 35px;
+		height: 10px;
+		border-radius: 10px;
+		border-bottom-left-radius: 0px;
+		background: #3f64ce;
+		-webkit-transform: rotate(40deg);
+		transform: rotate(40deg);
+	}
+	.wizard-head .wizard-hat .wizard-four-point-star {
+		position: absolute;
+		width: 12px;
+		height: 12px;
+	}
+	.wizard-head .wizard-hat .wizard-four-point-star::after {
+		-webkit-transform: rotate(156.66deg) skew(45deg);
+		transform: rotate(156.66deg) skew(45deg);
+	}
+	.wizard-head .wizard-hat .wizard-four-point-star.--first {
+		bottom: 28px;
+		left: 46px;
+	}
+	.wizard-head .wizard-hat .wizard-four-point-star.--second {
+		bottom: 40px;
+		left: 80px;
+	}
+	.wizard-head .wizard-hat .wizard-four-point-star.--third {
+		bottom: 15px;
+		left: 108px;
+	}
+	.wizard-head .wizard-hat .wizard-four-point-star::after, .wizard-head .wizard-hat .wizard-four-point-star::before {
+		content: "";
+		position: absolute;
+		background: #fff;
+		display: block;
+		left: 0;
+		width: 141.4213%;
+		top: 0;
+		bottom: 0;
+		border-radius: 10%;
+		-webkit-transform: rotate(66.66deg) skewX(45deg);
+		transform: rotate(66.66deg) skewX(45deg);
+	}
+	.wizard-objects {
+		position: relative;
+		width: 200px;
+		height: 240px;
+	}
+	.wizard-square {
+		position: absolute;
+		bottom: -60px;
+		left: -5px;
+		width: 120px;
+		height: 120px;
+		border-radius: 50%;
+		-webkit-transform: rotate(-360deg);
+		transform: rotate(-360deg);
+		-webkit-animation: path_square 10s ease-in-out infinite;
+		animation: path_square 10s ease-in-out infinite;
+	}
+	.wizard-square::after {
+		content: "";
+		position: absolute;
+		top: 10px;
+		left: 0;
+		width: 50px;
+		height: 50px;
+		background: #9ab3f5;
+	}
+	.wizard-circle {
+		position: absolute;
+		bottom: 10px;
+		left: 0;
+		width: 100px;
+		height: 100px;
+		border-radius: 50%;
+		-webkit-transform: rotate(-360deg);
+		transform: rotate(-360deg);
+		-webkit-animation: path_circle 10s ease-in-out infinite;
+		animation: path_circle 10s ease-in-out infinite;
+	}
+	.wizard-circle::after {
+		content: "";
+		position: absolute;
+		bottom: -10px;
+		left: 25px;
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		background: #c56183;
+	}
+	.wizard-triangle {
+		position: absolute;
+		bottom: -62px;
+		left: -10px;
+		width: 110px;
+		height: 110px;
+		border-radius: 50%;
+		-webkit-transform: rotate(-360deg);
+		transform: rotate(-360deg);
+		-webkit-animation: path_triangle 10s ease-in-out infinite;
+		animation: path_triangle 10s ease-in-out infinite;
+	}
+	.wizard-triangle::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		right: -10px;
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 0 28px 48px 28px;
+		border-color: transparent transparent #89beb3 transparent;
+	}
+	/** 10s animation - 10% = 1s */
+	@-webkit-keyframes right_arm {
+		0% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+		10% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		15% {
+			-webkit-transform: rotate(20deg);
+			transform: rotate(20deg);
+		}
+		20% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		25% {
+			-webkit-transform: rotate(26deg);
+			transform: rotate(26deg);
+		}
+		30% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		35% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		40% {
+			-webkit-transform: rotate(9deg);
+			transform: rotate(9deg);
+		}
+		45% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		50% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		58% {
+			-webkit-transform: rotate(74deg);
+			transform: rotate(74deg);
+		}
+		62% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+	}
+	@-webkit-keyframes left_arm {
+		0% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+		10% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		15% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		20% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		25% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		30% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		35% {
+			-webkit-transform: rotate(-17deg);
+			transform: rotate(-17deg);
+		}
+		40% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		45% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		50% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		58% {
+			-webkit-transform: rotate(-74deg);
+			transform: rotate(-74deg);
+		}
+		62% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+	}
+	@-webkit-keyframes right_hand {
+		0% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		10% {
+			-webkit-transform: rotate(-20deg);
+			transform: rotate(-20deg);
+		}
+		15% {
+			-webkit-transform: rotate(-5deg);
+			transform: rotate(-5deg);
+		}
+		20% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		25% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		30% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		35% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		40% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		45% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		50% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		60% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+	}
+	@-webkit-keyframes right_finger {
+		0% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+		10% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		50% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		60% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+	}
+	@-webkit-keyframes left_finger {
+		0% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+		10% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		15% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		20% {
+			-webkit-transform: scaleX(1) rotate(8deg);
+			transform: scaleX(1) rotate(8deg);
+		}
+		25% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		30% {
+			-webkit-transform: scaleX(1) rotate(7deg);
+			transform: scaleX(1) rotate(7deg);
+		}
+		35% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		40% {
+			-webkit-transform: scaleX(1) rotate(5deg);
+			transform: scaleX(1) rotate(5deg);
+		}
+		45% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		50% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		58% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+	}
+	@-webkit-keyframes head {
+		0% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+		10% {
+			-webkit-transform: translatex(10px) rotate(7deg);
+			transform: translatex(10px) rotate(7deg);
+		}
+		50% {
+			-webkit-transform: translatex(0px) rotate(0deg);
+			transform: translatex(0px) rotate(0deg);
+		}
+		56% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+	}
+	/** 10s animation - 10% = 1s */
+	@-webkit-keyframes path_circle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-100px) rotate(-5deg);
+			transform: translateY(-100px) rotate(-5deg);
+		}
+		55% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		58% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-webkit-keyframes path_square {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(10deg);
+			transform: translateY(-155px) translatex(-15px) rotate(10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		57% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-webkit-keyframes path_triangle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-10deg);
+			transform: translateY(-172px) translatex(10px) rotate(-10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		58% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-moz-keyframes right_arm {
+		0% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+		10% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		15% {
+			-webkit-transform: rotate(20deg);
+			transform: rotate(20deg);
+		}
+		20% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		25% {
+			-webkit-transform: rotate(26deg);
+			transform: rotate(26deg);
+		}
+		30% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		35% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		40% {
+			-webkit-transform: rotate(9deg);
+			transform: rotate(9deg);
+		}
+		45% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		50% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		58% {
+			-webkit-transform: rotate(74deg);
+			transform: rotate(74deg);
+		}
+		62% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+	}
+	@-webkit-keyframes right_arm {
+		0% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+		10% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		15% {
+			-webkit-transform: rotate(20deg);
+			transform: rotate(20deg);
+		}
+		20% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		25% {
+			-webkit-transform: rotate(26deg);
+			transform: rotate(26deg);
+		}
+		30% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		35% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		40% {
+			-webkit-transform: rotate(9deg);
+			transform: rotate(9deg);
+		}
+		45% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		50% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		58% {
+			-webkit-transform: rotate(74deg);
+			transform: rotate(74deg);
+		}
+		62% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+	}
+	@-o-keyframes right_arm {
+		0% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+		10% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		15% {
+			-webkit-transform: rotate(20deg);
+			transform: rotate(20deg);
+		}
+		20% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		25% {
+			-webkit-transform: rotate(26deg);
+			transform: rotate(26deg);
+		}
+		30% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		35% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		40% {
+			-webkit-transform: rotate(9deg);
+			transform: rotate(9deg);
+		}
+		45% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		50% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		58% {
+			-webkit-transform: rotate(74deg);
+			transform: rotate(74deg);
+		}
+		62% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+	}
+	@keyframes right_arm {
+		0% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+		10% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		15% {
+			-webkit-transform: rotate(20deg);
+			transform: rotate(20deg);
+		}
+		20% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		25% {
+			-webkit-transform: rotate(26deg);
+			transform: rotate(26deg);
+		}
+		30% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		35% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		40% {
+			-webkit-transform: rotate(9deg);
+			transform: rotate(9deg);
+		}
+		45% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		50% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		58% {
+			-webkit-transform: rotate(74deg);
+			transform: rotate(74deg);
+		}
+		62% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+	}
+	@-moz-keyframes left_arm {
+		0% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+		10% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		15% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		20% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		25% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		30% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		35% {
+			-webkit-transform: rotate(-17deg);
+			transform: rotate(-17deg);
+		}
+		40% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		45% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		50% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		58% {
+			-webkit-transform: rotate(-74deg);
+			transform: rotate(-74deg);
+		}
+		62% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+	}
+	@-webkit-keyframes left_arm {
+		0% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+		10% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		15% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		20% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		25% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		30% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		35% {
+			-webkit-transform: rotate(-17deg);
+			transform: rotate(-17deg);
+		}
+		40% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		45% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		50% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		58% {
+			-webkit-transform: rotate(-74deg);
+			transform: rotate(-74deg);
+		}
+		62% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+	}
+	@-o-keyframes left_arm {
+		0% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+		10% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		15% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		20% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		25% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		30% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		35% {
+			-webkit-transform: rotate(-17deg);
+			transform: rotate(-17deg);
+		}
+		40% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		45% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		50% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		58% {
+			-webkit-transform: rotate(-74deg);
+			transform: rotate(-74deg);
+		}
+		62% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+	}
+	@keyframes left_arm {
+		0% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+		10% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		15% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		20% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		25% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		30% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		35% {
+			-webkit-transform: rotate(-17deg);
+			transform: rotate(-17deg);
+		}
+		40% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		45% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		50% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		58% {
+			-webkit-transform: rotate(-74deg);
+			transform: rotate(-74deg);
+		}
+		62% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+	}
+	@-moz-keyframes right_hand {
+		0% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		10% {
+			-webkit-transform: rotate(-20deg);
+			transform: rotate(-20deg);
+		}
+		15% {
+			-webkit-transform: rotate(-5deg);
+			transform: rotate(-5deg);
+		}
+		20% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		25% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		30% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		35% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		40% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		45% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		50% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		60% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+	}
+	@-webkit-keyframes right_hand {
+		0% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		10% {
+			-webkit-transform: rotate(-20deg);
+			transform: rotate(-20deg);
+		}
+		15% {
+			-webkit-transform: rotate(-5deg);
+			transform: rotate(-5deg);
+		}
+		20% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		25% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		30% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		35% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		40% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		45% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		50% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		60% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+	}
+	@-o-keyframes right_hand {
+		0% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		10% {
+			-webkit-transform: rotate(-20deg);
+			transform: rotate(-20deg);
+		}
+		15% {
+			-webkit-transform: rotate(-5deg);
+			transform: rotate(-5deg);
+		}
+		20% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		25% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		30% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		35% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		40% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		45% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		50% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		60% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+	}
+	@keyframes right_hand {
+		0% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		10% {
+			-webkit-transform: rotate(-20deg);
+			transform: rotate(-20deg);
+		}
+		15% {
+			-webkit-transform: rotate(-5deg);
+			transform: rotate(-5deg);
+		}
+		20% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		25% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		30% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		35% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		40% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		45% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		50% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		60% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+	}
+	@-moz-keyframes right_finger {
+		0% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+		10% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		50% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		60% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+	}
+	@-webkit-keyframes right_finger {
+		0% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+		10% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		50% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		60% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+	}
+	@-o-keyframes right_finger {
+		0% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+		10% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		50% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		60% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+	}
+	@keyframes right_finger {
+		0% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+		10% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		50% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		60% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+	}
+	@-moz-keyframes left_finger {
+		0% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+		10% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		15% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		20% {
+			-webkit-transform: scaleX(1) rotate(8deg);
+			transform: scaleX(1) rotate(8deg);
+		}
+		25% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		30% {
+			-webkit-transform: scaleX(1) rotate(7deg);
+			transform: scaleX(1) rotate(7deg);
+		}
+		35% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		40% {
+			-webkit-transform: scaleX(1) rotate(5deg);
+			transform: scaleX(1) rotate(5deg);
+		}
+		45% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		50% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		58% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+	}
+	@-webkit-keyframes left_finger {
+		0% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+		10% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		15% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		20% {
+			-webkit-transform: scaleX(1) rotate(8deg);
+			transform: scaleX(1) rotate(8deg);
+		}
+		25% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		30% {
+			-webkit-transform: scaleX(1) rotate(7deg);
+			transform: scaleX(1) rotate(7deg);
+		}
+		35% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		40% {
+			-webkit-transform: scaleX(1) rotate(5deg);
+			transform: scaleX(1) rotate(5deg);
+		}
+		45% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		50% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		58% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+	}
+	@-o-keyframes left_finger {
+		0% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+		10% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		15% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		20% {
+			-webkit-transform: scaleX(1) rotate(8deg);
+			transform: scaleX(1) rotate(8deg);
+		}
+		25% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		30% {
+			-webkit-transform: scaleX(1) rotate(7deg);
+			transform: scaleX(1) rotate(7deg);
+		}
+		35% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		40% {
+			-webkit-transform: scaleX(1) rotate(5deg);
+			transform: scaleX(1) rotate(5deg);
+		}
+		45% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		50% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		58% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+	}
+	@keyframes left_finger {
+		0% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+		10% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		15% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		20% {
+			-webkit-transform: scaleX(1) rotate(8deg);
+			transform: scaleX(1) rotate(8deg);
+		}
+		25% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		30% {
+			-webkit-transform: scaleX(1) rotate(7deg);
+			transform: scaleX(1) rotate(7deg);
+		}
+		35% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		40% {
+			-webkit-transform: scaleX(1) rotate(5deg);
+			transform: scaleX(1) rotate(5deg);
+		}
+		45% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		50% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		58% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+	}
+	@-moz-keyframes head {
+		0% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+		10% {
+			-webkit-transform: translatex(10px) rotate(7deg);
+			transform: translatex(10px) rotate(7deg);
+		}
+		50% {
+			-webkit-transform: translatex(0px) rotate(0deg);
+			transform: translatex(0px) rotate(0deg);
+		}
+		56% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+	}
+	@-webkit-keyframes head {
+		0% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+		10% {
+			-webkit-transform: translatex(10px) rotate(7deg);
+			transform: translatex(10px) rotate(7deg);
+		}
+		50% {
+			-webkit-transform: translatex(0px) rotate(0deg);
+			transform: translatex(0px) rotate(0deg);
+		}
+		56% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+	}
+	@-o-keyframes head {
+		0% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+		10% {
+			-webkit-transform: translatex(10px) rotate(7deg);
+			transform: translatex(10px) rotate(7deg);
+		}
+		50% {
+			-webkit-transform: translatex(0px) rotate(0deg);
+			transform: translatex(0px) rotate(0deg);
+		}
+		56% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+	}
+	@keyframes head {
+		0% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+		10% {
+			-webkit-transform: translatex(10px) rotate(7deg);
+			transform: translatex(10px) rotate(7deg);
+		}
+		50% {
+			-webkit-transform: translatex(0px) rotate(0deg);
+			transform: translatex(0px) rotate(0deg);
+		}
+		56% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+	}
+	@-moz-keyframes path_circle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-100px) rotate(-5deg);
+			transform: translateY(-100px) rotate(-5deg);
+		}
+		55% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		58% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-webkit-keyframes path_circle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-100px) rotate(-5deg);
+			transform: translateY(-100px) rotate(-5deg);
+		}
+		55% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		58% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-o-keyframes path_circle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-100px) rotate(-5deg);
+			transform: translateY(-100px) rotate(-5deg);
+		}
+		55% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		58% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@keyframes path_circle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-100px) rotate(-5deg);
+			transform: translateY(-100px) rotate(-5deg);
+		}
+		55% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		58% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-moz-keyframes path_square {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(10deg);
+			transform: translateY(-155px) translatex(-15px) rotate(10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		57% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-webkit-keyframes path_square {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(10deg);
+			transform: translateY(-155px) translatex(-15px) rotate(10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		57% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-o-keyframes path_square {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(10deg);
+			transform: translateY(-155px) translatex(-15px) rotate(10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		57% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@keyframes path_square {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(10deg);
+			transform: translateY(-155px) translatex(-15px) rotate(10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		57% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-moz-keyframes path_triangle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-10deg);
+			transform: translateY(-172px) translatex(10px) rotate(-10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		58% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-webkit-keyframes path_triangle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-10deg);
+			transform: translateY(-172px) translatex(10px) rotate(-10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		58% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-o-keyframes path_triangle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-10deg);
+			transform: translateY(-172px) translatex(10px) rotate(-10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		58% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@keyframes path_triangle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-10deg);
+			transform: translateY(-172px) translatex(10px) rotate(-10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		58% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+</style>
+
+<script>
+  document.onreadystatechange=function(){
+    // console.log(document.readyState);
+    if(document.readyState=="complete"){
+      $("#loading-box").fadeOut();
+    }
+  }
+</script>
+<link rel="stylesheet" href="/js/dist/APlayer.min.css">
+<div class="no-destroy" id="aplayer">
+     <meting-js
+        server="netease"
+        type="playlist"
+        id="7465212579"
+        fixed="true"
+        volume="0.4"
+        order="random"
+        preload="auto"
+    ></meting-js>
+</div>
+<script src="/js/dist/APlayer.min.js"></script>
+<script src="/js/dist/Meting.js"></script>
+
+<body class="max-width mx-auto px3 ltr" >
+  
+
+    <div class="content index py4" id="pjax-container">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Docker相关
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name" id="post-author" style="cursor: pointer;">
+          <a href="/">Meow Mii </a>
+        </span>
+      </span>
+    
+      
+    <div class="postdate">
+      
+        <time datetime="2023-02-12T06:34:12.911Z" itemprop="datePublished">2023-02-12</time>
+        
+        (Updated: <time datetime="2023-02-12T06:48:44.066Z" itemprop="dateModified">2023-02-12</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Docker/">Docker</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div id="post_options">
+    <li><a class="icon" href="/"><i class="fa fa-paw" aria-hidden="true"></i></a></li>
+    <li><a data-pjax class="icon pjax" href="/search"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+    <li><a class="icon" href="#" onclick="$('#toc').toggle();return false;"><i class="fa fa-bars" aria-hidden="true"></i></a></li>
+    
+    <li><a class="icon" aria-label="Previous post" href="/p/c0e3b7e9.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+    
+    
+    <li><a class="icon" aria-label="Next post" href="/p/ba663a52.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+    
+    <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+    <li><a class="icon" id="share_do" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+    <li><a class="icon" href="#" onclick="switchNightMode()"><i class="fas fa-lightbulb" aria-hidden="true"></i></a></li>
+</div>
+<div id="share" style="display: none">
+<ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/316feddf.html&text=Docker相关"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Docker相关&body=Check out this article: https://blog.yiochin.top/p/316feddf.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/316feddf.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/316feddf.html&title=Docker相关"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/316feddf.html&is_video=false&description=Docker相关"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=Docker相关&body=Check out this article: https://blog.yiochin.top/p/316feddf.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/316feddf.html&title=Docker相关"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/316feddf.html&title=Docker相关"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/316feddf.html&title=Docker相关"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/316feddf.html&title=Docker相关"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/316feddf.html&name=Docker相关&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/316feddf.html&t=Docker相关"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
+
+</div>
+<div id="share" style="display: none">
+    <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/316feddf.html&text=Docker相关"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Docker相关&body=Check out this article: https://blog.yiochin.top/p/316feddf.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/316feddf.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/316feddf.html&title=Docker相关"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/316feddf.html&is_video=false&description=Docker相关"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=Docker相关&body=Check out this article: https://blog.yiochin.top/p/316feddf.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/316feddf.html&title=Docker相关"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/316feddf.html&title=Docker相关"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/316feddf.html&title=Docker相关"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/316feddf.html&title=Docker相关"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/316feddf.html&name=Docker相关&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/316feddf.html&t=Docker相关"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
+
+</div>
+<div id="toc" style="display: none">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%86docker%E8%A3%85%E5%85%A5%E6%8C%87%E5%AE%9A%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-number">1.</span> <span class="toc-text">将docker装入指定文件夹</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8%E6%99%AE%E9%80%9A%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E6%89%A7%E8%A1%8Cdocker"><span class="toc-number">2.</span> <span class="toc-text">使用普通用户权限执行docker</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Portainer"><span class="toc-number">3.</span> <span class="toc-text">安装Portainer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#docker-compose"><span class="toc-number">4.</span> <span class="toc-text">docker-compose</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85nginx"><span class="toc-number">5.</span> <span class="toc-text">安装nginx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#nginx-%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86hexo"><span class="toc-number">6.</span> <span class="toc-text">nginx 反向代理hexo</span></a></li></ol>
+</div>
+
+
+<style>
+#post_options{
+    border-radius: 10px;
+    background-color: #ffffff33;
+    position: fixed;
+    right: 1%;
+    bottom: 10%;
+    z-index: 99;
+}
+#post_options li{
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
+    /* outline-style: solid;
+    outline-color: grey; */
+        /* display: inline; */
+}
+
+#share{
+    position: fixed;
+    right: 5%;
+    bottom: 3%;
+    z-index: 1;
+    text-align: center;
+}
+@media screen and ( max-width: 500px) {
+    #share{
+        right: 10%;
+    }
+    #toc{
+        margin-right: 20px;
+        padding-left: 0px;
+    }
+
+}
+
+@media screen and (min-width: 900px){
+    .post #toc{
+        right: 4.5%;
+    }
+    .post #share{
+        right: 4.5%;
+    }
+}
+
+#share li{
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
+}
+#toc{
+    border-radius: 6px;
+    font-weight: 700;
+    background-color: rgba(80, 90, 100, 0.4);
+    font-size: 12px;
+    position: fixed;
+    right: 5%;
+    bottom: 25%;
+    z-index: 1;
+    margin-bottom: 18px;
+}
+#toc li{
+    list-style: none;
+}
+
+#toc .toc{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+#toc .toc .toc-child{
+    padding-left: 12px;
+}
+
+</style>
+<script>
+
+</script>
+  <div class="content" itemprop="articleBody">
+    <h2 id="将docker装入指定文件夹"><a href="#将docker装入指定文件夹" class="headerlink" title="将docker装入指定文件夹"></a>将docker装入指定文件夹</h2><p>修改配置文件</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/docker/daemon.json</span><br><span class="line"></span><br><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">	<span class="attr">&quot;registry-mirrors&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;http://hub-mirror.c.163.com&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">	<span class="attr">&quot;graph&quot;</span><span class="punctuation">:</span><span class="string">&quot;/opt/docker&quot;</span> <span class="comment">//指定文件夹</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>然后安装即可</p>
+<h2 id="使用普通用户权限执行docker"><a href="#使用普通用户权限执行docker" class="headerlink" title="使用普通用户权限执行docker"></a>使用普通用户权限执行docker</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#创建docker组</span></span><br><span class="line">sudo groupadd docker</span><br><span class="line"><span class="comment">#添加ithing进入docker组</span></span><br><span class="line">sudo gpasswd -a user docker</span><br><span class="line"><span class="comment">#重启docker服务</span></span><br><span class="line">sudo systemctl restart docker</span><br><span class="line"><span class="comment">#接下来就可以使用你添加的用户（user）使用docker命令了</span></span><br></pre></td></tr></table></figure>
+
+<p>在启动docker后生成的docker目录属于root，普通用户无法访问。</p>
+<p>直接修改文件权限</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo <span class="built_in">chown</span> user:user docker</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装Portainer"><a href="#安装Portainer" class="headerlink" title="安装Portainer"></a>安装Portainer</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker pull portainer/portainer-ce</span><br><span class="line">docker run -d  --name portainer -p 9000:9000 -v /var/run/docker.sock:/var/run/docker.sock --restart always portainer/portainer-ce</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="docker-compose"><a href="#docker-compose" class="headerlink" title="docker-compose"></a>docker-compose</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo apk add docker-compose</span><br><span class="line"><span class="comment">#在有docker-compose.yml的目录下执行以下指令</span></span><br><span class="line">sudo docker-compose up -d</span><br></pre></td></tr></table></figure>
+
+<p><code>docker-compose.yml</code>小例子</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3.3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">dashdot:</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="attr">privileged:</span> <span class="literal">false</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">dashdot</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;1001:3001&#x27;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&#x27;/:/mnt/host:ro&#x27;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DASHDOT_ENABLE_CPU_TEMPS=true</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DASHDOT_ENABLE_STORAGE_SPLIT_VIEW=true</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DASHDOT_ALWAYS_SHOW_PERCENTAGES=true</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">DASHDOT_PAGE_TITLE=Redmi2</span> <span class="string">No.1</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">&#x27;mauricenino/dashdot:latest&#x27;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="安装nginx"><a href="#安装nginx" class="headerlink" title="安装nginx"></a>安装nginx</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#先随便启动一个nginx</span></span><br><span class="line">docker run -d --name nginx nginx</span><br><span class="line"><span class="comment">#启动容器后，其内部会生成一个nginx的配置文件，将其复制到本地对应文件夹中</span></span><br><span class="line">docker <span class="built_in">cp</span> nginx:/etc/nginx/nginx.conf <span class="variable">$PWD</span>/</span><br><span class="line"><span class="comment">#然后就可以删除这个容器了</span></span><br><span class="line">docker container stop nginx</span><br><span class="line">docker container <span class="built_in">rm</span> nginx</span><br></pre></td></tr></table></figure>
+
+<p>部署容器</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">nginx:</span></span><br><span class="line">  	<span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">  	<span class="attr">container_name:</span> <span class="string">nginx</span></span><br><span class="line">  	<span class="attr">image:</span> <span class="string">nginx</span></span><br><span class="line">  	<span class="attr">ports:</span></span><br><span class="line">    	<span class="bullet">-</span> <span class="number">1008</span><span class="string">:80</span></span><br><span class="line">    	<span class="bullet">-</span> <span class="number">1443</span><span class="string">:443</span></span><br><span class="line">  	<span class="attr">volumes:</span></span><br><span class="line">    	<span class="bullet">-</span> <span class="string">/home/user/Disk/nginx/www/public:/usr/share/nginx/html</span></span><br><span class="line">    	<span class="bullet">-</span> <span class="string">/home/user/Disk/nginx/logs:/var/log/nginx</span></span><br><span class="line">    	<span class="bullet">-</span> <span class="string">/home/user/Disk/nginx/conf:/etc/nginx/conf.d/</span></span><br><span class="line">  	<span class="attr">environment:</span></span><br><span class="line">   		<span class="bullet">-</span> <span class="string">NGINX_PORT=80</span></span><br><span class="line">  <span class="attr">privileged:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d<span class="comment">#启动容器</span></span><br></pre></td></tr></table></figure>
+
+<p><code>public</code>中需要存在<code>index.html</code>文件否则会出现403错误:</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">&quot;utf-8&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>loveHeart<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;shortcut icon&quot;</span> <span class="attr">href</span>=<span class="string">&quot;http://zhouql.vip/images/心.png&quot;</span> <span class="attr">type</span>=<span class="string">&quot;image/x-icon&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="language-css"></span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">html</span>,</span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">body</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">height</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">padding</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">margin</span>: <span class="number">0</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">background</span>: <span class="number">#000</span>;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">        <span class="selector-tag">canvas</span> &#123;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">position</span>: absolute;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">width</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="language-css">            <span class="attribute">height</span>: <span class="number">100%</span>;</span></span><br><span class="line"><span class="language-css">        &#125;</span></span><br><span class="line"><span class="language-css">    </span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">canvas</span> <span class="attr">id</span>=<span class="string">&quot;pinkboard&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">canvas</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> settings = &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="attr">particles</span>: &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="attr">length</span>: <span class="number">500</span>, </span></span><br><span class="line"><span class="language-javascript">                <span class="attr">duration</span>: <span class="number">2</span>, </span></span><br><span class="line"><span class="language-javascript">                <span class="attr">velocity</span>: <span class="number">100</span>, </span></span><br><span class="line"><span class="language-javascript">                <span class="attr">effect</span>: -<span class="number">0.75</span>, </span></span><br><span class="line"><span class="language-javascript">                <span class="attr">size</span>: <span class="number">32</span>, </span></span><br><span class="line"><span class="language-javascript">            &#125;,</span></span><br><span class="line"><span class="language-javascript">        &#125;;</span></span><br><span class="line"><span class="language-javascript">        (<span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="keyword">var</span> b = <span class="number">0</span>; <span class="keyword">var</span> c = [<span class="string">&quot;ms&quot;</span>, <span class="string">&quot;moz&quot;</span>, <span class="string">&quot;webkit&quot;</span>, <span class="string">&quot;o&quot;</span>]; <span class="keyword">for</span> (<span class="keyword">var</span> a = <span class="number">0</span>; a &lt; c.<span class="property">length</span> &amp;&amp; !<span class="variable language_">window</span>.<span class="property">requestAnimationFrame</span>; ++a) &#123; <span class="variable language_">window</span>.<span class="property">requestAnimationFrame</span> = <span class="variable language_">window</span>[c[a] + <span class="string">&quot;RequestAnimationFrame&quot;</span>]; <span class="variable language_">window</span>.<span class="property">cancelAnimationFrame</span> = <span class="variable language_">window</span>[c[a] + <span class="string">&quot;CancelAnimationFrame&quot;</span>] || <span class="variable language_">window</span>[c[a] + <span class="string">&quot;CancelRequestAnimationFrame&quot;</span>] &#125; <span class="keyword">if</span> (!<span class="variable language_">window</span>.<span class="property">requestAnimationFrame</span>) &#123; <span class="variable language_">window</span>.<span class="property">requestAnimationFrame</span> = <span class="keyword">function</span> (<span class="params">h, e</span>) &#123; <span class="keyword">var</span> d = <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getTime</span>(); <span class="keyword">var</span> f = <span class="title class_">Math</span>.<span class="title function_">max</span>(<span class="number">0</span>, <span class="number">16</span> - (d - b)); <span class="keyword">var</span> g = <span class="variable language_">window</span>.<span class="built_in">setTimeout</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123; <span class="title function_">h</span>(d + f) &#125;, f); b = d + f; <span class="keyword">return</span> g &#125; &#125; <span class="keyword">if</span> (!<span class="variable language_">window</span>.<span class="property">cancelAnimationFrame</span>) &#123; <span class="variable language_">window</span>.<span class="property">cancelAnimationFrame</span> = <span class="keyword">function</span> (<span class="params">d</span>) &#123; <span class="built_in">clearTimeout</span>(d) &#125; &#125; &#125;());</span></span><br><span class="line"><span class="language-javascript"></span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> <span class="title class_">Point</span> = (<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">function</span> <span class="title function_">Point</span>(<span class="params">x, y</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">x</span> = (<span class="keyword">typeof</span> x !== <span class="string">&#x27;undefined&#x27;</span>) ? x : <span class="number">0</span>;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">y</span> = (<span class="keyword">typeof</span> y !== <span class="string">&#x27;undefined&#x27;</span>) ? y : <span class="number">0</span>;</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">            <span class="title class_">Point</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">clone</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Point</span>(<span class="variable language_">this</span>.<span class="property">x</span>, <span class="variable language_">this</span>.<span class="property">y</span>);</span></span><br><span class="line"><span class="language-javascript">            &#125;;</span></span><br><span class="line"><span class="language-javascript">            <span class="title class_">Point</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">length</span> = <span class="keyword">function</span> (<span class="params">length</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">if</span> (<span class="keyword">typeof</span> length == <span class="string">&#x27;undefined&#x27;</span>)</span></span><br><span class="line"><span class="language-javascript">                    <span class="keyword">return</span> <span class="title class_">Math</span>.<span class="title function_">sqrt</span>(<span class="variable language_">this</span>.<span class="property">x</span> * <span class="variable language_">this</span>.<span class="property">x</span> + <span class="variable language_">this</span>.<span class="property">y</span> * <span class="variable language_">this</span>.<span class="property">y</span>);</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="title function_">normalize</span>();</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">x</span> *= length;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">y</span> *= length;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">return</span> <span class="variable language_">this</span>;</span></span><br><span class="line"><span class="language-javascript">            &#125;;</span></span><br><span class="line"><span class="language-javascript">            <span class="title class_">Point</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">normalize</span> = <span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">var</span> length = <span class="variable language_">this</span>.<span class="title function_">length</span>();</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">x</span> /= length;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">y</span> /= length;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">return</span> <span class="variable language_">this</span>;</span></span><br><span class="line"><span class="language-javascript">            &#125;;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">return</span> <span class="title class_">Point</span>;</span></span><br><span class="line"><span class="language-javascript">        &#125;)();</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> <span class="title class_">Particle</span> = (<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">function</span> <span class="title function_">Particle</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">position</span> = <span class="keyword">new</span> <span class="title class_">Point</span>();</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">velocity</span> = <span class="keyword">new</span> <span class="title class_">Point</span>();</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">acceleration</span> = <span class="keyword">new</span> <span class="title class_">Point</span>();</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">age</span> = <span class="number">0</span>;</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">            <span class="title class_">Particle</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">initialize</span> = <span class="keyword">function</span> (<span class="params">x, y, dx, dy</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">position</span>.<span class="property">x</span> = x;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">position</span>.<span class="property">y</span> = y;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">velocity</span>.<span class="property">x</span> = dx;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">velocity</span>.<span class="property">y</span> = dy;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">acceleration</span>.<span class="property">x</span> = dx * settings.<span class="property">particles</span>.<span class="property">effect</span>;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">acceleration</span>.<span class="property">y</span> = dy * settings.<span class="property">particles</span>.<span class="property">effect</span>;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">age</span> = <span class="number">0</span>;</span></span><br><span class="line"><span class="language-javascript">            &#125;;</span></span><br><span class="line"><span class="language-javascript">            <span class="title class_">Particle</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">update</span> = <span class="keyword">function</span> (<span class="params">deltaTime</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">position</span>.<span class="property">x</span> += <span class="variable language_">this</span>.<span class="property">velocity</span>.<span class="property">x</span> * deltaTime;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">position</span>.<span class="property">y</span> += <span class="variable language_">this</span>.<span class="property">velocity</span>.<span class="property">y</span> * deltaTime;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">velocity</span>.<span class="property">x</span> += <span class="variable language_">this</span>.<span class="property">acceleration</span>.<span class="property">x</span> * deltaTime;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">velocity</span>.<span class="property">y</span> += <span class="variable language_">this</span>.<span class="property">acceleration</span>.<span class="property">y</span> * deltaTime;</span></span><br><span class="line"><span class="language-javascript">                <span class="variable language_">this</span>.<span class="property">age</span> += deltaTime;</span></span><br><span class="line"><span class="language-javascript">            &#125;;</span></span><br><span class="line"><span class="language-javascript">            <span class="title class_">Particle</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">draw</span> = <span class="keyword">function</span> (<span class="params">context, image</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">function</span> <span class="title function_">ease</span>(<span class="params">t</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                    <span class="keyword">return</span> (--t) * t * t + <span class="number">1</span>;</span></span><br><span class="line"><span class="language-javascript">                &#125;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">var</span> size = image.<span class="property">width</span> * <span class="title function_">ease</span>(<span class="variable language_">this</span>.<span class="property">age</span> / settings.<span class="property">particles</span>.<span class="property">duration</span>);</span></span><br><span class="line"><span class="language-javascript">                context.<span class="property">globalAlpha</span> = <span class="number">1</span> - <span class="variable language_">this</span>.<span class="property">age</span> / settings.<span class="property">particles</span>.<span class="property">duration</span>;</span></span><br><span class="line"><span class="language-javascript">                context.<span class="title function_">drawImage</span>(image, <span class="variable language_">this</span>.<span class="property">position</span>.<span class="property">x</span> - size / <span class="number">2</span>, <span class="variable language_">this</span>.<span class="property">position</span>.<span class="property">y</span> - size / <span class="number">2</span>, size, size);</span></span><br><span class="line"><span class="language-javascript">            &#125;;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">return</span> <span class="title class_">Particle</span>;</span></span><br><span class="line"><span class="language-javascript">        &#125;)();</span></span><br><span class="line"><span class="language-javascript">        <span class="keyword">var</span> <span class="title class_">ParticlePool</span> = (<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">var</span> particles,</span></span><br><span class="line"><span class="language-javascript">                firstActive = <span class="number">0</span>,</span></span><br><span class="line"><span class="language-javascript">                firstFree = <span class="number">0</span>,</span></span><br><span class="line"><span class="language-javascript">                duration = settings.<span class="property">particles</span>.<span class="property">duration</span>;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">function</span> <span class="title function_">ParticlePool</span>(<span class="params">length</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// create and populate particle pool</span></span></span><br><span class="line"><span class="language-javascript">                particles = <span class="keyword">new</span> <span class="title class_">Array</span>(length);</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; particles.<span class="property">length</span>; i++)</span></span><br><span class="line"><span class="language-javascript">                    particles[i] = <span class="keyword">new</span> <span class="title class_">Particle</span>();</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">            <span class="title class_">ParticlePool</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">add</span> = <span class="keyword">function</span> (<span class="params">x, y, dx, dy</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                particles[firstFree].<span class="title function_">initialize</span>(x, y, dx, dy);</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// handle circular queue</span></span></span><br><span class="line"><span class="language-javascript">                firstFree++;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">if</span> (firstFree == particles.<span class="property">length</span>) firstFree = <span class="number">0</span>;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">if</span> (firstActive == firstFree) firstActive++;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">if</span> (firstActive == particles.<span class="property">length</span>) firstActive = <span class="number">0</span>;</span></span><br><span class="line"><span class="language-javascript">            &#125;;</span></span><br><span class="line"><span class="language-javascript">            <span class="title class_">ParticlePool</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">update</span> = <span class="keyword">function</span> (<span class="params">deltaTime</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">var</span> i;</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// update active particles</span></span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">if</span> (firstActive &lt; firstFree) &#123;</span></span><br><span class="line"><span class="language-javascript">                    <span class="keyword">for</span> (i = firstActive; i &lt; firstFree; i++)</span></span><br><span class="line"><span class="language-javascript">                        particles[i].<span class="title function_">update</span>(deltaTime);</span></span><br><span class="line"><span class="language-javascript">                &#125;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">if</span> (firstFree &lt; firstActive) &#123;</span></span><br><span class="line"><span class="language-javascript">                    <span class="keyword">for</span> (i = firstActive; i &lt; particles.<span class="property">length</span>; i++)</span></span><br><span class="line"><span class="language-javascript">                        particles[i].<span class="title function_">update</span>(deltaTime);</span></span><br><span class="line"><span class="language-javascript">                    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; firstFree; i++)</span></span><br><span class="line"><span class="language-javascript">                        particles[i].<span class="title function_">update</span>(deltaTime);</span></span><br><span class="line"><span class="language-javascript">                &#125;</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// remove inactive particles</span></span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">while</span> (particles[firstActive].<span class="property">age</span> &gt;= duration &amp;&amp; firstActive != firstFree) &#123;</span></span><br><span class="line"><span class="language-javascript">                    firstActive++;</span></span><br><span class="line"><span class="language-javascript">                    <span class="keyword">if</span> (firstActive == particles.<span class="property">length</span>) firstActive = <span class="number">0</span>;</span></span><br><span class="line"><span class="language-javascript">                &#125;</span></span><br><span class="line"><span class="language-javascript">            &#125;;</span></span><br><span class="line"><span class="language-javascript">            <span class="title class_">ParticlePool</span>.<span class="property"><span class="keyword">prototype</span></span>.<span class="property">draw</span> = <span class="keyword">function</span> (<span class="params">context, image</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// draw active particles</span></span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">if</span> (firstActive &lt; firstFree) &#123;</span></span><br><span class="line"><span class="language-javascript">                    <span class="keyword">for</span> (i = firstActive; i &lt; firstFree; i++)</span></span><br><span class="line"><span class="language-javascript">                        particles[i].<span class="title function_">draw</span>(context, image);</span></span><br><span class="line"><span class="language-javascript">                &#125;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">if</span> (firstFree &lt; firstActive) &#123;</span></span><br><span class="line"><span class="language-javascript">                    <span class="keyword">for</span> (i = firstActive; i &lt; particles.<span class="property">length</span>; i++)</span></span><br><span class="line"><span class="language-javascript">                        particles[i].<span class="title function_">draw</span>(context, image);</span></span><br><span class="line"><span class="language-javascript">                    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; firstFree; i++)</span></span><br><span class="line"><span class="language-javascript">                        particles[i].<span class="title function_">draw</span>(context, image);</span></span><br><span class="line"><span class="language-javascript">                &#125;</span></span><br><span class="line"><span class="language-javascript">            &#125;;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">return</span> <span class="title class_">ParticlePool</span>;</span></span><br><span class="line"><span class="language-javascript">        &#125;)();</span></span><br><span class="line"><span class="language-javascript">        (<span class="keyword">function</span> (<span class="params">canvas</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">var</span> context = canvas.<span class="title function_">getContext</span>(<span class="string">&#x27;2d&#x27;</span>),</span></span><br><span class="line"><span class="language-javascript">                particles = <span class="keyword">new</span> <span class="title class_">ParticlePool</span>(settings.<span class="property">particles</span>.<span class="property">length</span>),</span></span><br><span class="line"><span class="language-javascript">                particleRate = settings.<span class="property">particles</span>.<span class="property">length</span> / settings.<span class="property">particles</span>.<span class="property">duration</span>, <span class="comment">// particles/sec</span></span></span><br><span class="line"><span class="language-javascript">                time;</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// get point on heart with -PI &lt;= t &lt;= PI</span></span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">function</span> <span class="title function_">pointOnHeart</span>(<span class="params">t</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Point</span>(</span></span><br><span class="line"><span class="language-javascript">                    <span class="number">160</span> * <span class="title class_">Math</span>.<span class="title function_">pow</span>(<span class="title class_">Math</span>.<span class="title function_">sin</span>(t), <span class="number">3</span>),</span></span><br><span class="line"><span class="language-javascript">                    <span class="number">130</span> * <span class="title class_">Math</span>.<span class="title function_">cos</span>(t) - <span class="number">50</span> * <span class="title class_">Math</span>.<span class="title function_">cos</span>(<span class="number">2</span> * t) - <span class="number">20</span> * <span class="title class_">Math</span>.<span class="title function_">cos</span>(<span class="number">3</span> * t) - <span class="number">10</span> * <span class="title class_">Math</span>.<span class="title function_">cos</span>(<span class="number">4</span> * t) + <span class="number">25</span></span></span><br><span class="line"><span class="language-javascript">                );</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// creating the particle image using a dummy canvas</span></span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">var</span> image = (<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">var</span> canvas = <span class="variable language_">document</span>.<span class="title function_">createElement</span>(<span class="string">&#x27;canvas&#x27;</span>),</span></span><br><span class="line"><span class="language-javascript">                    context = canvas.<span class="title function_">getContext</span>(<span class="string">&#x27;2d&#x27;</span>);</span></span><br><span class="line"><span class="language-javascript">                canvas.<span class="property">width</span> = settings.<span class="property">particles</span>.<span class="property">size</span>;</span></span><br><span class="line"><span class="language-javascript">                canvas.<span class="property">height</span> = settings.<span class="property">particles</span>.<span class="property">size</span>;</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// helper function to create the path</span></span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">function</span> <span class="title function_">to</span>(<span class="params">t</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                    <span class="keyword">var</span> point = <span class="title function_">pointOnHeart</span>(t);</span></span><br><span class="line"><span class="language-javascript">                    point.<span class="property">x</span> = settings.<span class="property">particles</span>.<span class="property">size</span> / <span class="number">2</span> + point.<span class="property">x</span> * settings.<span class="property">particles</span>.<span class="property">size</span> / <span class="number">350</span>;</span></span><br><span class="line"><span class="language-javascript">                    point.<span class="property">y</span> = settings.<span class="property">particles</span>.<span class="property">size</span> / <span class="number">2</span> - point.<span class="property">y</span> * settings.<span class="property">particles</span>.<span class="property">size</span> / <span class="number">350</span>;</span></span><br><span class="line"><span class="language-javascript">                    <span class="keyword">return</span> point;</span></span><br><span class="line"><span class="language-javascript">                &#125;</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// create the path</span></span></span><br><span class="line"><span class="language-javascript">                context.<span class="title function_">beginPath</span>();</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">var</span> t = -<span class="title class_">Math</span>.<span class="property">PI</span>;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">var</span> point = <span class="title function_">to</span>(t);</span></span><br><span class="line"><span class="language-javascript">                context.<span class="title function_">moveTo</span>(point.<span class="property">x</span>, point.<span class="property">y</span>);</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">while</span> (t &lt; <span class="title class_">Math</span>.<span class="property">PI</span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                    t += <span class="number">0.01</span>; <span class="comment">// baby steps!</span></span></span><br><span class="line"><span class="language-javascript">                    point = <span class="title function_">to</span>(t);</span></span><br><span class="line"><span class="language-javascript">                    context.<span class="title function_">lineTo</span>(point.<span class="property">x</span>, point.<span class="property">y</span>);</span></span><br><span class="line"><span class="language-javascript">                &#125;</span></span><br><span class="line"><span class="language-javascript">                context.<span class="title function_">closePath</span>();</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// create the fill</span></span></span><br><span class="line"><span class="language-javascript">                context.<span class="property">fillStyle</span> = <span class="string">&#x27;#ea80b0&#x27;</span>;</span></span><br><span class="line"><span class="language-javascript">                context.<span class="title function_">fill</span>();</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// create the image</span></span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">var</span> image = <span class="keyword">new</span> <span class="title class_">Image</span>();</span></span><br><span class="line"><span class="language-javascript">                image.<span class="property">src</span> = canvas.<span class="title function_">toDataURL</span>();</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">return</span> image;</span></span><br><span class="line"><span class="language-javascript">            &#125;)();</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// render that thing!</span></span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">function</span> <span class="title function_">render</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// next animation frame</span></span></span><br><span class="line"><span class="language-javascript">                <span class="title function_">requestAnimationFrame</span>(render);</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// update time</span></span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">var</span> newTime = <span class="keyword">new</span> <span class="title class_">Date</span>().<span class="title function_">getTime</span>() / <span class="number">1000</span>,</span></span><br><span class="line"><span class="language-javascript">                    deltaTime = newTime - (time || newTime);</span></span><br><span class="line"><span class="language-javascript">                time = newTime;</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// clear canvas</span></span></span><br><span class="line"><span class="language-javascript">                context.<span class="title function_">clearRect</span>(<span class="number">0</span>, <span class="number">0</span>, canvas.<span class="property">width</span>, canvas.<span class="property">height</span>);</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// create new particles</span></span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">var</span> amount = particleRate * deltaTime;</span></span><br><span class="line"><span class="language-javascript">                <span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; amount; i++) &#123;</span></span><br><span class="line"><span class="language-javascript">                    <span class="keyword">var</span> pos = <span class="title function_">pointOnHeart</span>(<span class="title class_">Math</span>.<span class="property">PI</span> - <span class="number">2</span> * <span class="title class_">Math</span>.<span class="property">PI</span> * <span class="title class_">Math</span>.<span class="title function_">random</span>());</span></span><br><span class="line"><span class="language-javascript">                    <span class="keyword">var</span> dir = pos.<span class="title function_">clone</span>().<span class="title function_">length</span>(settings.<span class="property">particles</span>.<span class="property">velocity</span>);</span></span><br><span class="line"><span class="language-javascript">                    particles.<span class="title function_">add</span>(canvas.<span class="property">width</span> / <span class="number">2</span> + pos.<span class="property">x</span>, canvas.<span class="property">height</span> / <span class="number">2</span> - pos.<span class="property">y</span>, dir.<span class="property">x</span>, -dir.<span class="property">y</span>);</span></span><br><span class="line"><span class="language-javascript">                &#125;</span></span><br><span class="line"><span class="language-javascript">                <span class="comment">// update and draw particles</span></span></span><br><span class="line"><span class="language-javascript">                particles.<span class="title function_">update</span>(deltaTime);</span></span><br><span class="line"><span class="language-javascript">                particles.<span class="title function_">draw</span>(context, image);</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// handle (re-)sizing of the canvas</span></span></span><br><span class="line"><span class="language-javascript">            <span class="keyword">function</span> <span class="title function_">onResize</span>(<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                canvas.<span class="property">width</span> = canvas.<span class="property">clientWidth</span>;</span></span><br><span class="line"><span class="language-javascript">                canvas.<span class="property">height</span> = canvas.<span class="property">clientHeight</span>;</span></span><br><span class="line"><span class="language-javascript">            &#125;</span></span><br><span class="line"><span class="language-javascript">            <span class="variable language_">window</span>.<span class="property">onresize</span> = onResize;</span></span><br><span class="line"><span class="language-javascript">            <span class="comment">// delay rendering bootstrap</span></span></span><br><span class="line"><span class="language-javascript">            <span class="built_in">setTimeout</span>(<span class="keyword">function</span> (<span class="params"></span>) &#123;</span></span><br><span class="line"><span class="language-javascript">                <span class="title function_">onResize</span>();</span></span><br><span class="line"><span class="language-javascript">                <span class="title function_">render</span>();</span></span><br><span class="line"><span class="language-javascript">            &#125;, <span class="number">10</span>);</span></span><br><span class="line"><span class="language-javascript">        &#125;)(<span class="variable language_">document</span>.<span class="title function_">getElementById</span>(<span class="string">&#x27;pinkboard&#x27;</span>));</span></span><br><span class="line"><span class="language-javascript">        </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>conf</code>中使用默认<code>nginx.conf</code>:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen       80;</span><br><span class="line">    listen  [::]:80;</span><br><span class="line">    server_name  localhost;</span><br><span class="line"></span><br><span class="line">    #access_log  /var/log/nginx/host.access.log  main;</span><br><span class="line"></span><br><span class="line">    location / &#123;</span><br><span class="line">        root   /usr/share/nginx/html;</span><br><span class="line">        index  index.html index.htm;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    #error_page  404              /404.html;</span><br><span class="line"></span><br><span class="line">    # redirect server error pages to the static page /50x.html</span><br><span class="line">    #</span><br><span class="line">    error_page   500 502 503 504  /50x.html;</span><br><span class="line">    location = /50x.html &#123;</span><br><span class="line">        root   /usr/share/nginx/html;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    # proxy the PHP scripts to Apache listening on 127.0.0.1:80</span><br><span class="line">    #</span><br><span class="line">    #location ~ \.php$ &#123;</span><br><span class="line">    #    proxy_pass   http://127.0.0.1;</span><br><span class="line">    #&#125;</span><br><span class="line"></span><br><span class="line">    # pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000</span><br><span class="line">    #</span><br><span class="line">    #location ~ \.php$ &#123;</span><br><span class="line">    #    root           html;</span><br><span class="line">    #    fastcgi_pass   127.0.0.1:9000;</span><br><span class="line">    #    fastcgi_index  index.php;</span><br><span class="line">    #    fastcgi_param  SCRIPT_FILENAME  /scripts$fastcgi_script_name;</span><br><span class="line">    #    include        fastcgi_params;</span><br><span class="line">    #&#125;</span><br><span class="line"></span><br><span class="line">    # deny access to .htaccess files, if Apache&#x27;s document root</span><br><span class="line">    # concurs with nginx&#x27;s one</span><br><span class="line">    #</span><br><span class="line">    #location ~ /\.ht &#123;</span><br><span class="line">    #    deny  all;</span><br><span class="line">    #&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="nginx-反向代理hexo"><a href="#nginx-反向代理hexo" class="headerlink" title="nginx 反向代理hexo"></a>nginx 反向代理hexo</h2><ol>
+<li><p>安装git【设置ssh公钥免密登陆可按照百度来，easy】</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apk add git</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建远程git仓库</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init --bare blog.git</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>配置hooks文件</p>
+<p>在blog.git下的hooks目录下创建<code>post-receive</code>文件，内容为：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">git --work-tree=【待上传blog仓库目录】 --git-dir=【自己的目录】/blog.git checkout -f</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在本地hexo配置文件中添加deploy路径</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> </span><br><span class="line">    [<span class="string">nickname</span>]<span class="string">:</span> [<span class="string">username</span>]<span class="string">@[yourRemoteIP]:[yourDir]/mygit/blog.git</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>访问[yourIP]:1008,即可看见自己的blog</p>
+</li>
+</ol>
+
+  </div>
+
+</article>
+
+
+<div id="copyright" class="post-copyright-information">
+    <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+    <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ 
+  <!-- 结束语 -->
+    <p id="easter-egg"></p>
+ 
+  <!-- post-copyright-information -->
+
+    <blockquote style="padding:0">
+        <p>作者：
+            Meow Mii
+        </p>
+        <p>本文链接：
+            
+                <a href="/p/316feddf.html" target="_blank" title="Docker相关">
+                https://blog.yiochin.top/p/316feddf.html</a>
+            
+        </p>
+        <p>版权声明： 本博客所有文章除特别声明外,均采用
+             <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" 
+             target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">
+             CC BY-NC-ND 4.0
+            </a> 许可协议，转载请注明出处！
+        </p>
+    </blockquote>
+    <hr>
+</div>
+
+
+
+
+
+
+<div id="comment_twikoo">
+    <p style="font-size: 1.5em; font-weight:700;">📝 Comment</p>
+    <div id="gitalk-container"></div>
+</div>
+<style>
+    #gitalk-container a{
+        background-image: none;
+    }
+</style>
+
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        proxy: 'https://vercel.prohibitorum.top/github_access_token',
+        clientID: '37aa963463a974f338bd',
+        clientSecret: '2dc9e5ef7ed915ee6c7bee00b90f299aa489deff',
+        repo: 'fshen0.github.io',
+        owner: 'fshen0',
+        admin: 'fshen0',
+        id: md5(location.pathname),      
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: true
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+
+
+
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    Meow Mii
+
+  <span>&nbsp;</span>
+    <span> 
+      
+    </span>
+  </div>
+
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li><li><a href="/archives/">Writing</a></li><li><a href="/categories/">Category</a></li><li><a href="/about/">About</a></li><li><a href="/search/">Search</a></li>
+      </ul>
+    </nav>
+  </div>
+  
+</footer>
+<script type="text/javascript">
+    $("#footer").hover(function(){
+      $(".aplayer-lrc-contents").css("opacity","0");
+    })
+    $("#footer").mouseleave(function(){
+      $(".aplayer-lrc-contents").css("opacity","1");
+    })
+</script>
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+
+<script src="/js/main.js"></script>
+
+
+<!-- search -->
+
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+
+<!-- FancyBox -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax/pjax.js"></script>
+<script>
+  var pjax = new Pjax({
+    elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"])',   // 拦截正常带链接的 a 标签
+    selectors: ["#pjax-container","title","#search"]                         // 根据实际需要确认重载区域
+});
+</script>
+   
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>

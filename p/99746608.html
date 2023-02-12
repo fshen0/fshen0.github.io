@@ -1,0 +1,2528 @@
+<!DOCTYPE html>
+<html lang=en>
+
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <script type="text/javascript" src="https://lf9-cdn-tos.bytecdntp.com/cdn/expire-1-M/jquery/3.6.0/jquery.js"></script>
+    
+    <!-- 消除 pjax失效问题 -->
+    <link rel="stylesheet" href="//unpkg.com/gitalk/dist/gitalk.css">
+    <script src="//unpkg.com/gitalk/dist/gitalk.min.js"></script>
+    <script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
+    
+
+    <meta name="description" content="介绍 传输协议  SMTP协议（Simple Mail Transfer Protocol） 属于TCP&#x2F;IP协议族 控制信件的中转方式，帮助找到下一个目的地 SMTP邮件服务器 发送协议   POP3协议（Post  Office Protocol - version 3） 属于TCP&#x2F;IP协议族 远程管理自己在服务器上的邮件 POP服务器 接收协议（登录管理协议）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java邮件发送">
+<meta property="og:url" content="https://blog.yiochin.top/p/99746608.html">
+<meta property="og:site_name" content="Meow Mii">
+<meta property="og:description" content="介绍 传输协议  SMTP协议（Simple Mail Transfer Protocol） 属于TCP&#x2F;IP协议族 控制信件的中转方式，帮助找到下一个目的地 SMTP邮件服务器 发送协议   POP3协议（Post  Office Protocol - version 3） 属于TCP&#x2F;IP协议族 远程管理自己在服务器上的邮件 POP服务器 接收协议（登录管理协议）">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/iuning/myPictures/image-20220325162626965.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/iuning/myPictures/image-20220325162715911.png">
+<meta property="article:published_time" content="2023-02-12T06:35:25.657Z">
+<meta property="article:modified_time" content="2023-02-12T06:44:29.013Z">
+<meta property="article:author" content="Meow Mii">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/iuning/myPictures/image-20220325162626965.png">
+
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.png">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon.png" sizes="192x192">
+        
+      
+      
+        
+          
+            <link rel="apple-touch-icon" sizes="180x180" href="https://www.gravatar.com/avatar/1c0ccb80f18de6871d3fd37b97cd3594?s=180">
+          
+        
+      
+    
+    <!-- title -->
+    <title>Java邮件发送</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+		<script type="text/x-mathjax-config">
+		  MathJax.Hub.Config({
+			tex2jax: {
+			  skipTags: ['script', 'noscript', 'style', 'textarea', 'pre'],
+			  inlineMath: [['$','$']]
+			}
+		  });
+		</script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML' async></script>
+	
+<meta name="generator" content="Hexo 6.2.0"><link rel="alternate" href="/atom.xml" title="Meow Mii" type="application/atom+xml">
+</head>
+
+<!-- loading  -->
+<div id="loading-box">
+    <div class="loading-left-bg"></div>
+    <div class="loading-right-bg"></div>
+    <div class="wizard-scene">
+      <div class="wizard-objects">
+        <div class="wizard-square"></div>
+        <div class="wizard-circle"></div>
+        <div class="wizard-triangle"></div>
+      </div>
+      <div class="wizard">
+        <div class="wizard-body"></div>
+        <div class="wizard-right-arm">
+          <div class="wizard-right-hand"></div>
+        </div>
+        <div class="wizard-left-arm">
+          <div class="wizard-left-hand"></div>
+        </div>
+        <div class="wizard-head">
+          <div class="wizard-beard"></div>
+          <div class="wizard-face">
+            <div class="wizard-adds"></div>
+          </div>
+          <div class="wizard-hat">
+            <div class="wizard-hat-of-the-hat"></div>
+            <div class="wizard-four-point-star --first"></div>
+            <div class="wizard-four-point-star --second"></div>
+            <div class="wizard-four-point-star --third"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+  <!-- 
+<link rel="stylesheet" href="/css/style.css">
+ -->
+<style>
+    #loading-box  {
+	 position: fixed;
+	 left: 0;
+	 z-index: 1000;
+	 width: 100%;
+	 /* height: 100%; */
+	 margin: 0;
+	 padding-left: -2em;
+	 background: black;
+	}
+	#loading-box .loading-left-bg {
+		left: 0;
+	}
+	#loading-box .loading-right-bg {
+		right: 0;
+	}
+	#loading-box.loaded {
+		z-index: -1000;
+	}
+	#loading-box.loaded .loading-left-bg {
+		transition: all 1s;
+		transform: translate(-100%, 0);
+	}
+	#loading-box.loaded .loading-right-bg {
+		transition: all 1s;
+		transform: translate(100%, 0);
+	}
+	#loading-box {
+		position: fixed;
+		z-index: 1000;
+		display: -webkit-box;
+		display: flex;
+		-webkit-box-align: center;
+		align-items: center;
+		-webkit-box-pack: center;
+		justify-content: center;
+		-webkit-box-orient: vertical;
+		-webkit-box-direction: normal;
+		flex-direction: column;
+		flex-wrap: wrap;
+		width: 100vw;
+		height: 100vh;
+		overflow: hidden;
+	}
+	#loading-box.loaded .wizard-scene {
+		display: none;
+	}
+	.wizard-scene {
+		position: fixed;
+		z-index: 1001;
+		display: -webkit-box;
+		display: flex;
+	}
+	.wizard {
+		position: relative;
+		width: 190px;
+		height: 240px;
+	}
+	.wizard-body {
+		position: absolute;
+		bottom: 0;
+		left: 68px;
+		height: 100px;
+		width: 60px;
+		background: #3f64ce;
+	}
+	.wizard-body::after {
+		content: "";
+		position: absolute;
+		bottom: 0;
+		left: 20px;
+		height: 100px;
+		width: 60px;
+		background: #3f64ce;
+		-webkit-transform: skewX(14deg);
+		transform: skewX(14deg);
+	}
+	.wizard-right-arm {
+		position: absolute;
+		bottom: 74px;
+		left: 110px;
+		height: 44px;
+		width: 90px;
+		background: #3f64ce;
+		border-radius: 22px;
+		-webkit-transform-origin: 16px 22px;
+		transform-origin: 16px 22px;
+		-webkit-transform: rotate(70deg);
+		transform: rotate(70deg);
+		-webkit-animation: right_arm 10s ease-in-out infinite;
+		animation: right_arm 10s ease-in-out infinite;
+	}
+	.wizard-right-arm .right-hand {
+		position: absolute;
+		right: 8px;
+		bottom: 8px;
+		width: 30px;
+		height: 30px;
+		border-radius: 50%;
+		background: #f1c5b4;
+		-webkit-transform-origin: center center;
+		transform-origin: center center;
+		-webkit-transform: rotate(-40deg);
+		transform: rotate(-40deg);
+		-webkit-animation: right_hand 10s ease-in-out infinite;
+		animation: right_hand 10s ease-in-out infinite;
+	}
+	.wizard-right-arm .wizard-right-hand::after {
+		content: "";
+		position: absolute;
+		right: 0px;
+		top: -8px;
+		width: 15px;
+		height: 30px;
+		border-radius: 10px;
+		background: #f1c5b4;
+		-webkit-transform: translateY(16px);
+		transform: translateY(16px);
+		-webkit-animation: right_finger 10s ease-in-out infinite;
+		animation: right_finger 10s ease-in-out infinite;
+	}
+	.wizard-left-arm {
+		position: absolute;
+		bottom: 74px;
+		left: 26px;
+		height: 44px;
+		width: 70px;
+		background: #3f64ce;
+		border-bottom-left-radius: 8px;
+		-webkit-transform-origin: 60px 26px;
+		transform-origin: 60px 26px;
+		-webkit-transform: rotate(-70deg);
+		transform: rotate(-70deg);
+		-webkit-animation: left_arm 10s ease-in-out infinite;
+		animation: left_arm 10s ease-in-out infinite;
+	}
+	.wizard-left-arm .wizard-left-hand {
+		position: absolute;
+		left: -18px;
+		top: 0;
+		width: 18px;
+		height: 30px;
+		border-top-left-radius: 35px;
+		border-bottom-left-radius: 35px;
+		background: #f1c5b4;
+	}
+	.wizard-left-arm .wizard-left-hand::after {
+		content: "";
+		position: absolute;
+		right: 0;
+		top: 0;
+		width: 30px;
+		height: 15px;
+		border-radius: 20px;
+		background: #f1c5b4;
+		-webkit-transform-origin: right bottom;
+		transform-origin: right bottom;
+		-webkit-transform: scaleX(0);
+		transform: scaleX(0);
+		-webkit-animation: left_finger 10s ease-in-out infinite;
+		animation: left_finger 10s ease-in-out infinite;
+	}
+	.wizard-head {
+		position: absolute;
+		top: 0;
+		left: 14px;
+		width: 160px;
+		height: 210px;
+		-webkit-transform-origin: center center;
+		transform-origin: center center;
+		-webkit-transform: rotate(-3deg);
+		transform: rotate(-3deg);
+		-webkit-animation: head 10s ease-in-out infinite;
+		animation: head 10s ease-in-out infinite;
+	}
+	.wizard-head .wizard-beard {
+		position: absolute;
+		bottom: 0;
+		left: 38px;
+		height: 106px;
+		width: 80px;
+		border-bottom-right-radius: 55%;
+		background: #fff;
+	}
+	.wizard-head .wizard-beard::after {
+		content: "";
+		position: absolute;
+		top: 16px;
+		left: -10px;
+		width: 40px;
+		height: 20px;
+		border-radius: 20px;
+		background: #fff;
+	}
+	.wizard-head .wizard-face {
+		position: absolute;
+		bottom: 76px;
+		left: 38px;
+		height: 30px;
+		width: 60px;
+		background: #f1c5b4;
+	}
+	.wizard-head .wizard-face::before {
+		content: "";
+		position: absolute;
+		top: 0px;
+		left: 40px;
+		width: 20px;
+		height: 40px;
+		border-bottom-right-radius: 20px;
+		border-bottom-left-radius: 20px;
+		background: #f1c5b4;
+	}
+	.wizard-head .wizard-face::after {
+		content: "";
+		position: absolute;
+		top: 16px;
+		left: -10px;
+		width: 50px;
+		height: 20px;
+		border-radius: 20px;
+		border-bottom-right-radius: 0px;
+		background: #fff;
+	}
+	.wizard-head .wizard-face .wizard-adds {
+		position: absolute;
+		top: 0px;
+		left: -10px;
+		width: 40px;
+		height: 20px;
+		border-radius: 20px;
+		background: #f1c5b4;
+	}
+	.wizard-head .wizard-face .wizard-adds::after {
+		content: "";
+		position: absolute;
+		top: 5px;
+		left: 80px;
+		width: 15px;
+		height: 20px;
+		border-bottom-right-radius: 20px;
+		border-top-right-radius: 20px;
+		background: #f1c5b4;
+	}
+	.wizard-head .wizard-hat {
+		position: absolute;
+		bottom: 106px;
+		left: 0;
+		width: 160px;
+		height: 20px;
+		border-radius: 20px;
+		background: #3f64ce;
+	}
+	.wizard-head .wizard-hat::before {
+		content: "";
+		position: absolute;
+		top: -70px;
+		left: 50%;
+		-webkit-transform: translatex(-50%);
+		transform: translatex(-50%);
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 0 34px 70px 50px;
+		border-color: transparent transparent #3f64ce transparent;
+	}
+	.wizard-head .wizard-hat::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 160px;
+		height: 20px;
+		background: #3f64ce;
+		border-radius: 20px;
+	}
+	.wizard-head .wizard-hat .wizard-hat-of-the-hat {
+		position: absolute;
+		bottom: 78px;
+		left: 79px;
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 0 25px 25px 19px;
+		border-color: transparent transparent #3f64ce transparent;
+	}
+	.wizard-head .wizard-hat .wizard-hat-of-the-hat::after {
+		content: "";
+		position: absolute;
+		top: 6px;
+		left: -4px;
+		width: 35px;
+		height: 10px;
+		border-radius: 10px;
+		border-bottom-left-radius: 0px;
+		background: #3f64ce;
+		-webkit-transform: rotate(40deg);
+		transform: rotate(40deg);
+	}
+	.wizard-head .wizard-hat .wizard-four-point-star {
+		position: absolute;
+		width: 12px;
+		height: 12px;
+	}
+	.wizard-head .wizard-hat .wizard-four-point-star::after {
+		-webkit-transform: rotate(156.66deg) skew(45deg);
+		transform: rotate(156.66deg) skew(45deg);
+	}
+	.wizard-head .wizard-hat .wizard-four-point-star.--first {
+		bottom: 28px;
+		left: 46px;
+	}
+	.wizard-head .wizard-hat .wizard-four-point-star.--second {
+		bottom: 40px;
+		left: 80px;
+	}
+	.wizard-head .wizard-hat .wizard-four-point-star.--third {
+		bottom: 15px;
+		left: 108px;
+	}
+	.wizard-head .wizard-hat .wizard-four-point-star::after, .wizard-head .wizard-hat .wizard-four-point-star::before {
+		content: "";
+		position: absolute;
+		background: #fff;
+		display: block;
+		left: 0;
+		width: 141.4213%;
+		top: 0;
+		bottom: 0;
+		border-radius: 10%;
+		-webkit-transform: rotate(66.66deg) skewX(45deg);
+		transform: rotate(66.66deg) skewX(45deg);
+	}
+	.wizard-objects {
+		position: relative;
+		width: 200px;
+		height: 240px;
+	}
+	.wizard-square {
+		position: absolute;
+		bottom: -60px;
+		left: -5px;
+		width: 120px;
+		height: 120px;
+		border-radius: 50%;
+		-webkit-transform: rotate(-360deg);
+		transform: rotate(-360deg);
+		-webkit-animation: path_square 10s ease-in-out infinite;
+		animation: path_square 10s ease-in-out infinite;
+	}
+	.wizard-square::after {
+		content: "";
+		position: absolute;
+		top: 10px;
+		left: 0;
+		width: 50px;
+		height: 50px;
+		background: #9ab3f5;
+	}
+	.wizard-circle {
+		position: absolute;
+		bottom: 10px;
+		left: 0;
+		width: 100px;
+		height: 100px;
+		border-radius: 50%;
+		-webkit-transform: rotate(-360deg);
+		transform: rotate(-360deg);
+		-webkit-animation: path_circle 10s ease-in-out infinite;
+		animation: path_circle 10s ease-in-out infinite;
+	}
+	.wizard-circle::after {
+		content: "";
+		position: absolute;
+		bottom: -10px;
+		left: 25px;
+		width: 50px;
+		height: 50px;
+		border-radius: 50%;
+		background: #c56183;
+	}
+	.wizard-triangle {
+		position: absolute;
+		bottom: -62px;
+		left: -10px;
+		width: 110px;
+		height: 110px;
+		border-radius: 50%;
+		-webkit-transform: rotate(-360deg);
+		transform: rotate(-360deg);
+		-webkit-animation: path_triangle 10s ease-in-out infinite;
+		animation: path_triangle 10s ease-in-out infinite;
+	}
+	.wizard-triangle::after {
+		content: "";
+		position: absolute;
+		top: 0;
+		right: -10px;
+		width: 0;
+		height: 0;
+		border-style: solid;
+		border-width: 0 28px 48px 28px;
+		border-color: transparent transparent #89beb3 transparent;
+	}
+	/** 10s animation - 10% = 1s */
+	@-webkit-keyframes right_arm {
+		0% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+		10% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		15% {
+			-webkit-transform: rotate(20deg);
+			transform: rotate(20deg);
+		}
+		20% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		25% {
+			-webkit-transform: rotate(26deg);
+			transform: rotate(26deg);
+		}
+		30% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		35% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		40% {
+			-webkit-transform: rotate(9deg);
+			transform: rotate(9deg);
+		}
+		45% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		50% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		58% {
+			-webkit-transform: rotate(74deg);
+			transform: rotate(74deg);
+		}
+		62% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+	}
+	@-webkit-keyframes left_arm {
+		0% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+		10% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		15% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		20% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		25% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		30% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		35% {
+			-webkit-transform: rotate(-17deg);
+			transform: rotate(-17deg);
+		}
+		40% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		45% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		50% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		58% {
+			-webkit-transform: rotate(-74deg);
+			transform: rotate(-74deg);
+		}
+		62% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+	}
+	@-webkit-keyframes right_hand {
+		0% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		10% {
+			-webkit-transform: rotate(-20deg);
+			transform: rotate(-20deg);
+		}
+		15% {
+			-webkit-transform: rotate(-5deg);
+			transform: rotate(-5deg);
+		}
+		20% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		25% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		30% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		35% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		40% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		45% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		50% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		60% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+	}
+	@-webkit-keyframes right_finger {
+		0% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+		10% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		50% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		60% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+	}
+	@-webkit-keyframes left_finger {
+		0% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+		10% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		15% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		20% {
+			-webkit-transform: scaleX(1) rotate(8deg);
+			transform: scaleX(1) rotate(8deg);
+		}
+		25% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		30% {
+			-webkit-transform: scaleX(1) rotate(7deg);
+			transform: scaleX(1) rotate(7deg);
+		}
+		35% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		40% {
+			-webkit-transform: scaleX(1) rotate(5deg);
+			transform: scaleX(1) rotate(5deg);
+		}
+		45% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		50% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		58% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+	}
+	@-webkit-keyframes head {
+		0% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+		10% {
+			-webkit-transform: translatex(10px) rotate(7deg);
+			transform: translatex(10px) rotate(7deg);
+		}
+		50% {
+			-webkit-transform: translatex(0px) rotate(0deg);
+			transform: translatex(0px) rotate(0deg);
+		}
+		56% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+	}
+	/** 10s animation - 10% = 1s */
+	@-webkit-keyframes path_circle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-100px) rotate(-5deg);
+			transform: translateY(-100px) rotate(-5deg);
+		}
+		55% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		58% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-webkit-keyframes path_square {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(10deg);
+			transform: translateY(-155px) translatex(-15px) rotate(10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		57% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-webkit-keyframes path_triangle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-10deg);
+			transform: translateY(-172px) translatex(10px) rotate(-10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		58% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-moz-keyframes right_arm {
+		0% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+		10% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		15% {
+			-webkit-transform: rotate(20deg);
+			transform: rotate(20deg);
+		}
+		20% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		25% {
+			-webkit-transform: rotate(26deg);
+			transform: rotate(26deg);
+		}
+		30% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		35% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		40% {
+			-webkit-transform: rotate(9deg);
+			transform: rotate(9deg);
+		}
+		45% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		50% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		58% {
+			-webkit-transform: rotate(74deg);
+			transform: rotate(74deg);
+		}
+		62% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+	}
+	@-webkit-keyframes right_arm {
+		0% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+		10% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		15% {
+			-webkit-transform: rotate(20deg);
+			transform: rotate(20deg);
+		}
+		20% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		25% {
+			-webkit-transform: rotate(26deg);
+			transform: rotate(26deg);
+		}
+		30% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		35% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		40% {
+			-webkit-transform: rotate(9deg);
+			transform: rotate(9deg);
+		}
+		45% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		50% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		58% {
+			-webkit-transform: rotate(74deg);
+			transform: rotate(74deg);
+		}
+		62% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+	}
+	@-o-keyframes right_arm {
+		0% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+		10% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		15% {
+			-webkit-transform: rotate(20deg);
+			transform: rotate(20deg);
+		}
+		20% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		25% {
+			-webkit-transform: rotate(26deg);
+			transform: rotate(26deg);
+		}
+		30% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		35% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		40% {
+			-webkit-transform: rotate(9deg);
+			transform: rotate(9deg);
+		}
+		45% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		50% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		58% {
+			-webkit-transform: rotate(74deg);
+			transform: rotate(74deg);
+		}
+		62% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+	}
+	@keyframes right_arm {
+		0% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+		10% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		15% {
+			-webkit-transform: rotate(20deg);
+			transform: rotate(20deg);
+		}
+		20% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		25% {
+			-webkit-transform: rotate(26deg);
+			transform: rotate(26deg);
+		}
+		30% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		35% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		40% {
+			-webkit-transform: rotate(9deg);
+			transform: rotate(9deg);
+		}
+		45% {
+			-webkit-transform: rotate(28deg);
+			transform: rotate(28deg);
+		}
+		50% {
+			-webkit-transform: rotate(8deg);
+			transform: rotate(8deg);
+		}
+		58% {
+			-webkit-transform: rotate(74deg);
+			transform: rotate(74deg);
+		}
+		62% {
+			-webkit-transform: rotate(70deg);
+			transform: rotate(70deg);
+		}
+	}
+	@-moz-keyframes left_arm {
+		0% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+		10% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		15% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		20% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		25% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		30% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		35% {
+			-webkit-transform: rotate(-17deg);
+			transform: rotate(-17deg);
+		}
+		40% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		45% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		50% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		58% {
+			-webkit-transform: rotate(-74deg);
+			transform: rotate(-74deg);
+		}
+		62% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+	}
+	@-webkit-keyframes left_arm {
+		0% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+		10% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		15% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		20% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		25% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		30% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		35% {
+			-webkit-transform: rotate(-17deg);
+			transform: rotate(-17deg);
+		}
+		40% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		45% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		50% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		58% {
+			-webkit-transform: rotate(-74deg);
+			transform: rotate(-74deg);
+		}
+		62% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+	}
+	@-o-keyframes left_arm {
+		0% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+		10% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		15% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		20% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		25% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		30% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		35% {
+			-webkit-transform: rotate(-17deg);
+			transform: rotate(-17deg);
+		}
+		40% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		45% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		50% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		58% {
+			-webkit-transform: rotate(-74deg);
+			transform: rotate(-74deg);
+		}
+		62% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+	}
+	@keyframes left_arm {
+		0% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+		10% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		15% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		20% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		25% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		30% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		35% {
+			-webkit-transform: rotate(-17deg);
+			transform: rotate(-17deg);
+		}
+		40% {
+			-webkit-transform: rotate(5deg);
+			transform: rotate(5deg);
+		}
+		45% {
+			-webkit-transform: rotate(-18deg);
+			transform: rotate(-18deg);
+		}
+		50% {
+			-webkit-transform: rotate(6deg);
+			transform: rotate(6deg);
+		}
+		58% {
+			-webkit-transform: rotate(-74deg);
+			transform: rotate(-74deg);
+		}
+		62% {
+			-webkit-transform: rotate(-70deg);
+			transform: rotate(-70deg);
+		}
+	}
+	@-moz-keyframes right_hand {
+		0% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		10% {
+			-webkit-transform: rotate(-20deg);
+			transform: rotate(-20deg);
+		}
+		15% {
+			-webkit-transform: rotate(-5deg);
+			transform: rotate(-5deg);
+		}
+		20% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		25% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		30% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		35% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		40% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		45% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		50% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		60% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+	}
+	@-webkit-keyframes right_hand {
+		0% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		10% {
+			-webkit-transform: rotate(-20deg);
+			transform: rotate(-20deg);
+		}
+		15% {
+			-webkit-transform: rotate(-5deg);
+			transform: rotate(-5deg);
+		}
+		20% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		25% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		30% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		35% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		40% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		45% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		50% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		60% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+	}
+	@-o-keyframes right_hand {
+		0% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		10% {
+			-webkit-transform: rotate(-20deg);
+			transform: rotate(-20deg);
+		}
+		15% {
+			-webkit-transform: rotate(-5deg);
+			transform: rotate(-5deg);
+		}
+		20% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		25% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		30% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		35% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		40% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		45% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		50% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		60% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+	}
+	@keyframes right_hand {
+		0% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		10% {
+			-webkit-transform: rotate(-20deg);
+			transform: rotate(-20deg);
+		}
+		15% {
+			-webkit-transform: rotate(-5deg);
+			transform: rotate(-5deg);
+		}
+		20% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		25% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		30% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		35% {
+			-webkit-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		40% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+		45% {
+			-webkit-transform: rotate(-60deg);
+			transform: rotate(-60deg);
+		}
+		50% {
+			-webkit-transform: rotate(10deg);
+			transform: rotate(10deg);
+		}
+		60% {
+			-webkit-transform: rotate(-40deg);
+			transform: rotate(-40deg);
+		}
+	}
+	@-moz-keyframes right_finger {
+		0% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+		10% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		50% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		60% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+	}
+	@-webkit-keyframes right_finger {
+		0% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+		10% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		50% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		60% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+	}
+	@-o-keyframes right_finger {
+		0% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+		10% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		50% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		60% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+	}
+	@keyframes right_finger {
+		0% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+		10% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		50% {
+			-webkit-transform: none;
+			transform: none;
+		}
+		60% {
+			-webkit-transform: translateY(16px);
+			transform: translateY(16px);
+		}
+	}
+	@-moz-keyframes left_finger {
+		0% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+		10% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		15% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		20% {
+			-webkit-transform: scaleX(1) rotate(8deg);
+			transform: scaleX(1) rotate(8deg);
+		}
+		25% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		30% {
+			-webkit-transform: scaleX(1) rotate(7deg);
+			transform: scaleX(1) rotate(7deg);
+		}
+		35% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		40% {
+			-webkit-transform: scaleX(1) rotate(5deg);
+			transform: scaleX(1) rotate(5deg);
+		}
+		45% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		50% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		58% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+	}
+	@-webkit-keyframes left_finger {
+		0% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+		10% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		15% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		20% {
+			-webkit-transform: scaleX(1) rotate(8deg);
+			transform: scaleX(1) rotate(8deg);
+		}
+		25% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		30% {
+			-webkit-transform: scaleX(1) rotate(7deg);
+			transform: scaleX(1) rotate(7deg);
+		}
+		35% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		40% {
+			-webkit-transform: scaleX(1) rotate(5deg);
+			transform: scaleX(1) rotate(5deg);
+		}
+		45% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		50% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		58% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+	}
+	@-o-keyframes left_finger {
+		0% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+		10% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		15% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		20% {
+			-webkit-transform: scaleX(1) rotate(8deg);
+			transform: scaleX(1) rotate(8deg);
+		}
+		25% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		30% {
+			-webkit-transform: scaleX(1) rotate(7deg);
+			transform: scaleX(1) rotate(7deg);
+		}
+		35% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		40% {
+			-webkit-transform: scaleX(1) rotate(5deg);
+			transform: scaleX(1) rotate(5deg);
+		}
+		45% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		50% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		58% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+	}
+	@keyframes left_finger {
+		0% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+		10% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		15% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		20% {
+			-webkit-transform: scaleX(1) rotate(8deg);
+			transform: scaleX(1) rotate(8deg);
+		}
+		25% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		30% {
+			-webkit-transform: scaleX(1) rotate(7deg);
+			transform: scaleX(1) rotate(7deg);
+		}
+		35% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		40% {
+			-webkit-transform: scaleX(1) rotate(5deg);
+			transform: scaleX(1) rotate(5deg);
+		}
+		45% {
+			-webkit-transform: scaleX(1) rotate(0deg);
+			transform: scaleX(1) rotate(0deg);
+		}
+		50% {
+			-webkit-transform: scaleX(1) rotate(6deg);
+			transform: scaleX(1) rotate(6deg);
+		}
+		58% {
+			-webkit-transform: scaleX(0);
+			transform: scaleX(0);
+		}
+	}
+	@-moz-keyframes head {
+		0% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+		10% {
+			-webkit-transform: translatex(10px) rotate(7deg);
+			transform: translatex(10px) rotate(7deg);
+		}
+		50% {
+			-webkit-transform: translatex(0px) rotate(0deg);
+			transform: translatex(0px) rotate(0deg);
+		}
+		56% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+	}
+	@-webkit-keyframes head {
+		0% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+		10% {
+			-webkit-transform: translatex(10px) rotate(7deg);
+			transform: translatex(10px) rotate(7deg);
+		}
+		50% {
+			-webkit-transform: translatex(0px) rotate(0deg);
+			transform: translatex(0px) rotate(0deg);
+		}
+		56% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+	}
+	@-o-keyframes head {
+		0% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+		10% {
+			-webkit-transform: translatex(10px) rotate(7deg);
+			transform: translatex(10px) rotate(7deg);
+		}
+		50% {
+			-webkit-transform: translatex(0px) rotate(0deg);
+			transform: translatex(0px) rotate(0deg);
+		}
+		56% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+	}
+	@keyframes head {
+		0% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+		10% {
+			-webkit-transform: translatex(10px) rotate(7deg);
+			transform: translatex(10px) rotate(7deg);
+		}
+		50% {
+			-webkit-transform: translatex(0px) rotate(0deg);
+			transform: translatex(0px) rotate(0deg);
+		}
+		56% {
+			-webkit-transform: rotate(-3deg);
+			transform: rotate(-3deg);
+		}
+	}
+	@-moz-keyframes path_circle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-100px) rotate(-5deg);
+			transform: translateY(-100px) rotate(-5deg);
+		}
+		55% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		58% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-webkit-keyframes path_circle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-100px) rotate(-5deg);
+			transform: translateY(-100px) rotate(-5deg);
+		}
+		55% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		58% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-o-keyframes path_circle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-100px) rotate(-5deg);
+			transform: translateY(-100px) rotate(-5deg);
+		}
+		55% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		58% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@keyframes path_circle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-100px) rotate(-5deg);
+			transform: translateY(-100px) rotate(-5deg);
+		}
+		55% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		58% {
+			-webkit-transform: translateY(-100px) rotate(-360deg);
+			transform: translateY(-100px) rotate(-360deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-moz-keyframes path_square {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(10deg);
+			transform: translateY(-155px) translatex(-15px) rotate(10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		57% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-webkit-keyframes path_square {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(10deg);
+			transform: translateY(-155px) translatex(-15px) rotate(10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		57% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-o-keyframes path_square {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(10deg);
+			transform: translateY(-155px) translatex(-15px) rotate(10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		57% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@keyframes path_square {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(10deg);
+			transform: translateY(-155px) translatex(-15px) rotate(10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		57% {
+			-webkit-transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+			transform: translateY(-155px) translatex(-15px) rotate(-350deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-moz-keyframes path_triangle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-10deg);
+			transform: translateY(-172px) translatex(10px) rotate(-10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		58% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-webkit-keyframes path_triangle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-10deg);
+			transform: translateY(-172px) translatex(10px) rotate(-10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		58% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@-o-keyframes path_triangle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-10deg);
+			transform: translateY(-172px) translatex(10px) rotate(-10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		58% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+	@keyframes path_triangle {
+		0% {
+			-webkit-transform: translateY(0);
+			transform: translateY(0);
+		}
+		10% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-10deg);
+			transform: translateY(-172px) translatex(10px) rotate(-10deg);
+		}
+		55% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		58% {
+			-webkit-transform: translateY(-172px) translatex(10px) rotate(-365deg);
+			transform: translateY(-172px) translatex(10px) rotate(-365deg);
+		}
+		63% {
+			-webkit-transform: rotate(-360deg);
+			transform: rotate(-360deg);
+		}
+	}
+</style>
+
+<script>
+  document.onreadystatechange=function(){
+    // console.log(document.readyState);
+    if(document.readyState=="complete"){
+      $("#loading-box").fadeOut();
+    }
+  }
+</script>
+<link rel="stylesheet" href="/js/dist/APlayer.min.css">
+<div class="no-destroy" id="aplayer">
+     <meting-js
+        server="netease"
+        type="playlist"
+        id="7465212579"
+        fixed="true"
+        volume="0.4"
+        order="random"
+        preload="auto"
+    ></meting-js>
+</div>
+<script src="/js/dist/APlayer.min.js"></script>
+<script src="/js/dist/Meting.js"></script>
+
+<body class="max-width mx-auto px3 ltr" >
+  
+
+    <div class="content index py4" id="pjax-container">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Java邮件发送
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name" id="post-author" style="cursor: pointer;">
+          <a href="/">Meow Mii </a>
+        </span>
+      </span>
+    
+      
+    <div class="postdate">
+      
+        <time datetime="2023-02-12T06:35:25.657Z" itemprop="datePublished">2023-02-12</time>
+        
+        (Updated: <time datetime="2023-02-12T06:44:29.013Z" itemprop="dateModified">2023-02-12</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Java/">Java</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
+  
+
+  <div id="post_options">
+    <li><a class="icon" href="/"><i class="fa fa-paw" aria-hidden="true"></i></a></li>
+    <li><a data-pjax class="icon pjax" href="/search"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+    <li><a class="icon" href="#" onclick="$('#toc').toggle();return false;"><i class="fa fa-bars" aria-hidden="true"></i></a></li>
+    
+    <li><a class="icon" aria-label="Previous post" href="/p/9096ed2c.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+    
+    
+    <li><a class="icon" aria-label="Next post" href="/p/48dafabf.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+    
+    <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+    <li><a class="icon" id="share_do" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+    <li><a class="icon" href="#" onclick="switchNightMode()"><i class="fas fa-lightbulb" aria-hidden="true"></i></a></li>
+</div>
+<div id="share" style="display: none">
+<ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/99746608.html&text=Java邮件发送"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java邮件发送&body=Check out this article: https://blog.yiochin.top/p/99746608.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/99746608.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/99746608.html&title=Java邮件发送"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/99746608.html&is_video=false&description=Java邮件发送"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=Java邮件发送&body=Check out this article: https://blog.yiochin.top/p/99746608.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/99746608.html&title=Java邮件发送"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/99746608.html&title=Java邮件发送"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/99746608.html&title=Java邮件发送"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/99746608.html&title=Java邮件发送"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/99746608.html&name=Java邮件发送&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/99746608.html&t=Java邮件发送"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
+
+</div>
+<div id="share" style="display: none">
+    <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/99746608.html&text=Java邮件发送"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java邮件发送&body=Check out this article: https://blog.yiochin.top/p/99746608.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/99746608.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/99746608.html&title=Java邮件发送"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/99746608.html&is_video=false&description=Java邮件发送"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=Java邮件发送&body=Check out this article: https://blog.yiochin.top/p/99746608.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/99746608.html&title=Java邮件发送"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/99746608.html&title=Java邮件发送"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/99746608.html&title=Java邮件发送"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/99746608.html&title=Java邮件发送"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/99746608.html&name=Java邮件发送&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/99746608.html&t=Java邮件发送"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
+
+</div>
+<div id="toc" style="display: none">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%82%AE%E4%BB%B6%E5%8F%91%E9%80%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.</span> <span class="toc-text">邮件发送实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Java%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text">Java实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaWeb%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.</span> <span class="toc-text">JavaWeb实现</span></a></li></ol>
+</div>
+
+
+<style>
+#post_options{
+    border-radius: 10px;
+    background-color: #ffffff33;
+    position: fixed;
+    right: 1%;
+    bottom: 10%;
+    z-index: 99;
+}
+#post_options li{
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
+    /* outline-style: solid;
+    outline-color: grey; */
+        /* display: inline; */
+}
+
+#share{
+    position: fixed;
+    right: 5%;
+    bottom: 3%;
+    z-index: 1;
+    text-align: center;
+}
+@media screen and ( max-width: 500px) {
+    #share{
+        right: 10%;
+    }
+    #toc{
+        margin-right: 20px;
+        padding-left: 0px;
+    }
+
+}
+
+@media screen and (min-width: 900px){
+    .post #toc{
+        right: 4.5%;
+    }
+    .post #share{
+        right: 4.5%;
+    }
+}
+
+#share li{
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
+}
+#toc{
+    border-radius: 6px;
+    font-weight: 700;
+    background-color: rgba(80, 90, 100, 0.4);
+    font-size: 12px;
+    position: fixed;
+    right: 5%;
+    bottom: 25%;
+    z-index: 1;
+    margin-bottom: 18px;
+}
+#toc li{
+    list-style: none;
+}
+
+#toc .toc{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+#toc .toc .toc-child{
+    padding-left: 12px;
+}
+
+</style>
+<script>
+
+</script>
+  <div class="content" itemprop="articleBody">
+    <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><ol>
+<li><p>传输协议</p>
+<ul>
+<li>SMTP协议（Simple Mail Transfer Protocol）<ul>
+<li>属于TCP&#x2F;IP协议族</li>
+<li>控制信件的中转方式，帮助找到下一个目的地</li>
+<li>SMTP邮件服务器</li>
+<li>发送协议</li>
+</ul>
+</li>
+<li>POP3协议（Post  Office Protocol - version 3）<ul>
+<li>属于TCP&#x2F;IP协议族</li>
+<li>远程管理自己在服务器上的邮件</li>
+<li>POP服务器</li>
+<li>接收协议（登录管理协议）</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>邮件服务器</p>
+<p>要在网络上实现邮件功能，要使用专门的邮件服务器。</p>
+<ul>
+<li>SMTP服务器 ：一般是smtp.xxx.com。如163邮箱smtp.163.com，QQ邮箱smtp.qq.com。</li>
+<li>POP服务器：一般是pop.xxx.com。如163邮箱pop.163.com，QQ邮箱pop.qq.com。</li>
+</ul>
+</li>
+</ol>
+<h2 id="邮件发送实现"><a href="#邮件发送实现" class="headerlink" title="邮件发送实现"></a>邮件发送实现</h2><blockquote>
+<ul>
+<li><p>需要JavaMail API 和 Java Activation Framework</p>
+</li>
+<li><p>对应两个jar包：mail.jar  activation.jar</p>
+</li>
+<li><p>要发送邮件 需要获得协议和支持 开启服务POP3&#x2F;SMTP服务</p>
+</li>
+<li><p>普通邮件：不包含附件和图片，纯文本邮件</p>
+</li>
+<li><p>复杂邮件：非纯文本邮件</p>
+</li>
+</ul>
+</blockquote>
+<ul>
+<li>pom.xml</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"> <span class="comment">&lt;!-- https://mvnrepository.com/artifact/javax.mail/mail --&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    &lt;dependency&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--      &lt;groupId&gt;javax.mail&lt;/groupId&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--      &lt;artifactId&gt;mail&lt;/artifactId&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--      &lt;version&gt;1.4.7&lt;/version&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    &lt;/dependency&gt;--&gt;</span></span><br><span class="line"><span class="comment">&lt;!--    上面那个包会出错 大概是ssl协议的问题 换成下下面这个包就可以了</span></span><br><span class="line"><span class="comment">或者  打开java安装路径-&gt;jre/lib/security</span></span><br><span class="line"><span class="comment">然后编辑java.security文件，把SSLv3跟TSL开头的都删掉，然后重启一下服务</span></span><br><span class="line"><span class="comment">--&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- https://mvnrepository.com/artifact/com.sun.mail/javax.mail --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.sun.mail<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>javax.mail<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.6.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">&lt;!-- https://mvnrepository.com/artifact/javax.activation/activation --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>javax.activation<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>activation<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.1.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><p>核心类介绍</p>
+<ul>
+<li><p>Session对象</p>
+<p>定义整个程序所需环境信息，比如主机名、端口号、采用的邮件发送协议和接收协议</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取实例对象</span></span><br><span class="line">Session <span class="title function_">getDefaultInstance</span><span class="params">(Properties props)</span></span><br><span class="line"></span><br><span class="line">Session <span class="title function_">getDefaultInstance</span><span class="params">(Properties props, Authenticator authenticator)</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">// 开启Debug模式</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">setDebug</span><span class="params">(<span class="type">boolean</span> debug)</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">// 获取Transport对象</span></span><br><span class="line">Transport <span class="title function_">getTransport</span><span class="params">()</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>Transport对象</p>
+<p>用来发送邮件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 连接到邮件服务器</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">connect</span><span class="params">(String host, String user, String password)</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">// 发送邮件</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">sendMessage</span><span class="params">(Message var1, Address[] var2)</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">// 关闭连接</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">close</span><span class="params">()</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>Message对象</p>
+<p>表示一封电子邮件，被Transport对象引用</p>
+</li>
+<li><p>Store对象</p>
+<p>用来接收邮件，被Session对象引用，同时创建Message对象</p>
+</li>
+<li><p>MailSSLSocketFactory</p>
+<p>设置SSL加密</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// SSL加密：QQ邮箱需要设置，通过以下4行代码</span></span><br><span class="line"><span class="type">MailSSLSocketFactory</span> <span class="variable">mssf</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MailSSLSocketFactory</span>();</span><br><span class="line">mssf.setTrustAllHosts(<span class="literal">true</span>);</span><br><span class="line">prop.put(<span class="string">&quot;mail.smtp.ssl.enable&quot;</span>, <span class="string">&quot;true&quot;</span>);</span><br><span class="line">prop.put(<span class="string">&quot;mail.smtp.ssl.socketFactory&quot;</span>, mssf);</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>MimePart接口实现类：MimeMessage类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 设置发件人</span></span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">setFrom</span><span class="params">(Address address)</span></span><br><span class="line">    </span><br><span class="line">  <span class="comment">// 设置收件人</span></span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">setRecipient</span><span class="params">(Message.RecipientType type, Address address)</span></span><br><span class="line">      </span><br><span class="line">  <span class="comment">// 设置主题</span></span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">setSubject</span><span class="params">(String subject)</span></span><br><span class="line">      </span><br><span class="line">  <span class="comment">// 设置内容</span></span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">setContent</span><span class="params">(Object o, String type)</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 保存修改：添加图片、附件时需要</span></span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">saveChanges</span><span class="params">()</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>MimePart接口实现类：MimeBodyPart类</p>
+<p>复杂邮件所需</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 文本：设置内容</span></span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">setContent</span><span class="params">(Object o, String type)</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 图片、附件：设置数据处理</span></span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">setDataHandler</span><span class="params">(DataHandler dh)</span></span><br><span class="line">      </span><br><span class="line">  <span class="comment">// 图片：设置CID，在文本中通过src引用</span></span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">setContentID</span><span class="params">(String cid)</span></span><br><span class="line">  </span><br><span class="line">  <span class="comment">// 附件：设置附件名</span></span><br><span class="line">  <span class="keyword">void</span> <span class="title function_">setFileName</span><span class="params">(String filename)</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>MimePart接口实现类：MimeMultiPart类</p>
+<p>组合多个代表MIME消息的MimeBodyPart对象。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 添加MIME消息</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">addBodyPart</span><span class="params">(BodyPart part)</span></span><br><span class="line">  </span><br><span class="line"><span class="comment">// 描述数据关系：alternative/related/mixed</span></span><br><span class="line"><span class="keyword">void</span> <span class="title function_">setSubType</span><span class="params">(String subtype)</span></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>步骤</p>
+<ol>
+<li>创建Session对象</li>
+<li>获得Transport对象</li>
+<li>创建邮件（<strong>普通邮件和复杂邮件有区别</strong>）</li>
+<li>发送Message，关闭连接</li>
+</ol>
+</li>
+</ul>
+<h2 id="Java实现"><a href="#Java实现" class="headerlink" title="Java实现"></a>Java实现</h2><ul>
+<li>发送简单邮件</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> xyz.yiochin;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sun.mail.util.MailSSLSocketFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.mail.*;</span><br><span class="line"><span class="keyword">import</span> javax.mail.internet.InternetAddress;</span><br><span class="line"><span class="keyword">import</span> javax.mail.internet.MimeMessage;</span><br><span class="line"><span class="keyword">import</span> java.util.Properties;</span><br><span class="line"></span><br><span class="line"><span class="comment">//发送简单邮件</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MailSend01</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">Properties</span> <span class="variable">prop</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Properties</span>();</span><br><span class="line"></span><br><span class="line">        <span class="comment">//set qq mail server</span></span><br><span class="line">        prop.setProperty(<span class="string">&quot;mail.host&quot;</span>,<span class="string">&quot;smtp.qq.com&quot;</span>);</span><br><span class="line">        <span class="comment">//set send protocol</span></span><br><span class="line">        prop.setProperty(<span class="string">&quot;mail.transport.protocol&quot;</span>,<span class="string">&quot;smtp&quot;</span>);</span><br><span class="line">        <span class="comment">//validate name and password</span></span><br><span class="line">        prop.setProperty(<span class="string">&quot;mail.smtp.auth&quot;</span>,<span class="string">&quot;true&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//qq need ssl</span></span><br><span class="line">        <span class="type">MailSSLSocketFactory</span> <span class="variable">sf</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MailSSLSocketFactory</span>();</span><br><span class="line">        sf.setTrustAllHosts(<span class="literal">true</span>);</span><br><span class="line">        prop.put(<span class="string">&quot;mail.smtp.ssl.enable&quot;</span>,<span class="string">&quot;true&quot;</span>);</span><br><span class="line">        prop.put(<span class="string">&quot;mail.smtp.ssl.socketFactory&quot;</span>,sf);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// use Java send a mail needs 5 steps</span></span><br><span class="line">        <span class="comment">// 1、创建定义整个应用程序所需要的环境信息的Session对象</span></span><br><span class="line">        <span class="comment">// qq needs others dont</span></span><br><span class="line">        <span class="type">Session</span> <span class="variable">session</span> <span class="operator">=</span> Session.getDefaultInstance(prop, <span class="keyword">new</span> <span class="title class_">Authenticator</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">protected</span> PasswordAuthentication <span class="title function_">getPasswordAuthentication</span><span class="params">()</span> &#123;</span><br><span class="line">                <span class="comment">//username validation</span></span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">PasswordAuthentication</span>(<span class="string">&quot;****@qq.com&quot;</span>,<span class="string">&quot;****&quot;</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="comment">// 开始Session的debug模式可以看到程序发送email的运行状态</span></span><br><span class="line">        session.setDebug(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2、通过Session得到Transport对象</span></span><br><span class="line">        <span class="type">Transport</span> <span class="variable">ts</span> <span class="operator">=</span> session.getTransport();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3、使用邮箱的用户名和授权码连上邮件服务器</span></span><br><span class="line">        ts.connect(<span class="string">&quot;smtp.qq.com&quot;</span>,<span class="string">&quot;****@qq.com&quot;</span>, <span class="string">&quot;****&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        <span class="comment">// 4、创建邮件</span></span><br><span class="line">        <span class="comment">// 创建邮件对象</span></span><br><span class="line">        <span class="type">MimeMessage</span> <span class="variable">message</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MimeMessage</span>(session);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 指明邮件发件人</span></span><br><span class="line">        message.setFrom(<span class="keyword">new</span> <span class="title class_">InternetAddress</span>(<span class="string">&quot;****@qq.com&quot;</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 指明收件人</span></span><br><span class="line">        message.setRecipient(Message.RecipientType.TO, <span class="keyword">new</span> <span class="title class_">InternetAddress</span>(<span class="string">&quot;****@163.com&quot;</span>));</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 邮件的标题</span></span><br><span class="line">        message.setSubject(<span class="string">&quot;This is a simple email sent by Java.&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 邮件的文本内容</span></span><br><span class="line">        message.setContent(<span class="string">&quot;Hello World!&quot;</span>,<span class="string">&quot;text/html;charset=UTF-8&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 5、发送邮件，关闭连接</span></span><br><span class="line">        ts.sendMessage(message,message.getAllRecipients());</span><br><span class="line"></span><br><span class="line">        ts.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>发送复杂邮件</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> xyz.yiochin;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.sun.mail.util.MailSSLSocketFactory;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.activation.DataHandler;</span><br><span class="line"><span class="keyword">import</span> javax.activation.FileDataSource;</span><br><span class="line"><span class="keyword">import</span> javax.mail.*;</span><br><span class="line"><span class="keyword">import</span> javax.mail.internet.*;</span><br><span class="line"><span class="keyword">import</span> java.security.GeneralSecurityException;</span><br><span class="line"><span class="keyword">import</span> java.util.Properties;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MailSend02</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="type">MailSend02</span> <span class="variable">mailSend02</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MailSend02</span>();</span><br><span class="line">        mailSend02.sendMail();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">void</span> <span class="title function_">sendMail</span><span class="params">()</span> <span class="keyword">throws</span> MessagingException, GeneralSecurityException &#123;</span><br><span class="line">        <span class="comment">// set properties</span></span><br><span class="line">        <span class="keyword">final</span> <span class="type">String</span> <span class="variable">host</span> <span class="operator">=</span> <span class="string">&quot;smtp.qq.com&quot;</span>;</span><br><span class="line">        <span class="keyword">final</span> <span class="type">String</span> <span class="variable">authCode</span> <span class="operator">=</span> <span class="string">&quot;wlnjptkrsfuebhjc&quot;</span>;</span><br><span class="line">        <span class="keyword">final</span> <span class="type">String</span> <span class="variable">addresser</span> <span class="operator">=</span> <span class="string">&quot;397040338@qq.com&quot;</span>;</span><br><span class="line">        <span class="keyword">final</span> <span class="type">String</span> <span class="variable">addressee</span> <span class="operator">=</span> <span class="string">&quot;18326497503@163.com&quot;</span>;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//Configuration parameters</span></span><br><span class="line">        <span class="type">Properties</span> <span class="variable">prop</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Properties</span>();</span><br><span class="line">        prop.setProperty(<span class="string">&quot;mail.host&quot;</span>,host);</span><br><span class="line">        prop.setProperty(<span class="string">&quot;mail.transport.protocol&quot;</span>,<span class="string">&quot;smtp&quot;</span>);</span><br><span class="line">        prop.setProperty(<span class="string">&quot;mail.smtp.auth&quot;</span>,<span class="string">&quot;true&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// SSL</span></span><br><span class="line">        <span class="type">MailSSLSocketFactory</span> <span class="variable">mailSSLSocketFactory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MailSSLSocketFactory</span>();</span><br><span class="line">        mailSSLSocketFactory.setTrustAllHosts(<span class="literal">true</span>);</span><br><span class="line">        prop.put(<span class="string">&quot;mail.smtp.ssl.enable&quot;</span>,<span class="string">&quot;true&quot;</span>);</span><br><span class="line">        prop.put(<span class="string">&quot;mail.smtp.ssl.socketFactory&quot;</span>,mailSSLSocketFactory);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 1、创建定义整个应用程序所需要的环境信息的Session对象</span></span><br><span class="line">        <span class="type">Session</span> <span class="variable">session</span> <span class="operator">=</span> Session.getDefaultInstance(prop, <span class="keyword">new</span> <span class="title class_">Authenticator</span>() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="keyword">protected</span> PasswordAuthentication <span class="title function_">getPasswordAuthentication</span><span class="params">()</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">PasswordAuthentication</span>(addresser, authCode);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//开启debug</span></span><br><span class="line">        session.setDebug(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 2、通过Session得到Transport对象</span></span><br><span class="line">        <span class="type">Transport</span> <span class="variable">ts</span> <span class="operator">=</span> session.getTransport();</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 3、使用邮箱的用户名和授权码连上邮件服务器</span></span><br><span class="line">        ts.connect(host,addresser,authCode);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 4、创建邮件</span></span><br><span class="line">        <span class="type">MimeMessage</span> <span class="variable">message</span> <span class="operator">=</span> makeMixedMessage(session, addresser, addressee);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 5、发送邮件，关闭连接</span></span><br><span class="line">        ts.sendMessage(message, message.getAllRecipients());</span><br><span class="line"></span><br><span class="line">        ts.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//创建复杂邮件</span></span><br><span class="line">    <span class="keyword">private</span> MimeMessage <span class="title function_">makeMixedMessage</span><span class="params">(Session session,String addresser,String addressee)</span> <span class="keyword">throws</span> MessagingException &#123;</span><br><span class="line">        <span class="type">MimeMessage</span> <span class="variable">message</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MimeMessage</span>(session);</span><br><span class="line"></span><br><span class="line">        <span class="comment">//sender</span></span><br><span class="line">        message.setFrom(<span class="keyword">new</span> <span class="title class_">InternetAddress</span>(addresser));</span><br><span class="line">        <span class="comment">//receiver</span></span><br><span class="line">        message.setRecipient(Message.RecipientType.TO,<span class="keyword">new</span> <span class="title class_">InternetAddress</span>(addressee));</span><br><span class="line">        <span class="comment">//subject</span></span><br><span class="line">        message.setSubject(<span class="string">&quot;This is a mixed email&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// text</span></span><br><span class="line">        <span class="type">MimeBodyPart</span> <span class="variable">textPart</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MimeBodyPart</span>();</span><br><span class="line">        textPart.setContent(<span class="string">&quot;There is a picture to you: &lt;img src=&#x27;cid:img&#x27;&gt;This&quot;</span>,<span class="string">&quot;text/html;charset=utf-8&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// picture</span></span><br><span class="line">        <span class="type">MimeBodyPart</span> <span class="variable">imgPart</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MimeBodyPart</span>();</span><br><span class="line">        <span class="type">DataHandler</span> <span class="variable">dataHandler</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DataHandler</span>(<span class="keyword">new</span> <span class="title class_">FileDataSource</span>(<span class="string">&quot;src\\main\\resources\\img\\img.png&quot;</span>));</span><br><span class="line">        imgPart.setDataHandler(dataHandler);</span><br><span class="line">        imgPart.setContentID(<span class="string">&quot;img&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// attachment</span></span><br><span class="line">        <span class="type">MimeBodyPart</span> <span class="variable">attachPart</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MimeBodyPart</span>();</span><br><span class="line">        <span class="type">DataHandler</span> <span class="variable">dataHandler1</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">DataHandler</span>(<span class="keyword">new</span> <span class="title class_">FileDataSource</span>(<span class="string">&quot;src\\main\\resources\\md\\test.md&quot;</span>));</span><br><span class="line">        attachPart.setDataHandler(dataHandler1);</span><br><span class="line">        attachPart.setFileName(<span class="string">&quot;fileUpload.md&quot;</span>);<span class="comment">//have a suffix name better</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">//describe data relationship：alternative/related/mixed</span></span><br><span class="line">        <span class="type">MimeMultipart</span> <span class="variable">mm</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MimeMultipart</span>();</span><br><span class="line">        mm.addBodyPart(textPart);</span><br><span class="line">        mm.addBodyPart(attachPart);</span><br><span class="line">        mm.addBodyPart(imgPart);</span><br><span class="line">        mm.setSubType(<span class="string">&quot;mixed&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// set to MimeMessage message and save modification</span></span><br><span class="line">        message.setContent(mm);</span><br><span class="line">        message.saveChanges();</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> message;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h2 id="JavaWeb实现"><a href="#JavaWeb实现" class="headerlink" title="JavaWeb实现"></a>JavaWeb实现</h2><blockquote>
+<ul>
+<li>网站的注册功能通常有邮件的激活步骤，用到了邮件的发送</li>
+<li>javax.mail、activation、servlet-api、jsp-api、jstl、lombok、junit</li>
+</ul>
+</blockquote>
+<ul>
+<li><p>目录结构：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/iuning/myPictures/image-20220325162626965.png" alt="image-20220325162626965">4</p>
+<p><img src="https://cdn.jsdelivr.net/gh/iuning/myPictures/image-20220325162715911.png" alt="image-20220325162715911"></p>
+</li>
+<li><p>前端</p>
+<ul>
+<li><p>register.jsp</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;form action=<span class="string">&quot;register.do&quot;</span> method=<span class="string">&quot;post&quot;</span>&gt;</span><br><span class="line">    &lt;label&gt;</span><br><span class="line">        账号：&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;username&quot;</span>&gt;</span><br><span class="line">        &lt;br&gt;</span><br><span class="line">    &lt;/label&gt;</span><br><span class="line">    &lt;label&gt;</span><br><span class="line">        密码：&lt;input type=<span class="string">&quot;password&quot;</span> name=<span class="string">&quot;password&quot;</span>&gt;</span><br><span class="line">        &lt;br&gt;</span><br><span class="line">    &lt;/label&gt;</span><br><span class="line">    &lt;label&gt;</span><br><span class="line">        邮箱：&lt;input type=<span class="string">&quot;text&quot;</span> name=<span class="string">&quot;mail&quot;</span>&gt;</span><br><span class="line">        &lt;br&gt;</span><br><span class="line">    &lt;/label&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;submit&quot;</span>&gt;|&lt;input type=<span class="string">&quot;reset&quot;</span>&gt;</span><br><span class="line">&lt;/form&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>seccess.jsp</p>
+<figure class="highlight jsp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&lt;%--</span><br><span class="line">  Created by IntelliJ IDEA.</span><br><span class="line">  User: oho</span><br><span class="line">  Date: <span class="number">2022</span>/<span class="number">3</span>/<span class="number">25</span></span><br><span class="line">  Time: <span class="number">15</span>:<span class="number">24</span></span><br><span class="line">  To change <span class="built_in">this</span> template use File | Settings | File Templates.</span><br><span class="line">--%&gt;</span><br><span class="line">&lt;%@ page contentType=<span class="string">&quot;text/html;charset=UTF-8&quot;</span> language=<span class="string">&quot;java&quot;</span> %&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;title&gt;成功&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;h1&gt;$&#123;msg&#125;&lt;/h1&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br><span class="line"></span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+<li><p>Servlet</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">RegisterServlet</span> <span class="keyword">extends</span> <span class="title class_">HttpServlet</span> &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">doGet</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        <span class="type">String</span> <span class="variable">username</span> <span class="operator">=</span> req.getParameter(<span class="string">&quot;username&quot;</span>);</span><br><span class="line">        <span class="type">String</span> <span class="variable">password</span> <span class="operator">=</span> req.getParameter(<span class="string">&quot;password&quot;</span>);</span><br><span class="line">        <span class="type">String</span> <span class="variable">mailAddress</span> <span class="operator">=</span> req.getParameter(<span class="string">&quot;mail&quot;</span>);</span><br><span class="line"></span><br><span class="line">        <span class="type">User</span> <span class="variable">user</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">User</span>(username, password, mailAddress);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 启动线程来发送邮件，优化注册等待时间</span></span><br><span class="line">        <span class="type">MailThread</span> <span class="variable">mailThread</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MailThread</span>(user);</span><br><span class="line">        mailThread.start();<span class="comment">//run只是调用方法 start才是开始多线程</span></span><br><span class="line"></span><br><span class="line">        req.setAttribute(<span class="string">&quot;msg&quot;</span>,<span class="string">&quot;注册成功，稍后会收到一封邮件&quot;</span>);</span><br><span class="line"></span><br><span class="line">        req.getRequestDispatcher(<span class="string">&quot;/WEB-INF/success.jsp&quot;</span>).forward(req,resp);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title function_">doPost</span><span class="params">(HttpServletRequest req, HttpServletResponse resp)</span> <span class="keyword">throws</span> ServletException, IOException &#123;</span><br><span class="line">        doGet(req, resp);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>web.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;UTF-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="comment">&lt;!--把这里的约束换成最新的--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">web-app</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xmlns:xsi</span>=<span class="string">&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">xsi:schemaLocation</span>=<span class="string">&quot;http://xmlns.jcp.org/xml/ns/javaee</span></span></span><br><span class="line"><span class="string"><span class="tag">         http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;</span></span></span><br><span class="line"><span class="tag">         <span class="attr">version</span>=<span class="string">&quot;4.0&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>RegisterServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>xyz.yiochin.servlet.RegisterServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>RegisterServlet<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>/register.do<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">welcome-file-list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">welcome-file</span>&gt;</span>/register.jsp<span class="tag">&lt;/<span class="name">welcome-file</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">welcome-file-list</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">web-app</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>实体类：User</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">User</span> &#123;</span><br><span class="line">    <span class="keyword">private</span> String username;</span><br><span class="line">    <span class="keyword">private</span> String password;</span><br><span class="line">    <span class="keyword">private</span> String mailAddress;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>工具类：MailThread</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MailThread</span> <span class="keyword">extends</span> <span class="title class_">Thread</span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="type">String</span> <span class="variable">host</span> <span class="operator">=</span> <span class="string">&quot;smtp.qq.com&quot;</span>;</span><br><span class="line">    <span class="keyword">final</span> <span class="type">String</span> <span class="variable">authCode</span> <span class="operator">=</span> <span class="string">&quot;wlnjptkrsfuebhjc&quot;</span>;</span><br><span class="line">    <span class="keyword">final</span> <span class="type">String</span> <span class="variable">addresser</span> <span class="operator">=</span> <span class="string">&quot;397040338@qq.com&quot;</span>;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">private</span> User user;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">MailThread</span><span class="params">(User user)</span> &#123;</span><br><span class="line">        <span class="built_in">this</span>.user = user;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">run</span><span class="params">()</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="comment">//配置参数</span></span><br><span class="line">            <span class="type">Properties</span> <span class="variable">prop</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Properties</span>();</span><br><span class="line">            prop.setProperty(<span class="string">&quot;mail.host&quot;</span>,host);</span><br><span class="line">            prop.setProperty(<span class="string">&quot;mail.transport.protocol&quot;</span>,<span class="string">&quot;smtp&quot;</span>);</span><br><span class="line">            prop.setProperty(<span class="string">&quot;mail.stmp.auth&quot;</span>,<span class="string">&quot;true&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">//SSL</span></span><br><span class="line">            <span class="type">MailSSLSocketFactory</span> <span class="variable">mailSSLSocketFactory</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MailSSLSocketFactory</span>();</span><br><span class="line">            mailSSLSocketFactory.setTrustAllHosts(<span class="literal">true</span>);</span><br><span class="line">            prop.put(<span class="string">&quot;mail.smtp.ssl.enable&quot;</span>,<span class="string">&quot;true&quot;</span>);</span><br><span class="line">            prop.put(<span class="string">&quot;mail.stmp.ssl.socketFactory&quot;</span>,mailSSLSocketFactory);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 1、创建Session</span></span><br><span class="line">            <span class="type">Session</span> <span class="variable">session</span> <span class="operator">=</span> Session.getDefaultInstance(prop, <span class="keyword">new</span> <span class="title class_">Authenticator</span>() &#123;</span><br><span class="line">                <span class="meta">@Override</span></span><br><span class="line">                <span class="keyword">protected</span> PasswordAuthentication <span class="title function_">getPasswordAuthentication</span><span class="params">()</span> &#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">PasswordAuthentication</span>(addresser, authCode);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            session.setDebug(<span class="literal">true</span>);</span><br><span class="line">            <span class="comment">// 2、session 得到 transport</span></span><br><span class="line">            <span class="type">Transport</span> <span class="variable">ts</span> <span class="operator">=</span> session.getTransport();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 3、使用用户名和授权码链接服务器</span></span><br><span class="line">            ts.connect(host,addresser,authCode);</span><br><span class="line">            <span class="comment">// 4、创建邮件</span></span><br><span class="line">            <span class="type">MimeMessage</span> <span class="variable">message</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">MimeMessage</span>(session);</span><br><span class="line">            message.setFrom(addresser);</span><br><span class="line">            message.setRecipient(Message.RecipientType.TO,<span class="keyword">new</span> <span class="title class_">InternetAddress</span>(user.getMailAddress()));</span><br><span class="line">            message.setSubject(<span class="string">&quot;用户注册邮件&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="type">String</span> <span class="variable">info</span> <span class="operator">=</span> <span class="string">&quot;注册成功，您的用户名：&quot;</span>+user.getUsername()+<span class="string">&quot;，密码&quot;</span>+user.getPassword();</span><br><span class="line">            <span class="comment">//test</span></span><br><span class="line">            System.out.println(<span class="string">&quot;=======================================&quot;</span>);</span><br><span class="line">            System.out.println(user.getUsername() +<span class="string">&quot;:&quot;</span>+user.getPassword());</span><br><span class="line">            System.out.println(<span class="string">&quot;=======================================&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">            message.setContent(info,<span class="string">&quot;text/html;charset=utf-8&quot;</span>);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// 5、发送邮件，关闭连接</span></span><br><span class="line">            ts.sendMessage(message,<span class="keyword">new</span> <span class="title class_">InternetAddress</span>[]&#123;<span class="keyword">new</span> <span class="title class_">InternetAddress</span>(user.getMailAddress())&#125;);</span><br><span class="line">            ts.close();</span><br><span class="line">        &#125; <span class="keyword">catch</span> (GeneralSecurityException | MessagingException e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+  </div>
+
+</article>
+
+
+<div id="copyright" class="post-copyright-information">
+    <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+    <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ 
+  <!-- 结束语 -->
+    <p id="easter-egg"></p>
+ 
+  <!-- post-copyright-information -->
+
+    <blockquote style="padding:0">
+        <p>作者：
+            Meow Mii
+        </p>
+        <p>本文链接：
+            
+                <a href="/p/99746608.html" target="_blank" title="Java邮件发送">
+                https://blog.yiochin.top/p/99746608.html</a>
+            
+        </p>
+        <p>版权声明： 本博客所有文章除特别声明外,均采用
+             <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" 
+             target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">
+             CC BY-NC-ND 4.0
+            </a> 许可协议，转载请注明出处！
+        </p>
+    </blockquote>
+    <hr>
+</div>
+
+
+
+
+
+
+<div id="comment_twikoo">
+    <p style="font-size: 1.5em; font-weight:700;">📝 Comment</p>
+    <div id="gitalk-container"></div>
+</div>
+<style>
+    #gitalk-container a{
+        background-image: none;
+    }
+</style>
+
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        proxy: 'https://vercel.prohibitorum.top/github_access_token',
+        clientID: '37aa963463a974f338bd',
+        clientSecret: '2dc9e5ef7ed915ee6c7bee00b90f299aa489deff',
+        repo: 'fshen0.github.io',
+        owner: 'fshen0',
+        admin: 'fshen0',
+        id: md5(location.pathname),      
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: true
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+
+
+
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2023
+    Meow Mii
+
+  <span>&nbsp;</span>
+    <span> 
+      
+    </span>
+  </div>
+
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <li><a href="/">Home</a></li><li><a href="/archives/">Writing</a></li><li><a href="/categories/">Category</a></li><li><a href="/about/">About</a></li><li><a href="/search/">Search</a></li>
+      </ul>
+    </nav>
+  </div>
+  
+</footer>
+<script type="text/javascript">
+    $("#footer").hover(function(){
+      $(".aplayer-lrc-contents").css("opacity","0");
+    })
+    $("#footer").mouseleave(function(){
+      $(".aplayer-lrc-contents").css("opacity","1");
+    })
+</script>
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+
+<script src="/js/main.js"></script>
+
+
+<!-- search -->
+
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+
+<!-- FancyBox -->
+
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+
+<script src="https://cdn.jsdelivr.net/npm/pjax/pjax.js"></script>
+<script>
+  var pjax = new Pjax({
+    elements: 'a[href]:not([href^="#"]):not([href="javascript:void(0)"])',   // 拦截正常带链接的 a 标签
+    selectors: ["#pjax-container","title","#search"]                         // 根据实际需要确认重载区域
+});
+</script>
+   
+<script async>window.onload=function(){var a=document.createElement('script'),b=document.getElementsByTagName('script')[0];a.type='text/javascript',a.async=!0,a.src='/sw-register.js?v='+Date.now(),b.parentNode.insertBefore(a,b)};</script></body></html>

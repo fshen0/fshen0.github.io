@@ -16,15 +16,25 @@
     <script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
     
 
-    <meta name="description" content="Sow nothing, reap nothing.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Meow Mii">
-<meta property="og:url" content="https://blog.yiochin.top/archives/index.html">
+    <meta name="description" content="优化思路 连接–配置优化第一个环节就是客户端到服务端的连接，可能会出现服务端的连接数不够造成的性能问题。有两个解决办法：一是增加服务端的可用连接数，通过修改配置参数增加可用连接数，修改max_connections的大小show variables like &#39;max_connections&#39;;--修改最大连接数，或者及时释放不活动的连接。交互式和非交互式的客户端的默认超时时间都是">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL学习笔记Ⅴ-优化">
+<meta property="og:url" content="https://blog.yiochin.top/p/ef2788f.html">
 <meta property="og:site_name" content="Meow Mii">
-<meta property="og:description" content="Sow nothing, reap nothing.">
+<meta property="og:description" content="优化思路 连接–配置优化第一个环节就是客户端到服务端的连接，可能会出现服务端的连接数不够造成的性能问题。有两个解决办法：一是增加服务端的可用连接数，通过修改配置参数增加可用连接数，修改max_connections的大小show variables like &#39;max_connections&#39;;--修改最大连接数，或者及时释放不活动的连接。交互式和非交互式的客户端的默认超时时间都是">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090059937.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090059809.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090059323.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090059259.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090059953.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090100289.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090100887.png">
+<meta property="article:published_time" content="2023-02-12T06:37:10.376Z">
+<meta property="article:modified_time" content="2023-02-12T06:48:20.446Z">
 <meta property="article:author" content="Meow Mii">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090059937.png">
 
     
     
@@ -47,7 +57,7 @@
       
     
     <!-- title -->
-    <title>Writing</title>
+    <title>MySQL学习笔记Ⅴ-优化</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -2015,300 +2025,386 @@
 
     <div class="content index py4" id="pjax-container">
         
-          <header id="header">
-  <a href="#" onclick="switchNightMode()" onmouseover="">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        MySQL学习笔记Ⅴ-优化
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name" id="post-author" style="cursor: pointer;">
+          <a href="/">Meow Mii </a>
+        </span>
+      </span>
+    
+      
+    <div class="postdate">
+      
+        <time datetime="2023-02-12T06:37:10.376Z" itemprop="datePublished">2023-02-12</time>
+        
+        (Updated: <time datetime="2023-02-12T06:48:20.446Z" itemprop="dateModified">2023-02-12</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/MySQL/">MySQL</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
   
-    
-      <div id="logo" style="background-image: url(/images/avatar.jpg);"></div>
-    
-  
-    <div id="title">
-      <h1>Meow Mii</h1>
-    </div>
-  </a>
-  <div id="nav">
-    <ul>
-      
-        <li><a href="/">Home</a></li>
-      
-        <li><a href="/archives/">Writing</a></li>
-      
-        <li><a href="/categories/">Category</a></li>
-      
-        <li><a href="/about/">About</a></li>
-      
-        <li><a href="/search/">Search</a></li>
-      
-    </ul>
-  </div>
-  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css" />
-  
-</header>
 
-
-        
-        <div id="archive">
-  <ul class="post-list">
+  <div id="post_options">
+    <li><a class="icon" href="/"><i class="fa fa-paw" aria-hidden="true"></i></a></li>
+    <li><a data-pjax class="icon pjax" href="/search"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+    <li><a class="icon" href="#" onclick="$('#toc').toggle();return false;"><i class="fa fa-bars" aria-hidden="true"></i></a></li>
+    
+    <li><a class="icon" aria-label="Previous post" href="/p/7e988c00.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
     
     
+    <li><a class="icon" aria-label="Next post" href="/p/9096ed2c.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
     
-    
-      
-      
-      
-      
-        <li class="post-year"><h2>2023</h2></li>
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:16.976Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/e911dea2.html">Redis缓存穿透和雪崩</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:12.950Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/c328eac5.html">Redis主从复制</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:08.939Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/bf72778.html">Redis发布订阅</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:04.800Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/815cc3a1.html">Redis配置</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:48:20.446Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/ef2788f.html">MySQL学习笔记Ⅴ-优化</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:48:11.565Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/9096ed2c.html">MySQL学习笔记Ⅳ-锁</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:48:03.376Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/e791ddba.html">MySQL学习笔记Ⅲ-事务</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:47:58.312Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/7e988c00.html">MySQL学习笔记Ⅱ-索引</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:47:52.988Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/99fbc96.html">MySQL学习笔记Ⅰ-存储引擎</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:44:29.013Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/99746608.html">Java邮件发送</a>
-    
-
-
-</span>
-      </li>
-    
-  </ul>
-  
-    <div class="pagination">
-        
-        <span class="page-number">Page 1 of 2</span>
-        
-            <a href="/archives/page/2/"><i class="fas fa-angle-right"></i>
-            </a>
-        
-    </div>
-
+    <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+    <li><a class="icon" id="share_do" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+    <li><a class="icon" href="#" onclick="switchNightMode()"><i class="fas fa-lightbulb" aria-hidden="true"></i></a></li>
+</div>
+<div id="share" style="display: none">
+<ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/ef2788f.html&text=MySQL学习笔记Ⅴ-优化"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MySQL学习笔记Ⅴ-优化&body=Check out this article: https://blog.yiochin.top/p/ef2788f.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/ef2788f.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/ef2788f.html&title=MySQL学习笔记Ⅴ-优化"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/ef2788f.html&is_video=false&description=MySQL学习笔记Ⅴ-优化"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=MySQL学习笔记Ⅴ-优化&body=Check out this article: https://blog.yiochin.top/p/ef2788f.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/ef2788f.html&title=MySQL学习笔记Ⅴ-优化"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/ef2788f.html&title=MySQL学习笔记Ⅴ-优化"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/ef2788f.html&title=MySQL学习笔记Ⅴ-优化"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/ef2788f.html&title=MySQL学习笔记Ⅴ-优化"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/ef2788f.html&name=MySQL学习笔记Ⅴ-优化&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/ef2788f.html&t=MySQL学习笔记Ⅴ-优化"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
 
 </div>
+<div id="share" style="display: none">
+    <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/ef2788f.html&text=MySQL学习笔记Ⅴ-优化"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MySQL学习笔记Ⅴ-优化&body=Check out this article: https://blog.yiochin.top/p/ef2788f.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/ef2788f.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/ef2788f.html&title=MySQL学习笔记Ⅴ-优化"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/ef2788f.html&is_video=false&description=MySQL学习笔记Ⅴ-优化"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=MySQL学习笔记Ⅴ-优化&body=Check out this article: https://blog.yiochin.top/p/ef2788f.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/ef2788f.html&title=MySQL学习笔记Ⅴ-优化"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/ef2788f.html&title=MySQL学习笔记Ⅴ-优化"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/ef2788f.html&title=MySQL学习笔记Ⅴ-优化"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/ef2788f.html&title=MySQL学习笔记Ⅴ-优化"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/ef2788f.html&name=MySQL学习笔记Ⅴ-优化&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/ef2788f.html&t=MySQL学习笔记Ⅴ-优化"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
+
+</div>
+<div id="toc" style="display: none">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E6%80%9D%E8%B7%AF"><span class="toc-number">1.</span> <span class="toc-text">优化思路</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E2%80%93%E9%85%8D%E7%BD%AE%E4%BC%98%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text">连接–配置优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BC%93%E5%AD%98%E2%80%93%E6%9E%B6%E6%9E%84%E4%BC%98%E5%8C%96"><span class="toc-number">3.</span> <span class="toc-text">缓存–架构优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%98%E5%8C%96%E5%99%A8%E2%80%93SQL%E8%AF%AD%E5%8F%A5%E5%88%86%E6%9E%90%E4%B8%8E%E4%BC%98%E5%8C%96"><span class="toc-number">4.</span> <span class="toc-text">优化器–SQL语句分析与优化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="toc-number">5.</span> <span class="toc-text">存储引擎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TIPS"><span class="toc-number">6.</span> <span class="toc-text">TIPS</span></a></li></ol>
+</div>
+
+
+<style>
+#post_options{
+    border-radius: 10px;
+    background-color: #ffffff33;
+    position: fixed;
+    right: 1%;
+    bottom: 10%;
+    z-index: 99;
+}
+#post_options li{
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
+    /* outline-style: solid;
+    outline-color: grey; */
+        /* display: inline; */
+}
+
+#share{
+    position: fixed;
+    right: 5%;
+    bottom: 3%;
+    z-index: 1;
+    text-align: center;
+}
+@media screen and ( max-width: 500px) {
+    #share{
+        right: 10%;
+    }
+    #toc{
+        margin-right: 20px;
+        padding-left: 0px;
+    }
+
+}
+
+@media screen and (min-width: 900px){
+    .post #toc{
+        right: 4.5%;
+    }
+    .post #share{
+        right: 4.5%;
+    }
+}
+
+#share li{
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
+}
+#toc{
+    border-radius: 6px;
+    font-weight: 700;
+    background-color: rgba(80, 90, 100, 0.4);
+    font-size: 12px;
+    position: fixed;
+    right: 5%;
+    bottom: 25%;
+    z-index: 1;
+    margin-bottom: 18px;
+}
+#toc li{
+    list-style: none;
+}
+
+#toc .toc{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+#toc .toc .toc-child{
+    padding-left: 12px;
+}
+
+</style>
+<script>
+
+</script>
+  <div class="content" itemprop="articleBody">
+    <h2 id="优化思路"><a href="#优化思路" class="headerlink" title="优化思路"></a>优化思路</h2><p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090059937.png" alt="image-20230208135856698"></p>
+<h2 id="连接–配置优化"><a href="#连接–配置优化" class="headerlink" title="连接–配置优化"></a>连接–配置优化</h2><p>第一个环节就是客户端到服务端的连接，可能会出现服务端的连接数不够造成的性能问题。有两个解决办法：一是增加服务端的可用连接数，通过修改配置参数增加可用连接数，修改<code>max_connections</code>的大小<code>show variables like &#39;max_connections&#39;;--修改最大连接数</code>，或者及时释放不活动的连接。交互式和非交互式的客户端的默认超时时间都是28800秒，8小时，我们可以把这个值调小。二是，从客户端来说，可以减少从服务端获取的连接数，如果不想要每一次执行SQL都创建一个新的连接，可以引入连接池，实现连接的重用。有点像（ThreadLocal）。</p>
+<h2 id="缓存–架构优化"><a href="#缓存–架构优化" class="headerlink" title="缓存–架构优化"></a>缓存–架构优化</h2><ol>
+<li><p><strong>缓存</strong></p>
+<p>在应用系统的并发数非常大的情况下，如果没有缓存，会造成两个问题：一方面是会给数据库带来很大的压力，另一方面，从应用的层面来说，操作数据的速度也会收到影响。可以使用第三方的缓存服务来解决这个问题，如Redis。</p>
+</li>
+<li><p><strong>集群、主从复制</strong></p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090059809.png" alt="image-20230208153806906"></p>
+<p>单台数据库服务满足不了访问需求，可以做数据库的集群方案。做了主从复制之后，只把数据写入master节点，而读的请求可以分担到slave节点。这种方案叫做读写分离。</p>
+<p>读写分离可以一定程度减轻数据库服务器的访问压力，但是需要特别注意主从数据一致性的问题。</p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090059323.png" alt="image-20230208153821704"></p>
+</li>
+<li><p><strong>分库分表</strong></p>
+<p><strong>垂直分库，减少并发压力。水平分表，解决存储瓶颈。</strong></p>
+<p>垂直分库的做法，是把一个数据库按照业务拆分成不同的数据库：</p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090059259.png" alt="image-20230208154603011"></p>
+<p>水平分表的做法，是把单张表的数据按照一定的规则分布到多个数据库。</p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090059953.png" alt="image-20230208155232639"></p>
+</li>
+</ol>
+<h2 id="优化器–SQL语句分析与优化"><a href="#优化器–SQL语句分析与优化" class="headerlink" title="优化器–SQL语句分析与优化"></a>优化器–SQL语句分析与优化</h2><ol>
+<li><p>慢查询日志 slow query log</p>
+<ul>
+<li><p>打开慢日志开关：打开是有代价的，所以默认关闭。<code>show variables like &#39;slow_query%&#39;</code>。除了这个开关还有一个参数，控制执行超过多长时间的SQL才记录到慢日志，默认是十秒，改成0秒的话就是记录所有的SQL。<code>show variables like &#39;%long_query%&#39;;</code>。可以直接动态修改参数（重启后失效）：、</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> variables <span class="keyword">like</span> <span class="string">&#x27;%long_query%&#x27;</span>;<span class="keyword">set</span> @<span class="variable">@global</span>.slow_query_log<span class="operator">=</span><span class="number">1</span>; <span class="comment">-- 1开启 0关闭 重启后失效</span></span><br><span class="line"><span class="keyword">set</span> @<span class="variable">@global</span>.long_query_time<span class="operator">=</span><span class="number">3</span>; <span class="comment">-- msyql默认的慢查询时间是10秒，另开一个窗口后才会查到最新值</span></span><br><span class="line"><span class="keyword">show</span> variables <span class="keyword">like</span> <span class="string">&#x27;slow_query%&#x27;</span></span><br><span class="line"><span class="keyword">show</span> variables <span class="keyword">like</span> <span class="string">&#x27;%long_query%&#x27;</span>;</span><br></pre></td></tr></table></figure>
+
+<p>或者修改配置文件my.cnf:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">slow_query_log=ON</span><br><span class="line">long_query_time=2</span><br><span class="line">slow_query_log_file=/var/lib/mysql/localhost-slow.log</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>慢日志分析</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">show</span> <span class="keyword">global</span> status <span class="keyword">like</span> <span class="string">&#x27;slow_queries&#x27;</span>; <span class="comment">-- 查看有多少，慢查询</span></span><br><span class="line"><span class="keyword">show</span> variables <span class="keyword">like</span> <span class="string">&#x27;%slow_query%&#x27;</span>; <span class="comment">-- 获取慢日志目录</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>mysqldumpslow</strong>：是MySQL提供的一个慢日志分析工具，在MySQL的bin目录下</p>
+<p><code>mysqldumpslow --help</code></p>
+<p>例如：查询用时最多的10条慢SQL：</p>
+<p><code>mysqldumpslow -s -t 10 -g &#39;select&#39; /var/lib/mysql/localhost-slow.log</code></p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090100289.png" alt="image-20230208204632713"></p>
+<p>Count：表示这个SQL执行了多少次</p>
+<p>Time：代表执行的时间，括号里面是累计时间</p>
+<p>Lock：表示锁定的时间，括号是累计</p>
+<p>Rows：表示返回的记录数，括号是累计</p>
+</li>
+</ul>
+</li>
+<li><p>SHOW PROFILE</p>
+<p>可以查看SQL语句执行的时候使用的资源，比如CPU、IO的消耗情况</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> @<span class="variable">@profiling</span>; <span class="comment">-- 查看是否开启</span></span><br><span class="line"><span class="keyword">set</span> @<span class="variable">@profiling</span><span class="operator">=</span><span class="number">1</span>； <span class="comment">-- 开启</span></span><br><span class="line"><span class="comment">-- 查看profile统计</span></span><br><span class="line"><span class="keyword">show</span> profiles;</span><br><span class="line"><span class="comment">-- 查看最后一个SQL的执行详细信息,从中找出耗时较多的环节</span></span><br><span class="line"><span class="keyword">show</span> profile;</span><br><span class="line"><span class="comment">-- 也可以根据ID查看执行详细信息，在后面带上 for query +ID</span></span><br><span class="line"><span class="keyword">show</span> profile <span class="keyword">for</span> query <span class="number">1</span>;</span><br><span class="line"><span class="comment">-- 其他系统命令</span></span><br><span class="line"><span class="comment">-- 分析server层的运行信息，可以用show status</span></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">global</span> status; <span class="comment">-- 用于查看MySQL服务器运行状态（重启后会清空）</span></span><br><span class="line"><span class="comment">-- 可以用like通配符过滤，例如查看select语句的执行次数</span></span><br><span class="line"><span class="keyword">show</span> <span class="keyword">global</span> status <span class="keyword">like</span> <span class="string">&#x27;com_select&#x27;</span>; <span class="comment">-- 查看select次数</span></span><br><span class="line"><span class="comment">-- 如果要分析服务层的连接信息，可以用：</span></span><br><span class="line"><span class="keyword">show</span> processlist; <span class="comment">-- 用于显示用户运行线程 可以用kill id 杀掉指定线程</span></span><br><span class="line"><span class="comment">-- 也可以查表，效果一样</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> information_schema processlist;</span><br><span class="line"><span class="comment">-- 显示存储引擎的当前运行信息，包括事务持有的表锁、行锁信息；事务的锁等待况；线程信号量；文件IO请求；buffer pool统计信息</span></span><br><span class="line"><span class="keyword">show</span> engine；</span><br><span class="line"><span class="keyword">show</span> engine innodb status;</span><br></pre></td></tr></table></figure>
+
+<p>通过上述的种种操作，我们可以知道哪些SQL慢，且慢在哪。MySQL又提供了一个执行计划的工具，通过EXPLAIN可以模拟优化器执行SQL查询语句的过程，来知道MySQL是怎么处理一条SQL语句的。通过这种方式我们可以分析语句或者表的性能瓶颈。</p>
+</li>
+<li><p>EXPLAIN执行计划</p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090100887.png" alt="image-20230208230026498"></p>
+<p><strong>select_type查询类型</strong>，还有其他：DEPENDENT UNION、DEPENDENT SUBQUERY、MATERIALIZED、UNCACHEABLE SUBQUERY、UNCACHEABLE UNION。</p>
+<p>常见的查询类型：</p>
+<ul>
+<li><p>SIMPLE：简单查询，不包含子查询和关联查询union。</p>
+</li>
+<li><p>PRIMARY：子查询SQL语句中的主查询，也就是最外面的那层查询。</p>
+</li>
+<li><p>SUBQUERY：子查询中所有的内层查询都是SUBQUERY类型的。</p>
+</li>
+<li><p>DERIVED：派生查询，表示在得到最终查询结果之前会用到临时表。</p>
+</li>
+<li><p>UNION：用到了UNION查询（UNION会用到内部的临时表）。UNION ALL不需要去重，因此不用临时表。</p>
+</li>
+<li><p>UNION RESULT：主要是显示哪些表之间存在UNION查询。</p>
+<p>例如：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 查询ID为1或2的老师教授的课程</span></span><br><span class="line">EXPLAIN <span class="keyword">SELECT</span> cr.name</span><br><span class="line"><span class="keyword">FROM</span>(</span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> course <span class="keyword">WHERE</span> tid<span class="operator">=</span><span class="number">1</span></span><br><span class="line"><span class="keyword">UNION</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="operator">*</span> <span class="keyword">FROM</span> course <span class="keyword">WHERE</span> tid<span class="operator">=</span><span class="number">2</span>)cr;</span><br></pre></td></tr></table></figure>
+
+<p><strong>对于关联查询，先执行右边的table（UNION），在执行左边的table</strong>，类型是DERIVED。</p>
+</li>
+</ul>
+<p><strong>type</strong>，在常用的连接类型中：system&gt;const&gt;eq_ref&gt;ref&gt;range&gt;index&gt;all，其他还有fulltext、ref_or_null、index_merger、unique_subquery、index_subquery。以上除了all，都能用到索引。</p>
+<ul>
+<li><p>const：主键索引或者唯一索引与常数进行等值匹配，只能查到一条数据的SQL。</p>
+</li>
+<li><p>system：是const的一种特例，只有一行满足条件，对于MyISAM、Memory的表，只查询到一条记录，也是system。</p>
+</li>
+<li><p>eq_ref：通常出现在多表的join查询，<strong>被驱动表通过唯一性索引</strong>（UNIQUE或PRIMARY KEY）进行访问，此时被驱动表的访问方式就是eq_ref。eq_ref是除const之外最好的访问形式。</p>
+</li>
+<li><p>以上三个访问方式都是可遇不可求的，基本上很难优化的这个状态。</p>
+</li>
+<li><p>ref：<strong>查询用到了非唯一索引</strong></p>
+</li>
+<li><p>range：对索引进行范围扫描。不走索引一定是全表扫描（ALL），IN查询也是range（字段有主键索引）</p>
+</li>
+<li><p>index：Full Index Scan，查询全部索引中的数据（比不走索引快）</p>
+<p><code>EXPLAIN SELECT tid FROM teacher;</code></p>
+</li>
+<li><p>ALL：FULL Table Scan，如果没有索引，type就是ALL。代表全表扫描。</p>
+</li>
+<li><p>一般来说，需要保证查询至少打到range级别，最好能达到ref。ALL（全表扫描）和index（查询全部索引）都是需要优化的。</p>
+</li>
+</ul>
+<p><strong>possible_key、key</strong>：可能用到的索引和实际用到的索引。如果是NULL就代表没有用到的索引。possible_key可以有一个或者多个，比如查询多个字段都有索引，或者一个字段同时有单列索引和联合索引。能用到的索引并不是越多越好。可能用到索引不代表一定用到索引。如果通过分析发现没有用到索引，就要检查SQL或者创建索引。</p>
+<p><strong>key_len</strong>：所以的长度（使用的字节数）。跟索引字段的类型、长度有关。表上有联合索引：KEY `comidx_name_phone`(`name`,`phone`)：<code>explain select * from user_innodb where name=&#39;XXX&#39;</code>这里索引只用到了name字段，utf8mb4编码1字符4字节。所以是255*4&#x3D;1020.使用变长字段varchar需要额外增加2字节，允许NULL需要额外增加1字节。一共是1023&#x3D;key_len。</p>
+<p><strong>rows</strong>：MySQL认为扫描多少行（数据或索引）才能返回请求的数据，是一个预估值，一般来说行数越少越好。</p>
+<p><strong>filtered</strong>：表示存储引擎返回的数据在server层过滤后，剩下多少满足查询的记录数量的比例，是一个百分比。如果比例很低，说明存储引擎层返回的的数据需要经过大量的过滤，这个是会消耗性能的。</p>
+<p><strong>ref</strong>：使用哪个列或者常数和索引一起从表中筛选数据，可以参考一下。（？？？）</p>
+<p><strong>extra</strong>：执行额外计划给出的额外的信息说明。</p>
+<p>如果需要具体的cost信息，可以用 EXPLAIN FORMAT&#x3D;JSON，可以开启optimizer trace获得更详细的信息。</p>
+</li>
+</ol>
+<h2 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h2><ol>
+<li><p>存储引擎的选择</p>
+<p>为不同的业务表选择不同的存储引擎，例如：查询插入操作多的业务表，用MyISAM。临时数据用Memory。常规的并发大更新多的表用innodb。</p>
+</li>
+<li><p>字段定义</p>
+<p>原则：使用可以正确存储数据的最小数据类型。为每一列选择合适的字段类型。</p>
+<ol>
+<li>整数类型：tinyint、smallint、mediumint、int、integer、bigint、bit，enum</li>
+<li>字符类型：变长varchar更节省空间，但要多一个字节来记录长度。固定长度用char。</li>
+<li>不要使用外键、触发器、视图：降低了可读性。影响数据库性能，应该把计算的事情交给程序，数据库专心做存储；数据完整性应该在程序中检查。</li>
+<li>大文件存储：不要在数据库存储图片或者大文件。NAS，数据库只需要存储URI。</li>
+<li>表拆分或者字段冗余：把不常用的字段拆分出去，避免列数过大和数据量过大、</li>
+</ol>
+</li>
+</ol>
+<h2 id="TIPS"><a href="#TIPS" class="headerlink" title="TIPS"></a>TIPS</h2><ol>
+<li>除了对SQL与索引、表定义、架构、存储引擎、配置优化外，业务层面的优化也不能忽视。比如限流、引入MQ削峰等</li>
+<li>SQL推荐：<ul>
+<li>使用小表驱动大表</li>
+<li>用join来代替子查询</li>
+<li>not exist转换为left join IS NULL</li>
+<li>or 改为 union</li>
+<li>使用UNION ALL代替UNION，如果结果集允许重复的话</li>
+<li>大偏移的limit，先过滤再排序。</li>
+</ul>
+</li>
+<li>表结构（冗余、拆分、not null等）、架构优化</li>
+<li>业务层优化，必须条件是否必要</li>
+</ol>
+
+  </div>
+
+</article>
+
+
+<div id="copyright" class="post-copyright-information">
+    <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+    <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ 
+  <!-- 结束语 -->
+    <p id="easter-egg"></p>
+ 
+  <!-- post-copyright-information -->
+
+    <blockquote style="padding:0">
+        <p>作者：
+            Meow Mii
+        </p>
+        <p>本文链接：
+            
+                <a href="/p/ef2788f.html" target="_blank" title="MySQL学习笔记Ⅴ-优化">
+                https://blog.yiochin.top/p/ef2788f.html</a>
+            
+        </p>
+        <p>版权声明： 本博客所有文章除特别声明外,均采用
+             <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" 
+             target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">
+             CC BY-NC-ND 4.0
+            </a> 许可协议，转载请注明出处！
+        </p>
+    </blockquote>
+    <hr>
+</div>
+
+
+
+
+
+
+<div id="comment_twikoo">
+    <p style="font-size: 1.5em; font-weight:700;">📝 Comment</p>
+    <div id="gitalk-container"></div>
+</div>
+<style>
+    #gitalk-container a{
+        background-image: none;
+    }
+</style>
+
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        proxy: 'https://vercel.prohibitorum.top/github_access_token',
+        clientID: '37aa963463a974f338bd',
+        clientSecret: '2dc9e5ef7ed915ee6c7bee00b90f299aa489deff',
+        repo: 'fshen0.github.io',
+        owner: 'fshen0',
+        admin: 'fshen0',
+        id: md5(location.pathname),      
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: true
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+
 
 
         <footer id="footer">
@@ -2358,6 +2454,29 @@
 
 
 <!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
 
 
 

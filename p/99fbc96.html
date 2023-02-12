@@ -16,15 +16,19 @@
     <script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
     
 
-    <meta name="description" content="Sow nothing, reap nothing.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Meow Mii">
-<meta property="og:url" content="https://blog.yiochin.top/archives/index.html">
+    <meta name="description" content="存储引擎 InnoDB： MySQL 8.0中的默认存储引擎。InnoDB是MySQL的事务安全（符合ACID）存储引擎，具有提交、回滚和崩溃恢复功能，以保护用户数据。InnoDB的行级锁（没有升级到更粗粒度的锁）和Oracle风格的一致无锁读取增加了多用户并发性和性能。InnoDB在集群索引中存储用户数据，以减少基于主键的普通查询的I&#x2F;O。为了保持数据的完整性，InnoDB也支持FOR">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL学习笔记Ⅰ-存储引擎">
+<meta property="og:url" content="https://blog.yiochin.top/p/99fbc96.html">
 <meta property="og:site_name" content="Meow Mii">
-<meta property="og:description" content="Sow nothing, reap nothing.">
+<meta property="og:description" content="存储引擎 InnoDB： MySQL 8.0中的默认存储引擎。InnoDB是MySQL的事务安全（符合ACID）存储引擎，具有提交、回滚和崩溃恢复功能，以保护用户数据。InnoDB的行级锁（没有升级到更粗粒度的锁）和Oracle风格的一致无锁读取增加了多用户并发性和性能。InnoDB在集群索引中存储用户数据，以减少基于主键的普通查询的I&#x2F;O。为了保持数据的完整性，InnoDB也支持FOR">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102699.png">
+<meta property="article:published_time" content="2023-02-12T06:37:10.392Z">
+<meta property="article:modified_time" content="2023-02-12T06:47:52.988Z">
 <meta property="article:author" content="Meow Mii">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102699.png">
 
     
     
@@ -47,7 +51,7 @@
       
     
     <!-- title -->
-    <title>Writing</title>
+    <title>MySQL学习笔记Ⅰ-存储引擎</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -2015,300 +2019,317 @@
 
     <div class="content index py4" id="pjax-container">
         
-          <header id="header">
-  <a href="#" onclick="switchNightMode()" onmouseover="">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        MySQL学习笔记Ⅰ-存储引擎
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name" id="post-author" style="cursor: pointer;">
+          <a href="/">Meow Mii </a>
+        </span>
+      </span>
+    
+      
+    <div class="postdate">
+      
+        <time datetime="2023-02-12T06:37:10.392Z" itemprop="datePublished">2023-02-12</time>
+        
+        (Updated: <time datetime="2023-02-12T06:47:52.988Z" itemprop="dateModified">2023-02-12</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/MySQL/">MySQL</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
   
-    
-      <div id="logo" style="background-image: url(/images/avatar.jpg);"></div>
-    
-  
-    <div id="title">
-      <h1>Meow Mii</h1>
-    </div>
-  </a>
-  <div id="nav">
-    <ul>
-      
-        <li><a href="/">Home</a></li>
-      
-        <li><a href="/archives/">Writing</a></li>
-      
-        <li><a href="/categories/">Category</a></li>
-      
-        <li><a href="/about/">About</a></li>
-      
-        <li><a href="/search/">Search</a></li>
-      
-    </ul>
-  </div>
-  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css" />
-  
-</header>
 
-
-        
-        <div id="archive">
-  <ul class="post-list">
+  <div id="post_options">
+    <li><a class="icon" href="/"><i class="fa fa-paw" aria-hidden="true"></i></a></li>
+    <li><a data-pjax class="icon pjax" href="/search"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+    <li><a class="icon" href="#" onclick="$('#toc').toggle();return false;"><i class="fa fa-bars" aria-hidden="true"></i></a></li>
+    
+    <li><a class="icon" aria-label="Previous post" href="/p/e911dea2.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
     
     
+    <li><a class="icon" aria-label="Next post" href="/p/e791ddba.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
     
-    
-      
-      
-      
-      
-        <li class="post-year"><h2>2023</h2></li>
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:16.976Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/e911dea2.html">Redis缓存穿透和雪崩</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:12.950Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/c328eac5.html">Redis主从复制</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:08.939Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/bf72778.html">Redis发布订阅</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:04.800Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/815cc3a1.html">Redis配置</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:48:20.446Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/ef2788f.html">MySQL学习笔记Ⅴ-优化</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:48:11.565Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/9096ed2c.html">MySQL学习笔记Ⅳ-锁</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:48:03.376Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/e791ddba.html">MySQL学习笔记Ⅲ-事务</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:47:58.312Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/7e988c00.html">MySQL学习笔记Ⅱ-索引</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:47:52.988Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/99fbc96.html">MySQL学习笔记Ⅰ-存储引擎</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:44:29.013Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/99746608.html">Java邮件发送</a>
-    
-
-
-</span>
-      </li>
-    
-  </ul>
-  
-    <div class="pagination">
-        
-        <span class="page-number">Page 1 of 2</span>
-        
-            <a href="/archives/page/2/"><i class="fas fa-angle-right"></i>
-            </a>
-        
-    </div>
-
+    <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+    <li><a class="icon" id="share_do" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+    <li><a class="icon" href="#" onclick="switchNightMode()"><i class="fas fa-lightbulb" aria-hidden="true"></i></a></li>
+</div>
+<div id="share" style="display: none">
+<ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/99fbc96.html&text=MySQL学习笔记Ⅰ-存储引擎"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MySQL学习笔记Ⅰ-存储引擎&body=Check out this article: https://blog.yiochin.top/p/99fbc96.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/99fbc96.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/99fbc96.html&title=MySQL学习笔记Ⅰ-存储引擎"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/99fbc96.html&is_video=false&description=MySQL学习笔记Ⅰ-存储引擎"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=MySQL学习笔记Ⅰ-存储引擎&body=Check out this article: https://blog.yiochin.top/p/99fbc96.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/99fbc96.html&title=MySQL学习笔记Ⅰ-存储引擎"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/99fbc96.html&title=MySQL学习笔记Ⅰ-存储引擎"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/99fbc96.html&title=MySQL学习笔记Ⅰ-存储引擎"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/99fbc96.html&title=MySQL学习笔记Ⅰ-存储引擎"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/99fbc96.html&name=MySQL学习笔记Ⅰ-存储引擎&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/99fbc96.html&t=MySQL学习笔记Ⅰ-存储引擎"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
 
 </div>
+<div id="share" style="display: none">
+    <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/99fbc96.html&text=MySQL学习笔记Ⅰ-存储引擎"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MySQL学习笔记Ⅰ-存储引擎&body=Check out this article: https://blog.yiochin.top/p/99fbc96.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/99fbc96.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/99fbc96.html&title=MySQL学习笔记Ⅰ-存储引擎"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/99fbc96.html&is_video=false&description=MySQL学习笔记Ⅰ-存储引擎"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=MySQL学习笔记Ⅰ-存储引擎&body=Check out this article: https://blog.yiochin.top/p/99fbc96.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/99fbc96.html&title=MySQL学习笔记Ⅰ-存储引擎"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/99fbc96.html&title=MySQL学习笔记Ⅰ-存储引擎"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/99fbc96.html&title=MySQL学习笔记Ⅰ-存储引擎"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/99fbc96.html&title=MySQL学习笔记Ⅰ-存储引擎"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/99fbc96.html&name=MySQL学习笔记Ⅰ-存储引擎&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/99fbc96.html&t=MySQL学习笔记Ⅰ-存储引擎"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
+
+</div>
+<div id="toc" style="display: none">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E5%BC%95%E6%93%8E"><span class="toc-number">1.</span> <span class="toc-text">存储引擎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MySQL%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84%E6%80%BB%E7%BB%93"><span class="toc-number">2.</span> <span class="toc-text">MySQL体系结构总结</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A8%A1%E5%9D%97%E8%AF%A6%E8%A7%A3"><span class="toc-number">2.1.</span> <span class="toc-text">模块详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%B6%E6%9E%84%E5%88%86%E5%B1%82"><span class="toc-number">2.2.</span> <span class="toc-text">架构分层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E6%9D%A1%E6%9B%B4%E6%96%B0%E8%AF%AD%E5%8F%A5%E6%98%AF%E5%A6%82%E4%BD%95%E6%89%A7%E8%A1%8C%E7%9A%84"><span class="toc-number">2.3.</span> <span class="toc-text">一条更新语句是如何执行的</span></a></li></ol></li></ol>
+</div>
+
+
+<style>
+#post_options{
+    border-radius: 10px;
+    background-color: #ffffff33;
+    position: fixed;
+    right: 1%;
+    bottom: 10%;
+    z-index: 99;
+}
+#post_options li{
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
+    /* outline-style: solid;
+    outline-color: grey; */
+        /* display: inline; */
+}
+
+#share{
+    position: fixed;
+    right: 5%;
+    bottom: 3%;
+    z-index: 1;
+    text-align: center;
+}
+@media screen and ( max-width: 500px) {
+    #share{
+        right: 10%;
+    }
+    #toc{
+        margin-right: 20px;
+        padding-left: 0px;
+    }
+
+}
+
+@media screen and (min-width: 900px){
+    .post #toc{
+        right: 4.5%;
+    }
+    .post #share{
+        right: 4.5%;
+    }
+}
+
+#share li{
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
+}
+#toc{
+    border-radius: 6px;
+    font-weight: 700;
+    background-color: rgba(80, 90, 100, 0.4);
+    font-size: 12px;
+    position: fixed;
+    right: 5%;
+    bottom: 25%;
+    z-index: 1;
+    margin-bottom: 18px;
+}
+#toc li{
+    list-style: none;
+}
+
+#toc .toc{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+#toc .toc .toc-child{
+    padding-left: 12px;
+}
+
+</style>
+<script>
+
+</script>
+  <div class="content" itemprop="articleBody">
+    <h2 id="存储引擎"><a href="#存储引擎" class="headerlink" title="存储引擎"></a>存储引擎</h2><ul>
+<li><strong>InnoDB</strong>： MySQL 8.0中的默认存储引擎。InnoDB是MySQL的<strong>事务安全</strong>（符合ACID）存储引擎，具有提交、回滚和崩溃恢复功能，以保护用户数据。InnoDB的<strong>行级锁</strong>（没有升级到更粗粒度的锁）和Oracle风格的一致无锁读取增加了多用户并发性和性能。InnoDB在集群索引中存储用户数据，以减少基于主键的普通查询的I&#x2F;O。为了保持数据的完整性，InnoDB也支持<strong>FOREIGN KEY参考完整性约束</strong>。其表有两个文件：.frm、.idb。</li>
+<li><strong>MyISAM</strong>：表的占用空间小。<strong>表级锁</strong>限制了读&#x2F;写工作负载的性能，所以它经常被用于网络和数据仓库配置中的<strong>只读或主要是读</strong>的工作负载。其表有三个文件：.frm、.MYD、.MYI。</li>
+<li><strong>Memory</strong>：将所有数据存储在<strong>RAM中</strong>，以便在需要快速查找非关键数据的环境中快速访问。这个引擎以前被称为HEAP引擎。它的使用情况越来越少；<strong>InnoDB及其缓冲池内存区提供了一种通用和持久的方式，将大部分或所有数据保存在内存中，而NDBCLUSTER为巨大的分布式数据集提供快速的键值查询</strong>。</li>
+<li><strong>csv</strong>：它的表格实际上<strong>是带有逗号分隔值的文本文件</strong>。CSV表让你以CSV格式导入或转储数据，与读写相同格式的脚本和应用程序交换数据。因为CSV表<strong>没有索引，所以你通常在正常操作中把数据保存在InnoDB表中，而只在导入或导出阶段使用CSV表</strong>。</li>
+<li><strong>Archive</strong>：紧凑的、无索引的表，用来存储和检索大量很少参考的历史、归档或安全审计信息。</li>
+<li>Blackhole、NDB、Merge、Federated、Example</li>
+</ul>
+<h2 id="MySQL体系结构总结"><a href="#MySQL体系结构总结" class="headerlink" title="MySQL体系结构总结"></a>MySQL体系结构总结</h2><h3 id="模块详解"><a href="#模块详解" class="headerlink" title="模块详解"></a>模块详解</h3><ul>
+<li><strong>Connector</strong>：用来支持各种语言和SQL的交互，比如Java的JDBC。</li>
+<li><strong>Management Services &amp; Utilities</strong>：系统管理和控制工具，包括备份恢复、MySQL复制，集群等</li>
+<li><strong>Connection Pool</strong>：连接池，管理需要缓冲的资源，包括用户密码权限线程等</li>
+<li><strong>SQL Interface</strong>：用来接收用户的SQL命令，返回用户需要的查询结果</li>
+<li><strong>Parse</strong>：用来解析SQL语句</li>
+<li><strong>Optimizer</strong>：查询优化器</li>
+<li><strong>Cache and Buffer</strong>：查询缓存，除了行记录的缓存之外还有表缓存，key缓存，权限缓存等</li>
+<li><strong>Pluggable Storage Engine</strong>：插件式存储引擎，提供API给服务层使用，跟具体的文件打交道</li>
+</ul>
+<h3 id="架构分层"><a href="#架构分层" class="headerlink" title="架构分层"></a>架构分层</h3><p>执行操作的服务层，和存储管理数据的存储引擎层</p>
+<ul>
+<li>服务层：包括客户端与服务端的链接，查询缓存的判断，对SQL语句进行词法和语法的解析。然后是优化器，MySQL底层根据一定的规则对语句进行优化，最后交给执行器去执行。</li>
+<li>存储引擎：是数据真正存放的地方，再往下就是文件管理系统，内存或者磁盘。</li>
+</ul>
+<h3 id="一条更新语句是如何执行的"><a href="#一条更新语句是如何执行的" class="headerlink" title="一条更新语句是如何执行的"></a>一条更新语句是如何执行的</h3><p>首先需要了解一下数据是如何在MySQL中存在的。</p>
+<ol>
+<li><p><strong>缓冲池 Buffer Pool</strong></p>
+<p>对于InnoDB存储引擎来说，数据都是存储在磁盘上的，要操作数据必须先要将磁盘里的数据加载到内存中才行。这里很像操作系统的内存机制。</p>
+<p>InnoDB设定了一个最小单位，叫做页，默认大小为16KB，他是一个逻辑单位，修改该值的大小必须修改源码重新编译安装。</p>
+<p>InnoDB使用了一种缓冲池的技术，就是把磁盘读的页放到一块内存区域中，下次再次读取该页先判断是否在内存中。这个内存区域就是Buffer Pool。</p>
+<p>修改数据的时候，先修改缓冲池中的页，与磁盘不一致的时候称为<strong>脏页</strong>。InnoDB有一个专门的后台线程将数据写入到磁盘，每隔一段时间就一次性的将多个修改写入磁盘，这个动作称之为<strong>脏刷</strong>。</p>
+</li>
+<li><p><strong>InnoDB的内存结构和磁盘结构</strong></p>
+<p>内存结构里面主要是Buffer Pool、Change Buffer、Log Buffer、AHI</p>
+<ul>
+<li><p><strong>Buffer Pool</strong>：默认大小为128MB</p>
+</li>
+<li><p><strong>（redo） Log Buffer</strong>：由上面脏刷操作可以知道数据刷新不是实时的，若在未刷入时系统发生宕机或者重启，数据就会丢失。故内存的数据必须要有一个持久化的措施。</p>
+<p>于是，InnoDB把所有对页面的修改操作专门写入一个日志文件，先写日志再写磁盘。如果有未同步到磁盘的数据，数据库在启动的时候，会从这个日志文件进行恢复操作（实现crash-safe）。事务中的ACID的D（持久性）就是用它实现的。</p>
+<p>这个日志文件就是<strong>redo log</strong>（重做日志），默认48M（大小固定），2个。<strong>是InnoDB独有的特性</strong>。</p>
+<p>刷盘是随机I&#x2F;O，而记录日志是顺序I&#x2F;O（连续写的），顺序IO的效率更高，因此先把修改写入日志文件，在保证了内存数据的安全性的情况下，可以延迟刷盘时机，进而提升系统吞吐。</p>
+<p>还有一个有关的<strong>undo log</strong>，用于将数据从逻辑上恢复至事务之前的状态，属于逻辑结构的日志。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>后台线程</strong></p>
+<p>主要作用是负责刷新内存池中的数据和修改的数据页刷新到磁盘。分为master thread，IO thread、</p>
+<p>purge thread、page cleaner thread。除了InnoDB架构中的日志文件，MySQL的server层也有一个日志文件，佳作binlog，可以被所有的存储引擎使用。</p>
+</li>
+<li><p><strong>Binlog</strong></p>
+<p>binlog以事件的形式记录了所有的DDL和DML语句，属于逻辑日志。可以用来做主从复制和数据恢复，和redo log不同，它的文件内容是可以追加的，没有固定大小限制。</p>
+<p>在开启binlog的情况下可以将其导出为SQL语句，把所有的操作重放一遍来实现数据的恢复。</p>
+</li>
+<li><p><strong>更新过程</strong></p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102699.png" alt="image-20230105221615853"></p>
+<p>总结重点：</p>
+<ol>
+<li>先记录到内存（buffer pool），再写日志文件</li>
+<li>记录redo log分为两个阶段：prepare 和 commit</li>
+<li>存储引擎和server分别记录不同的日志</li>
+<li>先记录redo在记录binlog</li>
+</ol>
+</li>
+</ol>
+
+  </div>
+
+</article>
+
+
+<div id="copyright" class="post-copyright-information">
+    <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+    <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ 
+  <!-- 结束语 -->
+    <p id="easter-egg"></p>
+ 
+  <!-- post-copyright-information -->
+
+    <blockquote style="padding:0">
+        <p>作者：
+            Meow Mii
+        </p>
+        <p>本文链接：
+            
+                <a href="/p/99fbc96.html" target="_blank" title="MySQL学习笔记Ⅰ-存储引擎">
+                https://blog.yiochin.top/p/99fbc96.html</a>
+            
+        </p>
+        <p>版权声明： 本博客所有文章除特别声明外,均采用
+             <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" 
+             target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">
+             CC BY-NC-ND 4.0
+            </a> 许可协议，转载请注明出处！
+        </p>
+    </blockquote>
+    <hr>
+</div>
+
+
+
+
+
+
+<div id="comment_twikoo">
+    <p style="font-size: 1.5em; font-weight:700;">📝 Comment</p>
+    <div id="gitalk-container"></div>
+</div>
+<style>
+    #gitalk-container a{
+        background-image: none;
+    }
+</style>
+
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        proxy: 'https://vercel.prohibitorum.top/github_access_token',
+        clientID: '37aa963463a974f338bd',
+        clientSecret: '2dc9e5ef7ed915ee6c7bee00b90f299aa489deff',
+        repo: 'fshen0.github.io',
+        owner: 'fshen0',
+        admin: 'fshen0',
+        id: md5(location.pathname),      
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: true
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+
 
 
         <footer id="footer">
@@ -2358,6 +2379,29 @@
 
 
 <!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
 
 
 

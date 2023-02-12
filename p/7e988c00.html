@@ -16,17 +16,19 @@
     <script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
     
 
-    <meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+    <meta name="description" content="索引是什么索引图解​	数据库索引，是数据库管理系统（DBMS）中的一个排序的数据结构，以协助快速查询、更新数据库表中数据。  ​	数据是以文件的形式存放在磁盘上面的，每一行数据都有它的磁盘地址。而索引就是存放这些地址的数据结构。 索引类型 Normal：非唯一索引，是最普通的索引，没有任何限制 Unique：唯一索引要求键值不能重复。主键索引是一种特殊的唯一索引，它要求键值不能为空。主键索引使用p">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="https://www.tinkun.top/p/4a17b156.html">
+<meta property="og:title" content="MySQL学习笔记Ⅱ-索引">
+<meta property="og:url" content="https://blog.yiochin.top/p/7e988c00.html">
 <meta property="og:site_name" content="Meow Mii">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:description" content="索引是什么索引图解​	数据库索引，是数据库管理系统（DBMS）中的一个排序的数据结构，以协助快速查询、更新数据库表中数据。  ​	数据是以文件的形式存放在磁盘上面的，每一行数据都有它的磁盘地址。而索引就是存放这些地址的数据结构。 索引类型 Normal：非唯一索引，是最普通的索引，没有任何限制 Unique：唯一索引要求键值不能重复。主键索引是一种特殊的唯一索引，它要求键值不能为空。主键索引使用p">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-09-07T12:38:46.017Z">
-<meta property="article:modified_time" content="2022-09-05T03:00:04.049Z">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090101333.png">
+<meta property="article:published_time" content="2023-02-12T06:37:10.376Z">
+<meta property="article:modified_time" content="2023-02-12T06:47:58.312Z">
 <meta property="article:author" content="Meow Mii">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090101333.png">
 
     
     
@@ -49,7 +51,7 @@
       
     
     <!-- title -->
-    <title>Hello World</title>
+    <title>MySQL学习笔记Ⅱ-索引</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -2021,7 +2023,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        Hello World
+        MySQL学习笔记Ⅱ-索引
     </h1>
 
 
@@ -2036,13 +2038,20 @@
       
     <div class="postdate">
       
-        <time datetime="2022-09-07T12:38:46.017Z" itemprop="datePublished">2022-09-07</time>
+        <time datetime="2023-02-12T06:37:10.376Z" itemprop="datePublished">2023-02-12</time>
+        
+        (Updated: <time datetime="2023-02-12T06:47:58.312Z" itemprop="dateModified">2023-02-12</time>)
         
       
     </div>
 
 
       
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/MySQL/">MySQL</a>
+    </div>
+
 
       
 
@@ -2055,8 +2064,10 @@
     <li><a data-pjax class="icon pjax" href="/search"><i class="fa fa-search" aria-hidden="true"></i></a></li>
     <li><a class="icon" href="#" onclick="$('#toc').toggle();return false;"><i class="fa fa-bars" aria-hidden="true"></i></a></li>
     
+    <li><a class="icon" aria-label="Previous post" href="/p/e791ddba.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
     
-    <li><a class="icon" aria-label="Next post" href="/p/ba663a52.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+    
+    <li><a class="icon" aria-label="Next post" href="/p/ef2788f.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
     
     <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
     <li><a class="icon" id="share_do" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -2064,42 +2075,40 @@
 </div>
 <div id="share" style="display: none">
 <ul>
-  <li><a class="icon" href="mailto:?subject=Hello World&body=Check out this article: https://www.tinkun.top/p/4a17b156.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.tinkun.top/p/4a17b156.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.tinkun.top/p/4a17b156.html&text=Hello World"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.tinkun.top/p/4a17b156.html&title=Hello World"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.tinkun.top/p/4a17b156.html&is_video=false&description=Hello World"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" href="mailto:?subject=Hello World&body=Check out this article: https://www.tinkun.top/p/4a17b156.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.tinkun.top/p/4a17b156.html&title=Hello World"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.tinkun.top/p/4a17b156.html&title=Hello World"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.tinkun.top/p/4a17b156.html&title=Hello World"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.tinkun.top/p/4a17b156.html&title=Hello World"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.tinkun.top/p/4a17b156.html&name=Hello World&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.tinkun.top/p/4a17b156.html&t=Hello World"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/7e988c00.html&text=MySQL学习笔记Ⅱ-索引"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MySQL学习笔记Ⅱ-索引&body=Check out this article: https://blog.yiochin.top/p/7e988c00.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/7e988c00.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/7e988c00.html&title=MySQL学习笔记Ⅱ-索引"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/7e988c00.html&is_video=false&description=MySQL学习笔记Ⅱ-索引"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=MySQL学习笔记Ⅱ-索引&body=Check out this article: https://blog.yiochin.top/p/7e988c00.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/7e988c00.html&title=MySQL学习笔记Ⅱ-索引"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/7e988c00.html&title=MySQL学习笔记Ⅱ-索引"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/7e988c00.html&title=MySQL学习笔记Ⅱ-索引"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/7e988c00.html&title=MySQL学习笔记Ⅱ-索引"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/7e988c00.html&name=MySQL学习笔记Ⅱ-索引&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/7e988c00.html&t=MySQL学习笔记Ⅱ-索引"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
 </ul>
 
 </div>
 <div id="share" style="display: none">
     <ul>
-  <li><a class="icon" href="mailto:?subject=Hello World&body=Check out this article: https://www.tinkun.top/p/4a17b156.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://www.tinkun.top/p/4a17b156.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://www.tinkun.top/p/4a17b156.html&text=Hello World"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://www.tinkun.top/p/4a17b156.html&title=Hello World"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://www.tinkun.top/p/4a17b156.html&is_video=false&description=Hello World"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" href="mailto:?subject=Hello World&body=Check out this article: https://www.tinkun.top/p/4a17b156.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://www.tinkun.top/p/4a17b156.html&title=Hello World"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://www.tinkun.top/p/4a17b156.html&title=Hello World"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://www.tinkun.top/p/4a17b156.html&title=Hello World"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://www.tinkun.top/p/4a17b156.html&title=Hello World"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://www.tinkun.top/p/4a17b156.html&name=Hello World&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://www.tinkun.top/p/4a17b156.html&t=Hello World"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/7e988c00.html&text=MySQL学习笔记Ⅱ-索引"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MySQL学习笔记Ⅱ-索引&body=Check out this article: https://blog.yiochin.top/p/7e988c00.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/7e988c00.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/7e988c00.html&title=MySQL学习笔记Ⅱ-索引"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/7e988c00.html&is_video=false&description=MySQL学习笔记Ⅱ-索引"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=MySQL学习笔记Ⅱ-索引&body=Check out this article: https://blog.yiochin.top/p/7e988c00.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/7e988c00.html&title=MySQL学习笔记Ⅱ-索引"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/7e988c00.html&title=MySQL学习笔记Ⅱ-索引"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/7e988c00.html&title=MySQL学习笔记Ⅱ-索引"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/7e988c00.html&title=MySQL学习笔记Ⅱ-索引"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/7e988c00.html&name=MySQL学习笔记Ⅱ-索引&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/7e988c00.html&t=MySQL学习笔记Ⅱ-索引"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
 </ul>
 
 </div>
 <div id="toc" style="display: none">
-<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Quick-Start"><span class="toc-number">1.</span> <span class="toc-text">Quick Start</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Create-a-new-post"><span class="toc-number">1.1.</span> <span class="toc-text">Create a new post</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Run-server"><span class="toc-number">1.2.</span> <span class="toc-text">Run server</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Generate-static-files"><span class="toc-number">1.3.</span> <span class="toc-text">Generate static files</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Deploy-to-remote-sites"><span class="toc-number">1.4.</span> <span class="toc-text">Deploy to remote sites</span></a></li></ol></li></ol>
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E6%98%AF%E4%BB%80%E4%B9%88"><span class="toc-number">1.</span> <span class="toc-text">索引是什么</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E5%9B%BE%E8%A7%A3"><span class="toc-number">1.1.</span> <span class="toc-text">索引图解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%B1%BB%E5%9E%8B"><span class="toc-number">1.2.</span> <span class="toc-text">索引类型</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E5%AD%98%E5%82%A8%E6%A8%A1%E5%9E%8B%E6%8E%A8%E6%BC%94"><span class="toc-number">2.</span> <span class="toc-text">索引存储模型推演</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E4%BD%BF%E7%94%A8%E5%8E%9F%E5%88%99"><span class="toc-number">3.</span> <span class="toc-text">索引使用原则</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E7%9A%84%E7%A6%BB%E6%95%A3%E5%BA%A6"><span class="toc-number">3.1.</span> <span class="toc-text">列的离散度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95%E6%9C%80%E5%B7%A6%E5%8C%B9%E9%85%8D"><span class="toc-number">3.2.</span> <span class="toc-text">联合索引最左匹配</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A6%86%E7%9B%96%E7%B4%A2%E5%BC%95"><span class="toc-number">3.3.</span> <span class="toc-text">覆盖索引</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E5%88%9B%E5%BB%BA%E4%B8%8E%E4%BD%BF%E7%94%A8"><span class="toc-number">3.4.</span> <span class="toc-text">索引的创建与使用</span></a></li></ol></li></ol>
 </div>
 
 
@@ -2186,19 +2195,122 @@
 
 </script>
   <div class="content" itemprop="articleBody">
-    <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
+    <h2 id="索引是什么"><a href="#索引是什么" class="headerlink" title="索引是什么"></a>索引是什么</h2><h3 id="索引图解"><a href="#索引图解" class="headerlink" title="索引图解"></a>索引图解</h3><p>​	数据库索引，是数据库管理系统（DBMS）中的一个排序的数据结构，以协助快速查询、更新数据库表中数据。</p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090101333.png" alt="image-20230106112752440"></p>
+<p>​	数据是以文件的形式存放在磁盘上面的，每一行数据都有它的磁盘地址。而索引就是存放这些地址的数据结构。</p>
+<h3 id="索引类型"><a href="#索引类型" class="headerlink" title="索引类型"></a>索引类型</h3><ul>
+<li>Normal：非唯一索引，是最普通的索引，没有任何限制</li>
+<li>Unique：唯一索引要求键值不能重复。主键索引是一种特殊的唯一索引，它要求键值不能为空。主键索引使用primary key创建。</li>
+<li>Fulltext：全文索引。针对比较大的数据，几KB大小的数据情况，如果要解决like查询效率低的问题，可以创建全文索引。只有文本类型的字段才能创建全文索引，比如char、varchar、text。</li>
+<li>MyISAM和InnoDB都支持全文索引。</li>
+</ul>
+<h2 id="索引存储模型推演"><a href="#索引存储模型推演" class="headerlink" title="索引存储模型推演"></a>索引存储模型推演</h2><ul>
+<li><p><strong>二叉查找树（BST，Binary Search Tree）</strong>：左小右大。当插入的数据刚好是有序的时候，就会变成链表，斜树。不够平衡。</p>
+</li>
+<li><p><strong>平衡二叉树（AVL Tree）</strong>：左右子树的深度差不超过1。需要通过左旋右旋，RL，LR进行调整确保平衡。每个节点都必须包含索引字段键值、数据磁盘地址（一行）、左右子树的引用。一个树的节点就是16K的大小，但实际使用不需要这么多，所以访问一个树节点进行一次IO的时候就浪费了大量的空间。</p>
+</li>
+<li><p><strong>多路平衡查找树（B Tree）</strong>：分裂合并。节点关键字大于等于1，每个节点的分叉数永远比关键字树多1。每个节点的存储内容和AVL Tree差不多。节点的分裂和合并，其实就是InnoDB页（page）的分裂和合并。</p>
+</li>
+<li><p><strong>B+树</strong>：</p>
+<p>特点：</p>
+<ol>
+<li><p>它的关键字的数量和路数是相等的。</p>
+</li>
+<li><p>B+Tree的根节点和枝节点中都不会存储数据，只有叶子结点才存储数据。找到关键字并不会返回，而是将继续到叶子结点。</p>
+</li>
+<li><p>B+树的每个叶子结点增加了一个指向相邻节点的指针，它的最后一个数据会指向下一个叶子节点的第一个数据，形成一个有序的链表结构。</p>
+</li>
+</ol>
+<p>优势：</p>
+<ol>
+<li>是B树的变种，B树能解决的它都能解决。（每个节点存储更多的关键字，路数更多）</li>
+<li>扫库、扫表的能力更强（对表进行全表扫描，只需要遍历叶子结点就可以了，不需要遍历整棵树）</li>
+<li>B+树对磁盘读写能力相对于B树来说更强（根节点和枝节点不保存数据区，所以一个节点可以保存更多的关键字，一次磁盘加载的关键字更多）</li>
+<li>排序能力更强（叶子节点上有下一数据区的指针，数据形成了链表）</li>
+<li>效率更稳定（B+树永远是在叶子结点上拿到数据，所以IO次数是稳定的）</li>
+</ol>
+</li>
+<li><p>索引的实现方法：</p>
+<ul>
+<li>B&#x2F;B+树：适合用来查找某一范围内的数据，支持数据排序。MyISAM表数据文件和索引文件是分离的，索引文件仅保存数据记录的磁盘地址；InnoDB表数据文件本身就是主索引，叶节点data域保存了完整的数据记录。</li>
+<li>Hash：仅支持”&#x3D;”,”IN”和”&lt;&#x3D;&gt;”精确查询，不范围查询，不支持排序，不支持排序，只有Memory引擎支持显式的Hash索引，但是它的Hash是nonunique的，冲突太多时也会影响查找性能。</li>
+<li>R-Tree：仅支持geometry数据类型。</li>
+</ul>
+</li>
+<li><p>MyISAM</p>
+<p>MyISAM有两个文件：</p>
+<ul>
+<li><p>.MYD：D代表Data，是数据文件，存放数据记录，所有表数据。</p>
+</li>
+<li><p>.MYI：I表示Index，是索引文件，存放索引。</p>
+</li>
+</ul>
+<p>在MyISAM中数据和索引是两个独立的文件。MyISAM的B+树中叶子结点存储的是数据文件对应的磁盘地址。所以从.MYI中找到键值之后，会到数据文件.MYD中获取相应的数据记录。</p>
+</li>
+<li><p>InnoDB</p>
+<p>在InnoDB中，是以主键为索引来组织数据的存储的，所以索引文件和数据文件是同一个文件，都在.ibd文件里面。在InnoDB的主键索引的叶子节点上，直接存储了数据。</p>
+</li>
+<li><p>聚集索引（聚簇索引）</p>
+<p>索引键值的逻辑顺序和表数据行的物理存储顺序是一致的。在InnoDB中，它组织数据的方式叫做（聚集）索引组织表(clustered index organize table)，所以主键索引是聚集索引，非主键索引都是非聚集索引。</p>
+</li>
+<li><p>辅助索引</p>
+<p>非主键索引，非聚集索引。辅助索引存储的是辅助索引和主键值，如果使用辅助索引查询，会根据主键值在主键索引中查询，最终取得数据。</p>
+</li>
+<li><p>无主键情形</p>
+<p>未指定主键时，InnoDB会选择第一个不包含有NULL值的唯一索引作为主键索引，如果没有这样的唯一索引，啧InnoDB会选择内置6字节长的ROWID作为隐藏的聚集索引，会随着行记录的写入而逐渐递增。</p>
+</li>
+</ul>
+<h2 id="索引使用原则"><a href="#索引使用原则" class="headerlink" title="索引使用原则"></a>索引使用原则</h2><h3 id="列的离散度"><a href="#列的离散度" class="headerlink" title="列的离散度"></a>列的离散度</h3><p>​	<code>count(distinct(column_name)):count(*)</code>，列的全部不同值和所有数据行的比例。数据行数相同的情况下，分子越大列的离散度就越高。<strong>如果列的重复值越多，离散度就越低。离散度越高需要扫描的行数就越少，查询速度就越快。</strong></p>
+<h3 id="联合索引最左匹配"><a href="#联合索引最左匹配" class="headerlink" title="联合索引最左匹配"></a>联合索引最左匹配</h3><ul>
+<li><p>多条件查询时会建立联合索引，单列索引可看做是特殊的联合索引。</p>
+</li>
+<li><p><code>alter table user_innodb add index comidx_name_phone(name,phone)</code>,这就是给user表建立了一个name和phone的联合索引。<strong>联合索引在B+Tree中是复合的数据结构，它是按照从左到右的顺序来建立搜索树的(name在左边，phone在右边)<strong>。name是有序的，phone是无序的。当name相等的时候phone才是有序的。在使用<code>wher name=&#39;name&#39; and phone=&#39;131***&#39;</code>去查询数据的时候，会优先比较name来确定下一步应该搜索的方向，在name相同的时候再比较phone。</strong>但是如果查询条件中没有name，就不知道第一步应查询哪个节点，因为建立搜索树的时候name是第一个比较因子，所以用不到索引。</strong></p>
+</li>
+<li><p>对于联合索引（a,b）只有在使用右边的b字段时，无法使用索引，会全表扫描，其他情况都会使用联合索引。</p>
+</li>
+<li><p>创建联合索引：</p>
+<p><code>create index idx_name_phone on user_innodb(name,phone)</code></p>
+<p><code>create index idx_a_b_c on user_innodb(a,b,c)</code>，想当于创建三个索引：<code>index(a),index(a,b),index(a,b,c)</code>即最左边的是必要条件。</p>
+</li>
+</ul>
+<h3 id="覆盖索引"><a href="#覆盖索引" class="headerlink" title="覆盖索引"></a>覆盖索引</h3><p>​	回表：非主键索引，先通过索引找到主键索引的键值，再通过主键值查出索引里面没有的数据，它比基于主键索引的查询多扫描了一棵索引树，这个过程就叫做回表。</p>
+<p>​	例如：<code>select * from user_innodb where name=&#39;qqs&#39;</code></p>
+<p>​	在辅助索引里面，不管是单列索引还是联合索引，如果select的数据列只用从索引中就能取得，不必从数据区中读取，这时候使用的索引就叫做覆盖索引，这样就避免了回表。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 创建联合索引</span></span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> user_innodb <span class="keyword">drop</span> index comixd_name_phone;</span><br><span class="line"><span class="keyword">alter</span> <span class="keyword">table</span> user_innodb <span class="keyword">add</span> index <span class="string">&#x27;comixd_name_phone&#x27;</span> (<span class="string">&#x27;name&#x27;</span>,<span class="string">&#x27;phone&#x27;</span>);</span><br><span class="line"><span class="comment">-- 下面三个查询语句都用到了覆盖索引</span></span><br><span class="line">explain <span class="keyword">select</span> name,phone <span class="keyword">from</span> user_innodb <span class="keyword">where</span> name<span class="operator">=</span><span class="string">&#x27;qq2&#x27;</span> <span class="keyword">and</span> phone<span class="operator">=</span><span class="string">&#x27;1232321&#x27;</span>;</span><br><span class="line">explain <span class="keyword">select</span> name <span class="keyword">from</span> user_innodb <span class="keyword">where</span> name<span class="operator">=</span><span class="string">&#x27;qq2&#x27;</span> <span class="keyword">and</span> phone<span class="operator">=</span><span class="string">&#x27;12313123&#x27;</span>;</span><br><span class="line">explain <span class="keyword">select</span> phone <span class="keyword">from</span> user_innodb <span class="keyword">where</span> name<span class="operator">=</span><span class="string">&#x27;qq2&#x27;</span> <span class="keyword">and</span> phone<span class="operator">=</span><span class="string">&#x27;12313123&#x27;</span>;</span><br><span class="line"><span class="comment">-- 下条查询语句用不到覆盖索引</span></span><br><span class="line"><span class="keyword">select</span> <span class="operator">*</span> </span><br></pre></td></tr></table></figure>
 
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+<p>​	假若一个主键索引，其他3个字段建立辅助索引，select *也属于覆盖索引。</p>
+<h3 id="索引的创建与使用"><a href="#索引的创建与使用" class="headerlink" title="索引的创建与使用"></a>索引的创建与使用</h3><ul>
+<li><p>索引的创建</p>
+<ol>
+<li>在用于where判断order排序和join的（on）字段上创建索引。</li>
+<li>索引的个数不要过多–浪费空间，更新变慢。</li>
+<li>过长的字段，建立前缀索引。</li>
+<li>区分度低的字段，例如性别，不要建索引。离散度太低，导致扫描行数太多。</li>
+<li>频繁更新的值，不要作为主键或者索引。   页分裂。</li>
+<li>随机无序的值，不建议作为主键索引，例如身份证，UUID。无序，分裂。</li>
+<li>组合索引把散列性高（区分度高）的值放在前面。</li>
+<li>创建复合索引，而不是修改单列索引。</li>
+</ol>
+</li>
+<li><p>什么时候用不到索引</p>
+<ol>
+<li><p>索引列上使用函数（replace\substr\concat\sum count avg）、表达式（+-*&#x2F;）。</p>
+</li>
+<li><p>字符串不加引号，出现隐式转换。</p>
+</li>
+<li><p>like条件中前面带%，where条件中like abc%，like %23432%，like %777都用不到索引，因为过滤的开销太大，这时候可以用全文索引。</p>
+</li>
+<li><p>负向查询 not like 不能；!&#x3D;, &lt;&gt;,not in在某些情况下可以：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">explain <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> employees <span class="keyword">where</span> emp_no <span class="keyword">not</span> <span class="keyword">in</span> (<span class="number">1</span>);</span><br><span class="line">explain <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> employees <span class="keyword">where</span> emp_no <span class="operator">&lt;&gt;</span> <span class="number">1</span></span><br><span class="line"><span class="comment">-- 跟数据库版本、数据量、数据选择度都有关系</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>其实，用不用索引，最终都是<strong>优化器</strong>说了算。</p>
+<p>Optimizer，是基于cost开销（cost base optimizer），不是基于规则（rule-based optimizer），也不是基于语义。怎么开销小就怎么来。</p>
+</li>
+</ol>
+</li>
+<li><p>使用索引有基本原则，但没有具体规则</p>
+</li>
+</ul>
 
   </div>
 
@@ -2223,8 +2335,8 @@
         </p>
         <p>本文链接：
             
-                <a href="/p/4a17b156.html" target="_blank" title="Hello World">
-                https://www.tinkun.top/p/4a17b156.html</a>
+                <a href="/p/7e988c00.html" target="_blank" title="MySQL学习笔记Ⅱ-索引">
+                https://blog.yiochin.top/p/7e988c00.html</a>
             
         </p>
         <p>版权声明： 本博客所有文章除特别声明外,均采用

@@ -16,15 +16,21 @@
     <script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
     
 
-    <meta name="description" content="Sow nothing, reap nothing.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Meow Mii">
-<meta property="og:url" content="https://blog.yiochin.top/archives/index.html">
+    <meta name="description" content="Redis发布订阅 官网很简介了已经。 订阅进阶：消息队列  Redis 发布订阅(pub&#x2F;sub)是一种消息通信模式：发送者(pub)发送消息，订阅者(sub)接收消息。 Redis 客户端可以订阅任意数量的频道。 下图展示了频道 channel1 ， 以及订阅这个频道的三个客户端 —— client2 、 client5 和 client1 之间的关系：  当有新消息通过 PUBLI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Redis发布订阅">
+<meta property="og:url" content="https://blog.yiochin.top/p/bf72778.html">
 <meta property="og:site_name" content="Meow Mii">
-<meta property="og:description" content="Sow nothing, reap nothing.">
+<meta property="og:description" content="Redis发布订阅 官网很简介了已经。 订阅进阶：消息队列  Redis 发布订阅(pub&#x2F;sub)是一种消息通信模式：发送者(pub)发送消息，订阅者(sub)接收消息。 Redis 客户端可以订阅任意数量的频道。 下图展示了频道 channel1 ， 以及订阅这个频道的三个客户端 —— client2 、 client5 和 client1 之间的关系：  当有新消息通过 PUBLI">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090108268.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090108269.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090108270.png">
+<meta property="article:published_time" content="2023-02-12T06:39:37.456Z">
+<meta property="article:modified_time" content="2023-02-12T06:49:08.939Z">
 <meta property="article:author" content="Meow Mii">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090108268.png">
 
     
     
@@ -47,7 +53,7 @@
       
     
     <!-- title -->
-    <title>Writing</title>
+    <title>Redis发布订阅</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -2015,300 +2021,307 @@
 
     <div class="content index py4" id="pjax-container">
         
-          <header id="header">
-  <a href="#" onclick="switchNightMode()" onmouseover="">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Redis发布订阅
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name" id="post-author" style="cursor: pointer;">
+          <a href="/">Meow Mii </a>
+        </span>
+      </span>
+    
+      
+    <div class="postdate">
+      
+        <time datetime="2023-02-12T06:39:37.456Z" itemprop="datePublished">2023-02-12</time>
+        
+        (Updated: <time datetime="2023-02-12T06:49:08.939Z" itemprop="dateModified">2023-02-12</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Redis/">Redis</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
   
-    
-      <div id="logo" style="background-image: url(/images/avatar.jpg);"></div>
-    
-  
-    <div id="title">
-      <h1>Meow Mii</h1>
-    </div>
-  </a>
-  <div id="nav">
-    <ul>
-      
-        <li><a href="/">Home</a></li>
-      
-        <li><a href="/archives/">Writing</a></li>
-      
-        <li><a href="/categories/">Category</a></li>
-      
-        <li><a href="/about/">About</a></li>
-      
-        <li><a href="/search/">Search</a></li>
-      
-    </ul>
-  </div>
-  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css" />
-  
-</header>
 
-
-        
-        <div id="archive">
-  <ul class="post-list">
+  <div id="post_options">
+    <li><a class="icon" href="/"><i class="fa fa-paw" aria-hidden="true"></i></a></li>
+    <li><a data-pjax class="icon pjax" href="/search"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+    <li><a class="icon" href="#" onclick="$('#toc').toggle();return false;"><i class="fa fa-bars" aria-hidden="true"></i></a></li>
+    
+    <li><a class="icon" aria-label="Previous post" href="/p/815cc3a1.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
     
     
+    <li><a class="icon" aria-label="Next post" href="/p/e911dea2.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
     
-    
-      
-      
-      
-      
-        <li class="post-year"><h2>2023</h2></li>
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:16.976Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/e911dea2.html">Redis缓存穿透和雪崩</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:12.950Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/c328eac5.html">Redis主从复制</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:08.939Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/bf72778.html">Redis发布订阅</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:04.800Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/815cc3a1.html">Redis配置</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:48:20.446Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/ef2788f.html">MySQL学习笔记Ⅴ-优化</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:48:11.565Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/9096ed2c.html">MySQL学习笔记Ⅳ-锁</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:48:03.376Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/e791ddba.html">MySQL学习笔记Ⅲ-事务</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:47:58.312Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/7e988c00.html">MySQL学习笔记Ⅱ-索引</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:47:52.988Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/99fbc96.html">MySQL学习笔记Ⅰ-存储引擎</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:44:29.013Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/99746608.html">Java邮件发送</a>
-    
-
-
-</span>
-      </li>
-    
-  </ul>
-  
-    <div class="pagination">
-        
-        <span class="page-number">Page 1 of 2</span>
-        
-            <a href="/archives/page/2/"><i class="fas fa-angle-right"></i>
-            </a>
-        
-    </div>
-
+    <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+    <li><a class="icon" id="share_do" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+    <li><a class="icon" href="#" onclick="switchNightMode()"><i class="fas fa-lightbulb" aria-hidden="true"></i></a></li>
+</div>
+<div id="share" style="display: none">
+<ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/bf72778.html&text=Redis发布订阅"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Redis发布订阅&body=Check out this article: https://blog.yiochin.top/p/bf72778.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/bf72778.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/bf72778.html&title=Redis发布订阅"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/bf72778.html&is_video=false&description=Redis发布订阅"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=Redis发布订阅&body=Check out this article: https://blog.yiochin.top/p/bf72778.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/bf72778.html&title=Redis发布订阅"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/bf72778.html&title=Redis发布订阅"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/bf72778.html&title=Redis发布订阅"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/bf72778.html&title=Redis发布订阅"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/bf72778.html&name=Redis发布订阅&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/bf72778.html&t=Redis发布订阅"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
 
 </div>
+<div id="share" style="display: none">
+    <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/bf72778.html&text=Redis发布订阅"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Redis发布订阅&body=Check out this article: https://blog.yiochin.top/p/bf72778.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/bf72778.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/bf72778.html&title=Redis发布订阅"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/bf72778.html&is_video=false&description=Redis发布订阅"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=Redis发布订阅&body=Check out this article: https://blog.yiochin.top/p/bf72778.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/bf72778.html&title=Redis发布订阅"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/bf72778.html&title=Redis发布订阅"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/bf72778.html&title=Redis发布订阅"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/bf72778.html&title=Redis发布订阅"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/bf72778.html&name=Redis发布订阅&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/bf72778.html&t=Redis发布订阅"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
+
+</div>
+<div id="toc" style="display: none">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85"><span class="toc-number">1.</span> <span class="toc-text">Redis发布订阅</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%9E%E4%BE%8B"><span class="toc-number">2.</span> <span class="toc-text">实例</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-%E5%8F%91%E5%B8%83%E8%AE%A2%E9%98%85%E5%91%BD%E4%BB%A4"><span class="toc-number">3.</span> <span class="toc-text">Redis 发布订阅命令</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8E%9F%E7%90%86"><span class="toc-number">4.</span> <span class="toc-text">原理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link"><span class="toc-number">5.</span> <span class="toc-text"></span></a></li></ol>
+</div>
+
+
+<style>
+#post_options{
+    border-radius: 10px;
+    background-color: #ffffff33;
+    position: fixed;
+    right: 1%;
+    bottom: 10%;
+    z-index: 99;
+}
+#post_options li{
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
+    /* outline-style: solid;
+    outline-color: grey; */
+        /* display: inline; */
+}
+
+#share{
+    position: fixed;
+    right: 5%;
+    bottom: 3%;
+    z-index: 1;
+    text-align: center;
+}
+@media screen and ( max-width: 500px) {
+    #share{
+        right: 10%;
+    }
+    #toc{
+        margin-right: 20px;
+        padding-left: 0px;
+    }
+
+}
+
+@media screen and (min-width: 900px){
+    .post #toc{
+        right: 4.5%;
+    }
+    .post #share{
+        right: 4.5%;
+    }
+}
+
+#share li{
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
+}
+#toc{
+    border-radius: 6px;
+    font-weight: 700;
+    background-color: rgba(80, 90, 100, 0.4);
+    font-size: 12px;
+    position: fixed;
+    right: 5%;
+    bottom: 25%;
+    z-index: 1;
+    margin-bottom: 18px;
+}
+#toc li{
+    list-style: none;
+}
+
+#toc .toc{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+#toc .toc .toc-child{
+    padding-left: 12px;
+}
+
+</style>
+<script>
+
+</script>
+  <div class="content" itemprop="articleBody">
+    <h2 id="Redis发布订阅"><a href="#Redis发布订阅" class="headerlink" title="Redis发布订阅"></a>Redis发布订阅</h2><blockquote>
+<p>官网很简介了已经。</p>
+<p>订阅进阶：消息队列</p>
+</blockquote>
+<p>Redis 发布订阅(pub&#x2F;sub)是一种消息通信模式：发送者(pub)发送消息，订阅者(sub)接收消息。</p>
+<p>Redis 客户端可以订阅任意数量的频道。</p>
+<p>下图展示了频道 channel1 ， 以及订阅这个频道的三个客户端 —— client2 、 client5 和 client1 之间的关系：</p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090108268.png" alt="pubsub1"></p>
+<p>当有新消息通过 PUBLISH 命令发送给频道 channel1 时， 这个消息就会被发送给订阅它的三个客户端：</p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090108269.png" alt="pubsub2"></p>
+<h2 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h2><p>以下实例演示了发布订阅是如何工作的。在我们实例中我们创建了订阅频道名为 <strong>redisChat</strong>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt; SUBSCRIBE redisChat </span><br><span class="line">Reading messages... (press Ctrl-C to quit)</span><br><span class="line">1)<span class="string">&quot;subscribe&quot;</span></span><br><span class="line">2) <span class="string">&quot;redisChat&quot;</span></span><br><span class="line">3) (<span class="built_in">integer</span>) 1</span><br></pre></td></tr></table></figure>
+
+<p>现在，我们先重新开启个 redis 客户端，然后在同一个频道 redisChat 发布两次消息，订阅者就能接收到消息。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">redis 127.0.0.1:6379&gt; PUBLISH redisChat <span class="string">&quot;Redis is a great caching technique&quot;</span> </span><br><span class="line">(<span class="built_in">integer</span>) 1 </span><br><span class="line">redis 127.0.0.1:6379&gt; PUBLISH redisChat <span class="string">&quot;Learn redis by w3cschool.cc&quot;</span> </span><br><span class="line">(<span class="built_in">integer</span>) 1</span><br><span class="line"><span class="comment"># 订阅者的客户端会显示如下消息</span></span><br><span class="line">1) <span class="string">&quot;message&quot;</span></span><br><span class="line">2) <span class="string">&quot;redisChat&quot;</span></span><br><span class="line">3) <span class="string">&quot;Redis is a great caching technique&quot;</span></span><br><span class="line">1) <span class="string">&quot;message&quot;</span></span><br><span class="line">2) <span class="string">&quot;redisChat&quot;</span></span><br><span class="line">3) <span class="string">&quot;Learn redis by w3cschool.cc&quot;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Redis-发布订阅命令"><a href="#Redis-发布订阅命令" class="headerlink" title="Redis 发布订阅命令"></a>Redis 发布订阅命令</h2><p>下表列出了 redis 发布订阅常用命令：</p>
+<table>
+<thead>
+<tr>
+<th align="left">序号</th>
+<th align="left">命令及描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">1</td>
+<td align="left"><a target="_blank" rel="noopener" href="https://www.redis.net.cn/order/3632.html">PSUBSCRIBE pattern [pattern …]</a> 订阅一个或多个符合给定模式的频道。</td>
+</tr>
+<tr>
+<td align="left">2</td>
+<td align="left">[PUBSUB subcommand <a target="_blank" rel="noopener" href="https://www.redis.net.cn/order/3633.html">argument [argument …]]</a> 查看订阅与发布系统状态。</td>
+</tr>
+<tr>
+<td align="left">3</td>
+<td align="left"><a target="_blank" rel="noopener" href="https://www.redis.net.cn/order/3634.html">PUBLISH channel message</a> 将信息发送到指定的频道。</td>
+</tr>
+<tr>
+<td align="left">4</td>
+<td align="left">[PUNSUBSCRIBE <a target="_blank" rel="noopener" href="https://www.redis.net.cn/order/3635.html">pattern [pattern …]]</a> 退订所有给定模式的频道。</td>
+</tr>
+<tr>
+<td align="left">5</td>
+<td align="left"><a target="_blank" rel="noopener" href="https://www.redis.net.cn/order/3636.html">SUBSCRIBE channel [channel …]</a> 订阅给定的一个或多个频道的信息。</td>
+</tr>
+<tr>
+<td align="left">6</td>
+<td align="left">[UNSUBSCRIBE <a target="_blank" rel="noopener" href="https://www.redis.net.cn/order/3637.html">channel [channel …]]</a> 指退订给定的频道。</td>
+</tr>
+</tbody></table>
+<h2 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h2><p>每个 Redis 服务器进程都维持着一个表示服务器状态的 redis.h&#x2F;redisServer 结构， </p>
+<p>结构的 pubsub_channels 属性是一个字典， 这个字典就用于保存订阅频道的信息，其中，字典的键为正在被订阅的频道， 而<strong>字典的值则是一个链表</strong>， 链表中保存了所有订阅这个频道的客户端。</p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090108270.png" alt="img"></p>
+<p>当调用 PUBLISH channel message 命令， 程序首先根据 channel 定位到字典的键， 然后将信息发送给字典值链表中的所有客户端。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2>
+  </div>
+
+</article>
+
+
+<div id="copyright" class="post-copyright-information">
+    <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+    <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ 
+  <!-- 结束语 -->
+    <p id="easter-egg"></p>
+ 
+  <!-- post-copyright-information -->
+
+    <blockquote style="padding:0">
+        <p>作者：
+            Meow Mii
+        </p>
+        <p>本文链接：
+            
+                <a href="/p/bf72778.html" target="_blank" title="Redis发布订阅">
+                https://blog.yiochin.top/p/bf72778.html</a>
+            
+        </p>
+        <p>版权声明： 本博客所有文章除特别声明外,均采用
+             <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" 
+             target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">
+             CC BY-NC-ND 4.0
+            </a> 许可协议，转载请注明出处！
+        </p>
+    </blockquote>
+    <hr>
+</div>
+
+
+
+
+
+
+<div id="comment_twikoo">
+    <p style="font-size: 1.5em; font-weight:700;">📝 Comment</p>
+    <div id="gitalk-container"></div>
+</div>
+<style>
+    #gitalk-container a{
+        background-image: none;
+    }
+</style>
+
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        proxy: 'https://vercel.prohibitorum.top/github_access_token',
+        clientID: '37aa963463a974f338bd',
+        clientSecret: '2dc9e5ef7ed915ee6c7bee00b90f299aa489deff',
+        repo: 'fshen0.github.io',
+        owner: 'fshen0',
+        admin: 'fshen0',
+        id: md5(location.pathname),      
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: true
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+
 
 
         <footer id="footer">
@@ -2358,6 +2371,29 @@
 
 
 <!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
 
 
 

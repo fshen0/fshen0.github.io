@@ -16,15 +16,34 @@
     <script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
     
 
-    <meta name="description" content="Sow nothing, reap nothing.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Meow Mii">
-<meta property="og:url" content="https://blog.yiochin.top/archives/index.html">
+    <meta name="description" content="初识DockerFileDockerFile就是用来构建docker镜像的构建文件，命令脚本。 通过这个脚本可以生成镜像，镜像是一层一层的，脚本的每个命令都是一层。 小例子：  dockerfile1  123456FROM centosVOLUME [&quot;volume01&quot;,&quot;volume02&quot;]CMD echo &quot;-------end------">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DockerFile">
+<meta property="og:url" content="https://blog.yiochin.top/p/f5f9fa9b.html">
 <meta property="og:site_name" content="Meow Mii">
-<meta property="og:description" content="Sow nothing, reap nothing.">
+<meta property="og:description" content="初识DockerFileDockerFile就是用来构建docker镜像的构建文件，命令脚本。 通过这个脚本可以生成镜像，镜像是一层一层的，脚本的每个命令都是一层。 小例子：  dockerfile1  123456FROM centosVOLUME [&quot;volume01&quot;,&quot;volume02&quot;]CMD echo &quot;-------end------">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102410.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102411.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102412.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102413.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102414.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102415.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102416.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102417.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102418.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102419.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102420.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102421.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102422.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102424.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102425.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102426.png">
+<meta property="article:published_time" content="2023-02-12T06:34:12.911Z">
+<meta property="article:modified_time" content="2023-02-12T06:47:35.698Z">
 <meta property="article:author" content="Meow Mii">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102410.png">
 
     
     
@@ -47,7 +66,7 @@
       
     
     <!-- title -->
-    <title>Writing</title>
+    <title>DockerFile</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -2015,300 +2034,479 @@
 
     <div class="content index py4" id="pjax-container">
         
-          <header id="header">
-  <a href="#" onclick="switchNightMode()" onmouseover="">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        DockerFile
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name" id="post-author" style="cursor: pointer;">
+          <a href="/">Meow Mii </a>
+        </span>
+      </span>
+    
+      
+    <div class="postdate">
+      
+        <time datetime="2023-02-12T06:34:12.911Z" itemprop="datePublished">2023-02-12</time>
+        
+        (Updated: <time datetime="2023-02-12T06:47:35.698Z" itemprop="dateModified">2023-02-12</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/Docker/">Docker</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
   
-    
-      <div id="logo" style="background-image: url(/images/avatar.jpg);"></div>
-    
-  
-    <div id="title">
-      <h1>Meow Mii</h1>
-    </div>
-  </a>
-  <div id="nav">
-    <ul>
-      
-        <li><a href="/">Home</a></li>
-      
-        <li><a href="/archives/">Writing</a></li>
-      
-        <li><a href="/categories/">Category</a></li>
-      
-        <li><a href="/about/">About</a></li>
-      
-        <li><a href="/search/">Search</a></li>
-      
-    </ul>
-  </div>
-  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css" />
-  
-</header>
 
-
-        
-        <div id="archive">
-  <ul class="post-list">
+  <div id="post_options">
+    <li><a class="icon" href="/"><i class="fa fa-paw" aria-hidden="true"></i></a></li>
+    <li><a data-pjax class="icon pjax" href="/search"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+    <li><a class="icon" href="#" onclick="$('#toc').toggle();return false;"><i class="fa fa-bars" aria-hidden="true"></i></a></li>
+    
+    <li><a class="icon" aria-label="Previous post" href="/p/3849e8ae.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
     
     
+    <li><a class="icon" aria-label="Next post" href="/p/c0e3b7e9.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
     
-    
-      
-      
-      
-      
-        <li class="post-year"><h2>2023</h2></li>
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:16.976Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/e911dea2.html">Redis缓存穿透和雪崩</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:12.950Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/c328eac5.html">Redis主从复制</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:08.939Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/bf72778.html">Redis发布订阅</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:04.800Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/815cc3a1.html">Redis配置</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:48:20.446Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/ef2788f.html">MySQL学习笔记Ⅴ-优化</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:48:11.565Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/9096ed2c.html">MySQL学习笔记Ⅳ-锁</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:48:03.376Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/e791ddba.html">MySQL学习笔记Ⅲ-事务</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:47:58.312Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/7e988c00.html">MySQL学习笔记Ⅱ-索引</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:47:52.988Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/99fbc96.html">MySQL学习笔记Ⅰ-存储引擎</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:44:29.013Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/99746608.html">Java邮件发送</a>
-    
-
-
-</span>
-      </li>
-    
-  </ul>
-  
-    <div class="pagination">
-        
-        <span class="page-number">Page 1 of 2</span>
-        
-            <a href="/archives/page/2/"><i class="fas fa-angle-right"></i>
-            </a>
-        
-    </div>
-
+    <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+    <li><a class="icon" id="share_do" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+    <li><a class="icon" href="#" onclick="switchNightMode()"><i class="fas fa-lightbulb" aria-hidden="true"></i></a></li>
+</div>
+<div id="share" style="display: none">
+<ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/f5f9fa9b.html&text=DockerFile"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=DockerFile&body=Check out this article: https://blog.yiochin.top/p/f5f9fa9b.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/f5f9fa9b.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/f5f9fa9b.html&title=DockerFile"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/f5f9fa9b.html&is_video=false&description=DockerFile"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=DockerFile&body=Check out this article: https://blog.yiochin.top/p/f5f9fa9b.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/f5f9fa9b.html&title=DockerFile"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/f5f9fa9b.html&title=DockerFile"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/f5f9fa9b.html&title=DockerFile"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/f5f9fa9b.html&title=DockerFile"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/f5f9fa9b.html&name=DockerFile&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/f5f9fa9b.html&t=DockerFile"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
 
 </div>
+<div id="share" style="display: none">
+    <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/f5f9fa9b.html&text=DockerFile"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=DockerFile&body=Check out this article: https://blog.yiochin.top/p/f5f9fa9b.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/f5f9fa9b.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/f5f9fa9b.html&title=DockerFile"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/f5f9fa9b.html&is_video=false&description=DockerFile"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=DockerFile&body=Check out this article: https://blog.yiochin.top/p/f5f9fa9b.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/f5f9fa9b.html&title=DockerFile"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/f5f9fa9b.html&title=DockerFile"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/f5f9fa9b.html&title=DockerFile"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/f5f9fa9b.html&title=DockerFile"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/f5f9fa9b.html&name=DockerFile&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/f5f9fa9b.html&t=DockerFile"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
+
+</div>
+<div id="toc" style="display: none">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E8%AF%86DockerFile"><span class="toc-number">1.</span> <span class="toc-text">初识DockerFile</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%8D%B7%E5%AE%B9%E5%99%A8"><span class="toc-number">2.</span> <span class="toc-text">数据卷容器</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DockerFile"><span class="toc-number">3.</span> <span class="toc-text">DockerFile</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E5%BB%BA%E6%AD%A5%E9%AA%A4%EF%BC%9A"><span class="toc-number">3.1.</span> <span class="toc-text">构建步骤：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DockerFile%E5%B0%8F%E7%9F%A5%E8%AF%86"><span class="toc-number">3.2.</span> <span class="toc-text">DockerFile小知识</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DockerFile%E7%9A%84%E6%8C%87%E4%BB%A4"><span class="toc-number">3.3.</span> <span class="toc-text">DockerFile的指令</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%91%E5%B8%83%E8%87%AA%E5%B7%B1%E7%9A%84%E9%95%9C%E5%83%8F"><span class="toc-number">4.</span> <span class="toc-text">发布自己的镜像</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Docker%E5%9B%BE"><span class="toc-number">5.</span> <span class="toc-text">Docker图</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-number">6.</span> <span class="toc-text">参考</span></a></li></ol>
+</div>
+
+
+<style>
+#post_options{
+    border-radius: 10px;
+    background-color: #ffffff33;
+    position: fixed;
+    right: 1%;
+    bottom: 10%;
+    z-index: 99;
+}
+#post_options li{
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
+    /* outline-style: solid;
+    outline-color: grey; */
+        /* display: inline; */
+}
+
+#share{
+    position: fixed;
+    right: 5%;
+    bottom: 3%;
+    z-index: 1;
+    text-align: center;
+}
+@media screen and ( max-width: 500px) {
+    #share{
+        right: 10%;
+    }
+    #toc{
+        margin-right: 20px;
+        padding-left: 0px;
+    }
+
+}
+
+@media screen and (min-width: 900px){
+    .post #toc{
+        right: 4.5%;
+    }
+    .post #share{
+        right: 4.5%;
+    }
+}
+
+#share li{
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
+}
+#toc{
+    border-radius: 6px;
+    font-weight: 700;
+    background-color: rgba(80, 90, 100, 0.4);
+    font-size: 12px;
+    position: fixed;
+    right: 5%;
+    bottom: 25%;
+    z-index: 1;
+    margin-bottom: 18px;
+}
+#toc li{
+    list-style: none;
+}
+
+#toc .toc{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+#toc .toc .toc-child{
+    padding-left: 12px;
+}
+
+</style>
+<script>
+
+</script>
+  <div class="content" itemprop="articleBody">
+    <h2 id="初识DockerFile"><a href="#初识DockerFile" class="headerlink" title="初识DockerFile"></a>初识DockerFile</h2><p>DockerFile就是用来构建docker镜像的构建文件，命令脚本。</p>
+<p>通过这个脚本可以生成镜像，镜像是一层一层的，脚本的每个命令都是一层。</p>
+<p>小例子：</p>
+<ul>
+<li>dockerfile1</li>
+</ul>
+<figure class="highlight do"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">FROM centos</span><br><span class="line"></span><br><span class="line">VOLUME [<span class="string">&quot;volume01&quot;</span>,<span class="string">&quot;volume02&quot;</span>]</span><br><span class="line"></span><br><span class="line">CMD echo <span class="string">&quot;-------end-------&quot;</span></span><br><span class="line">CMD /bin/bash</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>docker build -f dockerfile1 -t yio/centos:1.0 .</code> (-t 后不能以 “&#x2F;” 开头)</p>
+</li>
+<li><p>根据fockerfile创建容器镜像</p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102410.png" alt="image-20220716233049319"></p>
+</li>
+<li><p>运行容器，查看容器的文件目录</p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102411.png" alt="运行容器"></p>
+</li>
+<li><p>查看挂载目录的数据卷信息 <code>docker inspect [docker id]</code></p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102412.png" alt="image-20220716233939299"></p>
+</li>
+<li><p>查看同步信息：</p>
+<p><code>cd /var/lib/docker/volumes/873e4aad2ecc323526142d2a491d9ed51a0d762f6094cae5643469369c545ae7/_data</code><br><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102413.png" alt="image-20220716234108711"></p>
+</li>
+<li><p>倘若使用DockerFile构建镜像时没有挂载卷，要手动挂载卷 <code>-v 卷名:容器内路径</code></p>
+</li>
+</ul>
+<h2 id="数据卷容器"><a href="#数据卷容器" class="headerlink" title="数据卷容器"></a>数据卷容器</h2><p>例如多个MySQL同步数据</p>
+<p>容器中的数据在容器删除后就会消失，$\textcolor{yellow}{所以需要持久化到本地}$。此时，我们可以使用<code>-v</code>来实现数据挂载到本地目录：</p>
+<ul>
+<li><code>-v :[容器内路径]</code>来实现<strong>匿名挂载</strong></li>
+<li><code>-v [name]:[容器内路径]</code>来实现<strong>具名挂载</strong></li>
+</ul>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102414.png" alt="image-20220716234818879"></p>
+<p>小例子：</p>
+<ul>
+<li><p>启动一个docker01</p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102415.png" alt="image-20220716235208104"></p>
+</li>
+<li><p>启动docker02</p>
+<p><code>docker run -it --name docker02 --volumes-from docker01 66b</code></p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102416.png" alt="image-20220716235507556"></p>
+</li>
+<li><p>在docker01中的volume01目录中创建数据，查看同步结果</p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102417.png" alt="image-20220716235734836"></p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102418.png" alt="image-20220717000023463"></p>
+</li>
+<li><p>删除docker01文件仍然存在，类似于备份机制。都挂载在宿主机的同一个目录下。</p>
+</li>
+<li><p>结论：</p>
+<p>数据卷容器的生命周期一直持续到没有容器使用为止。一旦持久化到了本地，本地数据就是不会删除的了。</p>
+</li>
+</ul>
+<h2 id="DockerFile"><a href="#DockerFile" class="headerlink" title="DockerFile"></a>DockerFile</h2><p>是用来构建docker镜像的文件，命令参数脚本。</p>
+<h3 id="构建步骤："><a href="#构建步骤：" class="headerlink" title="构建步骤："></a>构建步骤：</h3><ol>
+<li>编写一个dockerfile文件</li>
+<li>docker build 构建成为一个镜像</li>
+<li>docker run 运行镜像</li>
+<li>docker push 发布镜像 （DocekrHub、阿里云镜像仓库）</li>
+</ol>
+<p>例如：</p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102419.png" alt="image-20220717001919508"></p>
+<p>看一眼Centos的DockerFile</p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102420.png" alt="image-20220717002049690"></p>
+<h3 id="DockerFile小知识"><a href="#DockerFile小知识" class="headerlink" title="DockerFile小知识"></a>DockerFile小知识</h3><ul>
+<li><p><strong>基础知识</strong>：</p>
+<ul>
+<li>每个保留关键字（指令）都必须是大写字母</li>
+<li>执行顺序按照从上到下</li>
+<li><code>#</code> 表示注释</li>
+<li>每一指令都会创建提交一个新的<strong>镜像层</strong>，并提交</li>
+</ul>
+</li>
+<li><p>DockerFile 是面向开发的，也就是说我们以后发布项目做镜像，就需要编写dockerfile文件，这个文件十分简单！</p>
+</li>
+<li><p>tips：</p>
+<ul>
+<li>DockerFile：构建文件，定义了一切步骤，源代码文件</li>
+<li>DockerImages：通过DockerFile构建生成的镜像，是最终发布和运行的产品</li>
+<li>Docker容器：容器就是镜像运行起来的服务器</li>
+</ul>
+</li>
+</ul>
+<h3 id="DockerFile的指令"><a href="#DockerFile的指令" class="headerlink" title="DockerFile的指令"></a>DockerFile的指令</h3><table>
+<thead>
+<tr>
+<th align="center"><code>FROM</code></th>
+<th align="left">基础镜像，一切从这里开始构建</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><code>MAINTAINER</code></td>
+<td align="left">镜像的作者：姓名+邮箱</td>
+</tr>
+<tr>
+<td align="center"><code>RUN</code></td>
+<td align="left">镜像构建时需要运行的命令</td>
+</tr>
+<tr>
+<td align="center"><code>CMD</code></td>
+<td align="left">设置容器的启动命令  CMD &#x2F;bin&#x2F;bash   一个CMD执行多个只有最后一个会生效，可被替代。可以写多个CMD命令</td>
+</tr>
+<tr>
+<td align="center"><code>COPY</code></td>
+<td align="left">COPY &lt;源路径&gt;… &lt;目标路径&gt;，使用 COPY 指令，源文件的各种元数据都会保留。比如读、写、执行权限、文件变更时间等</td>
+</tr>
+<tr>
+<td align="center"><code>ADD</code></td>
+<td align="left">复制文件到镜像中，ADD 指令和 COPY 的格式和性质基本一致。但是ADD的<code>&lt;源路径&gt;</code>可以是一个 URL，下载到<code>&lt;目标路径&gt;</code>去。</td>
+</tr>
+<tr>
+<td align="center"><code>WORKDIR</code></td>
+<td align="left"><code>WORKDIR /path/to/workdir</code>镜像的工作目录</td>
+</tr>
+<tr>
+<td align="center"><code>VOLUME</code></td>
+<td align="left">挂载的目录</td>
+</tr>
+<tr>
+<td align="center"><code>ENTRYPOINT</code></td>
+<td align="left">指定这个容器在启动时要运行的命令 可以追加命令。用于给容器配置一个可执行程序。也就是说，每次使用镜像创建容器时，通过 ENTRYPOINT 指定的程序都会被设置为默认程序</td>
+</tr>
+<tr>
+<td align="center"><code>ONBUILD</code></td>
+<td align="left"><code>ONBUILD ADD . /app/src ONBUILD RUN /usr/local/bin/python-build --dir /app/src</code>用于设置镜像触发器。当所构建的镜像被用做其它镜像的基础镜像，该镜像中的触发器将会被触发</td>
+</tr>
+<tr>
+<td align="center"><code>EXPOSE</code></td>
+<td align="left">暴露端口</td>
+</tr>
+<tr>
+<td align="center"><code>ARG</code></td>
+<td align="left"><code>ARG &lt;name&gt;[=&lt;default value&gt;]</code>用于指定传递给构建运行时的变量</td>
+</tr>
+<tr>
+<td align="center"><code>STOPSIGNAL</code></td>
+<td align="left">用于设置停止容器所要发送的系统调用信号，必须是内核系统调用表中的合法的值</td>
+</tr>
+<tr>
+<td align="center"><code>SHELL</code></td>
+<td align="left">用于设置执行命令（shell式）所使用的的默认 shell 类型，SHELL在Windows环境下比较有用，Windows 下通常会有 cmd 和 powershell 两种 shell，可能还会有 sh。这时就可以通过 SHELL 来指定所使用的 shell 类型</td>
+</tr>
+<tr>
+<td align="center"><code>LABEL</code></td>
+<td align="left"><code>LABEL version=&quot;1.0&quot; description=&quot;这是一个Web服务器&quot; by=&quot;IT笔录&quot;</code>用于为镜像添加元数据，以键值对的形式指定。推荐将所有的元数据通过一条LABEL指令指定，以免生成过多的中间镜像。</td>
+</tr>
+<tr>
+<td align="center"><code>USER</code></td>
+<td align="left"><code>USER user:group</code>用于指定运行镜像所使用的用户。使用USER指定用户时，可以使用用户名、UID 或 GID，或是两者的组合（使用 : 间隔）</td>
+</tr>
+<tr>
+<td align="center"><code>ENV</code></td>
+<td align="left"><code>K V </code>or<code>K=V</code> 形式。这个指令很简单，就是设置环境变量而已，无论是后面的其它指令，如 RUN，还是运行时的应用，都可以直接使用这里定义的环境变量。</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><code>CMD</code>和<code>ENTRYPOINT</code>的区别</p>
+<ul>
+<li><p><code>CMD</code>的命令会被 <code>docker run</code> 的命令覆盖而 <code>ENTRYPOINT</code> 不会，且<code>ENTRYPOINT</code>可以追加命令</p>
+</li>
+<li><p><code>CMD </code>指令的目的是：为容器提供默认的执行命令。<br><code>CMD </code>指令有三种使用方式，其中的一种是为 <code>ENTRYPOINT </code>提供默认的参数：</p>
+<ol>
+<li><strong><code>CMD [&quot;param1&quot;,&quot;param2&quot;]</code></strong> 写在<code>ENTRYPOINT</code>下面，将作为参数添加到<code>ENTRYPOINT []</code>中<br>另外两种使用方式分别是<code>exec </code>模式和<code>shell </code>模式：</li>
+<li><strong><code>CMD [&quot;executable&quot;,&quot;param1&quot;,&quot;param2&quot;]</code></strong>  &#x2F;&#x2F; 这是 exec 模式的写法，注意需要使用双引号。</li>
+<li><strong><code>CMD command param1 param2</code></strong>         &#x2F;&#x2F; 这是 shell 模式的写法。<br>注意命令行参数可以覆盖 <code>CMD </code>指令的设置，但是只能是重写，却不能给 <code>CMD </code>中的命令通过命令行传递参数。</li>
+</ol>
+</li>
+<li><p><code>ENTRYPOINT </code>指令的目的也是为容器指定默认执行的任务。<br><code>ENTRYPOINT </code>指令有两种使用方式，就是我们前面介绍的<code>exec </code>模式和<code>shell</code>模式：</p>
+<ol>
+<li><strong><code>ENTRYPOINT [&quot;executable&quot;, &quot;param1&quot;, &quot;param2&quot;]</code></strong>  &#x2F;&#x2F; 这是 exec 模式的写法，注意需要使用双引号。</li>
+<li><strong><code>ENTRYPOINT command param1 param2</code></strong>          &#x2F;&#x2F; 这是 shell 模式的写法。<strong>会完全忽略命令行参数</strong><br><code>exec </code>模式和 <code>shell </code>模式的基本用法和 <code>CMD </code>指令是一样的，下面我们介绍一些比较特殊的用法。</li>
+</ol>
+<p><strong>指定 <code>ENTRYPOINT </code>指令为 <code>exec </code>模式时，<code>docker run</code>命令行上指定的参数会作为参数添加到 <code>ENTRYPOINT </code>指定命令的参数列表中。</strong></p>
+</li>
+<li><p>&#96;&#96;&#96;dockerfile<br>#1.如果dockerfile如下<br>FROM centos<br>CMD [“ls”,”-a”]<br>#2.构建<br>docker build -f dockerfile -t cmdtest<br>#3.run运行 发现 CMD命令运行正常<br>docker run cmdtest<br>#4.想追加命令 运行失败 -l 替换了 dockerfile中的CMD命令<br>docker run cmdtest -l<br>#5.新dockerfile<br>FROM centos<br>ENTRYPOINT [ “ls”, “-a” ]<br>CMD [“-l”]<br>#构建后运行<br>docker run cmdtest<br>#运行成功 最后执行的是 ls -a -l 命令<br>docker run cmdtest -S<br>#运行成功 最后执行的是 ls -a -S 命令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">### 实战测试</span><br><span class="line"></span><br><span class="line">Docker Hub中99%的镜像都是从这个基础镜像过来的： `FROM scratch`，然后再配置需要的软件和配置来进行构建。</span><br><span class="line"></span><br><span class="line">创建一个自己的Centos</span><br><span class="line"></span><br><span class="line">- DockerFile</span><br><span class="line"></span><br><span class="line"> ```dockerfile</span><br><span class="line"> #mydockerfile</span><br><span class="line"> </span><br><span class="line"> FROM centos:7</span><br><span class="line"> MAINTAINER yio&lt;3226314806@qq.com&gt;</span><br><span class="line"> </span><br><span class="line"> ENV MYPATH /usr/local</span><br><span class="line"> WORKDIR $MYPATH</span><br><span class="line"> </span><br><span class="line"> RUN yum -y install vim</span><br><span class="line"> RUN yum -y install net-tools</span><br><span class="line"> </span><br><span class="line"> EXPOSE 80,3310</span><br><span class="line"> </span><br><span class="line"> CMD echo $MYPATH</span><br><span class="line"> CMD echo &quot;===end===&quot;</span><br><span class="line"> CMD /bin/bash</span><br></pre></td></tr></table></figure></li>
+</ul>
+</blockquote>
+<ul>
+<li><p>通过这个文件构建镜像</p>
+<p><code>docker build -f mydockerfile -t mycentos:0.1 .</code></p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102421.png" alt="image-20220717220432980"></p>
+</li>
+</ul>
+<p>​	<code>docker run -it mycentos:0.1</code></p>
+<p>​	<img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102422.png" alt="image-20220717220755678"></p>
+<ul>
+<li><p>看一眼官方的mysql是怎么做的</p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102424.png" alt="image-20220717221348444"></p>
+</li>
+</ul>
+<blockquote>
+<p>Dockerfile制作tomcat镜像</p>
+</blockquote>
+<figure class="highlight dockerfile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Dockerfile</span></span><br><span class="line"><span class="keyword">FROM</span> centos:<span class="number">7</span></span><br><span class="line"><span class="keyword">MAINTAINER</span> yio&lt;<span class="number">3226314806</span>@qq.com&gt;</span><br><span class="line"><span class="keyword">COPY</span><span class="language-bash"> readme.txt /usr/local/readme.txt</span></span><br><span class="line"><span class="comment">#添加 并解压</span></span><br><span class="line"><span class="keyword">ADD</span><span class="language-bash"> jdk-8u11-linux-x64.tar.gz /usr/local</span></span><br><span class="line"><span class="keyword">ADD</span><span class="language-bash"> apache-tomcat-9.0.22.tar.gz /usr/local</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">RUN</span><span class="language-bash"> yum -y install vim</span></span><br><span class="line"><span class="comment">#工作目录</span></span><br><span class="line"><span class="keyword">ENV</span> MYPATH /usr/local</span><br><span class="line"><span class="keyword">WORKDIR</span><span class="language-bash"> <span class="variable">$MYPATH</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">ENV</span> JAVA_HOME /usr/local/jdk1.<span class="number">8.0</span>_11</span><br><span class="line"><span class="keyword">ENV</span> CLASSPATH $JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar</span><br><span class="line"><span class="keyword">ENV</span> CATALINA_HOME /usr/local/apache-tomcat-<span class="number">9.0</span>.<span class="number">22</span></span><br><span class="line"><span class="keyword">ENV</span> CATALINA_BASH /usr/local/apache-tomcat-<span class="number">9.0</span>.<span class="number">22</span></span><br><span class="line"><span class="keyword">ENV</span> PATH $PATH:$JAVA_HOME/bin:$CATALINA_HOME/lib:$CATALINA_HOME/bin</span><br><span class="line"></span><br><span class="line"><span class="keyword">EXPOSE</span> <span class="number">8080</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#启动tomcat</span></span><br><span class="line"><span class="keyword">CMD</span><span class="language-bash"> /usr/local/apache-tomcat-9.0.22/bin/startup.sh &amp;&amp; <span class="built_in">tail</span> -F /usr/local/apache-tomcat-9.0.22/bin/logs/catalina.out</span></span><br><span class="line"><span class="comment">#end</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#构建</span></span><br><span class="line">docker build -f Dockerfile -t mytomcat .</span><br><span class="line"><span class="comment">#运行</span></span><br><span class="line">docker <span class="keyword">run</span><span class="language-bash"> -d -p 9090:8080 --name diytomcat -v /home/yio/docker-test/tomcat/test:/usr/local/apache-tomcat-9.0.22/webapps/test -v /home/yio/docker-test/tomcat/logs:/usr/local/apache-tomcat-9.0.22/logs mytomcat</span></span><br><span class="line"><span class="comment">#做了挂载，在本地目录发布项目就可以同步到容器内部了</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="发布自己的镜像"><a href="#发布自己的镜像" class="headerlink" title="发布自己的镜像"></a>发布自己的镜像</h2><blockquote>
+<p>DockerHub</p>
+</blockquote>
+<ol>
+<li><p><a target="_blank" rel="noopener" href="https://hub.docker.com/">https://hub.docker.com/</a> 注册</p>
+</li>
+<li><p>在服务器上登录docker</p>
+<p><code>docker login -u 用户名 -p</code></p>
+</li>
+<li><p>登录之后就可以提交了</p>
+<ul>
+<li><p>先使用<code>docker tag 原镜像名:1.0 用户名/镜像名:1.0</code>将镜像名修改成标准的名字</p>
+</li>
+<li><p>然后使用<code>docker push 用户名/镜像名:1.0</code>提交</p>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="Docker图"><a href="#Docker图" class="headerlink" title="Docker图"></a>Docker图</h2><p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102425.png" alt="20200913222649722"></p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090102426.png" alt="20200913223111483"></p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><p><a target="_blank" rel="noopener" href="https://docs.docker.com/engine/reference/builder/">Dockerfile reference | Docker Documentation</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sparkdev/p/8461576.html">Dockerfile 中的 CMD 与 ENTRYPOINT - sparkdev - 博客园 (cnblogs.com)</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.runoob.com/docker/docker-dockerfile.html">Docker Dockerfile | 菜鸟教程 (runoob.com)</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="http://www.dockerinfo.net/dockerfile%E4%BB%8B%E7%BB%8D">Docker中文文档 Dockerfile介绍-DockerInfo</a></p>
+</li>
+</ul>
+
+  </div>
+
+</article>
+
+
+<div id="copyright" class="post-copyright-information">
+    <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+    <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ 
+  <!-- 结束语 -->
+    <p id="easter-egg"></p>
+ 
+  <!-- post-copyright-information -->
+
+    <blockquote style="padding:0">
+        <p>作者：
+            Meow Mii
+        </p>
+        <p>本文链接：
+            
+                <a href="/p/f5f9fa9b.html" target="_blank" title="DockerFile">
+                https://blog.yiochin.top/p/f5f9fa9b.html</a>
+            
+        </p>
+        <p>版权声明： 本博客所有文章除特别声明外,均采用
+             <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" 
+             target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">
+             CC BY-NC-ND 4.0
+            </a> 许可协议，转载请注明出处！
+        </p>
+    </blockquote>
+    <hr>
+</div>
+
+
+
+
+
+
+<div id="comment_twikoo">
+    <p style="font-size: 1.5em; font-weight:700;">📝 Comment</p>
+    <div id="gitalk-container"></div>
+</div>
+<style>
+    #gitalk-container a{
+        background-image: none;
+    }
+</style>
+
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        proxy: 'https://vercel.prohibitorum.top/github_access_token',
+        clientID: '37aa963463a974f338bd',
+        clientSecret: '2dc9e5ef7ed915ee6c7bee00b90f299aa489deff',
+        repo: 'fshen0.github.io',
+        owner: 'fshen0',
+        admin: 'fshen0',
+        id: md5(location.pathname),      
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: true
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+
 
 
         <footer id="footer">
@@ -2358,6 +2556,29 @@
 
 
 <!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
 
 
 

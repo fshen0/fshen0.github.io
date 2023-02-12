@@ -16,15 +16,21 @@
     <script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
     
 
-    <meta name="description" content="Sow nothing, reap nothing.">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Meow Mii">
-<meta property="og:url" content="https://blog.yiochin.top/archives/index.html">
+    <meta name="description" content="事务wiki：事务是数据库管理系统（DBMS）执行过程中的一个逻辑单位，有一个有限的数据库操作序列构成。InnoDB支持事务。 事务的四大特性 原子性：Atomicity，不可再分，意味着对数据库的一系列操作要么全部成功要么全部失败，不会出现其他的情况。出错时需要进行回滚，在InnoDB中使用undo log来实现，记录了数据修改之前的值（逻辑日志）。 一致性：Consistency，指数据库的完">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL学习笔记Ⅲ-事务">
+<meta property="og:url" content="https://blog.yiochin.top/p/e791ddba.html">
 <meta property="og:site_name" content="Meow Mii">
-<meta property="og:description" content="Sow nothing, reap nothing.">
+<meta property="og:description" content="事务wiki：事务是数据库管理系统（DBMS）执行过程中的一个逻辑单位，有一个有限的数据库操作序列构成。InnoDB支持事务。 事务的四大特性 原子性：Atomicity，不可再分，意味着对数据库的一系列操作要么全部成功要么全部失败，不会出现其他的情况。出错时需要进行回滚，在InnoDB中使用undo log来实现，记录了数据修改之前的值（逻辑日志）。 一致性：Consistency，指数据库的完">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090101440.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090101441.png">
+<meta property="og:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090101442.png">
+<meta property="article:published_time" content="2023-02-12T06:37:10.376Z">
+<meta property="article:modified_time" content="2023-02-12T06:48:03.376Z">
 <meta property="article:author" content="Meow Mii">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090101440.png">
 
     
     
@@ -47,7 +53,7 @@
       
     
     <!-- title -->
-    <title>Writing</title>
+    <title>MySQL学习笔记Ⅲ-事务</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -2015,300 +2021,398 @@
 
     <div class="content index py4" id="pjax-container">
         
-          <header id="header">
-  <a href="#" onclick="switchNightMode()" onmouseover="">
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        MySQL学习笔记Ⅲ-事务
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name" id="post-author" style="cursor: pointer;">
+          <a href="/">Meow Mii </a>
+        </span>
+      </span>
+    
+      
+    <div class="postdate">
+      
+        <time datetime="2023-02-12T06:37:10.376Z" itemprop="datePublished">2023-02-12</time>
+        
+        (Updated: <time datetime="2023-02-12T06:48:03.376Z" itemprop="dateModified">2023-02-12</time>)
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fas fa-archive"></i>
+        <a class="category-link" href="/categories/MySQL/">MySQL</a>
+    </div>
+
+
+      
+
+    </div>
+  </header>
   
-    
-      <div id="logo" style="background-image: url(/images/avatar.jpg);"></div>
-    
-  
-    <div id="title">
-      <h1>Meow Mii</h1>
-    </div>
-  </a>
-  <div id="nav">
-    <ul>
-      
-        <li><a href="/">Home</a></li>
-      
-        <li><a href="/archives/">Writing</a></li>
-      
-        <li><a href="/categories/">Category</a></li>
-      
-        <li><a href="/about/">About</a></li>
-      
-        <li><a href="/search/">Search</a></li>
-      
-    </ul>
-  </div>
-  
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css" />
-  
-</header>
 
-
-        
-        <div id="archive">
-  <ul class="post-list">
+  <div id="post_options">
+    <li><a class="icon" href="/"><i class="fa fa-paw" aria-hidden="true"></i></a></li>
+    <li><a data-pjax class="icon pjax" href="/search"><i class="fa fa-search" aria-hidden="true"></i></a></li>
+    <li><a class="icon" href="#" onclick="$('#toc').toggle();return false;"><i class="fa fa-bars" aria-hidden="true"></i></a></li>
+    
+    <li><a class="icon" aria-label="Previous post" href="/p/99fbc96.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
     
     
+    <li><a class="icon" aria-label="Next post" href="/p/7e988c00.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
     
-    
-      
-      
-      
-      
-        <li class="post-year"><h2>2023</h2></li>
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:16.976Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/e911dea2.html">Redis缓存穿透和雪崩</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:12.950Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/c328eac5.html">Redis主从复制</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:08.939Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/bf72778.html">Redis发布订阅</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:49:04.800Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/815cc3a1.html">Redis配置</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:48:20.446Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/ef2788f.html">MySQL学习笔记Ⅴ-优化</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:48:11.565Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/9096ed2c.html">MySQL学习笔记Ⅳ-锁</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:48:03.376Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/e791ddba.html">MySQL学习笔记Ⅲ-事务</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:47:58.312Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/7e988c00.html">MySQL学习笔记Ⅱ-索引</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:47:52.988Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/99fbc96.html">MySQL学习笔记Ⅰ-存储引擎</a>
-    
-
-
-</span>
-      </li>
-    
-      
-      
-      
-      
-      <li class="post-item">
-        
-    <div class="meta">
-      
-        
-          <time datetime="2023-02-12T06:44:29.013Z" itemprop="dateModified">2023-02-12</time>
-        
-      
-    </div>
-
-
-        <span>
-    
-        <a class="" href="/p/99746608.html">Java邮件发送</a>
-    
-
-
-</span>
-      </li>
-    
-  </ul>
-  
-    <div class="pagination">
-        
-        <span class="page-number">Page 1 of 2</span>
-        
-            <a href="/archives/page/2/"><i class="fas fa-angle-right"></i>
-            </a>
-        
-    </div>
-
+    <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+    <li><a class="icon" id="share_do" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+    <li><a class="icon" href="#" onclick="switchNightMode()"><i class="fas fa-lightbulb" aria-hidden="true"></i></a></li>
+</div>
+<div id="share" style="display: none">
+<ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/e791ddba.html&text=MySQL学习笔记Ⅲ-事务"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MySQL学习笔记Ⅲ-事务&body=Check out this article: https://blog.yiochin.top/p/e791ddba.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/e791ddba.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/e791ddba.html&title=MySQL学习笔记Ⅲ-事务"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/e791ddba.html&is_video=false&description=MySQL学习笔记Ⅲ-事务"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=MySQL学习笔记Ⅲ-事务&body=Check out this article: https://blog.yiochin.top/p/e791ddba.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/e791ddba.html&title=MySQL学习笔记Ⅲ-事务"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/e791ddba.html&title=MySQL学习笔记Ⅲ-事务"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/e791ddba.html&title=MySQL学习笔记Ⅲ-事务"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/e791ddba.html&title=MySQL学习笔记Ⅲ-事务"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/e791ddba.html&name=MySQL学习笔记Ⅲ-事务&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/e791ddba.html&t=MySQL学习笔记Ⅲ-事务"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
 
 </div>
+<div id="share" style="display: none">
+    <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/e791ddba.html&text=MySQL学习笔记Ⅲ-事务"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=MySQL学习笔记Ⅲ-事务&body=Check out this article: https://blog.yiochin.top/p/e791ddba.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/e791ddba.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/e791ddba.html&title=MySQL学习笔记Ⅲ-事务"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/e791ddba.html&is_video=false&description=MySQL学习笔记Ⅲ-事务"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=MySQL学习笔记Ⅲ-事务&body=Check out this article: https://blog.yiochin.top/p/e791ddba.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/e791ddba.html&title=MySQL学习笔记Ⅲ-事务"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/e791ddba.html&title=MySQL学习笔记Ⅲ-事务"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/e791ddba.html&title=MySQL学习笔记Ⅲ-事务"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/e791ddba.html&title=MySQL学习笔记Ⅲ-事务"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/e791ddba.html&name=MySQL学习笔记Ⅲ-事务&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/e791ddba.html&t=MySQL学习笔记Ⅲ-事务"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+</ul>
+
+</div>
+<div id="toc" style="display: none">
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1"><span class="toc-number">1.</span> <span class="toc-text">事务</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9B%9B%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="toc-number">2.</span> <span class="toc-text">事务的四大特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#InnoDB%E4%B8%89%E5%A4%A7%E7%89%B9%E6%80%A7"><span class="toc-number">3.</span> <span class="toc-text">InnoDB三大特性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E5%8A%A1%E5%B9%B6%E5%8F%91%E5%B8%A6%E6%9D%A5%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">4.</span> <span class="toc-text">事务并发带来的问题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="toc-number">5.</span> <span class="toc-text">隔离级别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL92%E6%A0%87%E5%87%86"><span class="toc-number">5.1.</span> <span class="toc-text">SQL92标准</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#MySQL-InnoDB%E5%AF%B9%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E7%9A%84%E6%94%AF%E6%8C%81"><span class="toc-number">5.2.</span> <span class="toc-text">MySQL InnoDB对隔离级别的支持</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%A4%E5%A4%A7%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%A1%88"><span class="toc-number">5.3.</span> <span class="toc-text">两大实现方案</span></a></li></ol></li></ol>
+</div>
+
+
+<style>
+#post_options{
+    border-radius: 10px;
+    background-color: #ffffff33;
+    position: fixed;
+    right: 1%;
+    bottom: 10%;
+    z-index: 99;
+}
+#post_options li{
+    cursor: pointer;
+    width: 2rem;
+    height: 2rem;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
+    /* outline-style: solid;
+    outline-color: grey; */
+        /* display: inline; */
+}
+
+#share{
+    position: fixed;
+    right: 5%;
+    bottom: 3%;
+    z-index: 1;
+    text-align: center;
+}
+@media screen and ( max-width: 500px) {
+    #share{
+        right: 10%;
+    }
+    #toc{
+        margin-right: 20px;
+        padding-left: 0px;
+    }
+
+}
+
+@media screen and (min-width: 900px){
+    .post #toc{
+        right: 4.5%;
+    }
+    .post #share{
+        right: 4.5%;
+    }
+}
+
+#share li{
+    text-align: center;
+    text-decoration: none;
+    list-style: none;
+}
+#toc{
+    border-radius: 6px;
+    font-weight: 700;
+    background-color: rgba(80, 90, 100, 0.4);
+    font-size: 12px;
+    position: fixed;
+    right: 5%;
+    bottom: 25%;
+    z-index: 1;
+    margin-bottom: 18px;
+}
+#toc li{
+    list-style: none;
+}
+
+#toc .toc{
+    padding-left: 15px;
+    padding-right: 15px;
+}
+#toc .toc .toc-child{
+    padding-left: 12px;
+}
+
+</style>
+<script>
+
+</script>
+  <div class="content" itemprop="articleBody">
+    <h2 id="事务"><a href="#事务" class="headerlink" title="事务"></a>事务</h2><p>wiki：事务是数据库管理系统（DBMS）执行过程中的一个逻辑单位，有一个有限的数据库操作序列构成。InnoDB支持事务。</p>
+<h2 id="事务的四大特性"><a href="#事务的四大特性" class="headerlink" title="事务的四大特性"></a>事务的四大特性</h2><ol>
+<li><strong>原子性</strong>：Atomicity，不可再分，意味着对数据库的一系列操作要么全部成功要么全部失败，不会出现其他的情况。出错时需要进行回滚，在InnoDB中使用undo log来实现，记录了数据修改之前的值（逻辑日志）。</li>
+<li><strong>一致性</strong>：Consistency，指数据库的完整性约束没有被破坏，事务执行前后都是合法的数据状态。比如主键必须是唯一的，字段长度符合要求。</li>
+<li><strong>隔离性</strong>：Isolation，数据库中会有很多的事务同时去操作同一张表或者同一行数据，必然会出现一些并发或者干扰的操作，对隔离的定义就是说这些事务之间是透明的、相互不干扰的，借此保证数据的一致性。</li>
+<li><strong>持久性</strong>：Durability，对数据库的任何操作，增删改查，只要事务提交成功，那么结果就是永久的，不可能因为系统的宕机或者重启而恢复到之前的状态。持久性通过redo log来实现，在操作数据时，会先写到内存的buffer pool中，同时记录redo log，如果在刷盘之前出现异常，在重启后就可以读取redo log的内容写到磁盘，保证数据的持久性。</li>
+</ol>
+<h2 id="InnoDB三大特性"><a href="#InnoDB三大特性" class="headerlink" title="InnoDB三大特性"></a>InnoDB三大特性</h2><ol>
+<li><p>双写缓冲区（DoubleWrite Buffer）</p>
+<p>是一个存储区，InnoDB将页面写入InnoDB数据文件中的适当位置之前，先从缓冲池中刷新页面。如果在页面写入过程中存在操作系统、存储子系统或意外的misqld进程退出，则InnoDB可以在崩溃期间从doublewrite缓冲区找到页面的良好副本。在系统恢复后，MySQL可以根据redolog来恢复，而MySQL在恢复过程中是检查page的checksum，即page的最后事务号，发生partial page write（页断裂，页断裂是数据库宕机时，数据库页面只有部分写入磁盘，导致页面出现不一致的情况。）问题时，page已损坏，找不到该page中的事务号，就无法恢复。而双写缓冲区，在宏观上与事务的四特性有关，在底层则是为了解决partial page write问题。</p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090101440.png" alt="image-20230203225219355"></p>
+<p>InnoDB会在磁盘上划分出连续的两个区的范围，一个区包含64页，一页16k，一个区为1M，因此一个<strong>双写缓冲区</strong>的大小为两个1M，共2M。</p>
+<ul>
+<li><p>我们写数据时，InnoDB会先调用memcopy函数把数据从内存的buffer pool中复制到双写缓冲区中，接着调用fsyc函数将其写入到磁盘的双写缓冲区中（完整页数据），最后再把数据写入到对应的数据页中。</p>
+</li>
+<li><p>如果写页过程出现意外崩溃，InnoDB在稍后的恢复过程中在双写缓冲区中找到完好的page副本用于修复。redolog存储的是修改操作，只能恢复被修改过字段出现的损坏。</p>
+</li>
+<li><p>为什么写数据要提前写个双写缓冲区？</p>
+<p>一页数据是16kb，磁盘写一次是4kb，因此一页数据写磁盘需要写四次。假如在写到8kb时数据库崩了，就会出现partial page write问题。而双写缓冲区作为预分配的磁盘位置，数据库在写磁盘双写缓冲区时是使用的顺序写，因此效率上比直接写数据的随机写快的多，出问题的概率系小。</p>
+</li>
+</ul>
+</li>
+<li><p>AHI 自适应哈希</p>
+<p>InnoDB自行研发的，用于提高MySQL的查询效率。</p>
+<p><strong>InnoDB内部会自己去监控索引表，如果监控到某个索引经常用，那么就认为是热数据，然后内部会自己创建一个hash索引，称之为自适应哈希索引（Adaptive Hash Index，AHI）。</strong></p>
+<p>创建之后，若下次又查询到该索引，则可直接通过hash算法推导出记录地址一次查到数据，比查b+树更有效率。MySQL在哈希索引的设计上还采用了热点分散技术，这样的哈希索引在MySQL上默认是启动8个的，热点数据会分散到不同的哈希索引上，因此热数据访问时，能将请求分散到不同的哈希索引上，提高并发访问的性能。</p>
+</li>
+<li><p>Buffer Pool</p>
+<ul>
+<li><p>什么是Buffer Pool </p>
+<p>InnoDB为了缓存磁盘中的页，在MySQL服务器启动的时候就向操作系统申请了一片连续的内存，叫做Buffer Pool。默认大小只有128M大小，启动服务器时可以通过配置<code>innodb_buffer_pool_size</code>参数的值来指定大小。</p>
+</li>
+<li><p>Buffer Pool内部组成</p>
+<p>bufferpool中默认的缓存页大小和在磁盘上默认的页大小是一样的，都是16KB。InnoDB为每一个其中的缓存页都创建了控制信息，这些控制信息包括该页所属的表空间编号、页号、缓存页在bufferpool中的地址，链表节点信息、一些所信息以及LSN信息等，称之为<strong>控制块</strong>。</p>
+<p>MySQL大部分缓存的数据都在bufferpool中，缓存页就是数据，数据库查询出来的数据都会缓存到缓存页中，便于下次快速查询，控制块保存了缓存页的各种信息地址等，用来查找缓存页。</p>
+</li>
+<li><p>Buffer Pool中的链表结构</p>
+<ul>
+<li><p>Free 链：是将所有空闲的缓存页串起来，也就是将空闲的缓存页对应的控制块地址用一个链表来维护，在新数据到来时，可以直接在Free链上找到空闲缓存页。</p>
+</li>
+<li><p>Flush链：结构与Free链一样，MySQL把缓冲区上面这种被<strong>修改过</strong>的数据的控制块也用一个链表来进行维护，以此来快速定位被修改过的数据，也被称之为脏数据（未落盘的数据），因此Flush链也被称为<strong>脏链</strong>。</p>
+<p>MySQL数据提交之后并不是立刻落盘的，而是依然在缓冲区里，最后会统一落盘，数据提交后会有redo日志，即使没有落盘，在数据库挂掉的时候也依然可以恢复数据，读取的时候也可以正常读取。</p>
+</li>
+<li><p>LRU链表：是一种最近最少使用淘汰链表，使用过的数据会被维护到这个链表上，新用提到表头，当链表满的时候就从链表尾开始淘汰不常使用的数据。</p>
+<p>MySQL对LRU的改进措施：</p>
+<ol>
+<li><p>将LRU链表分为两部分，前面为热数据区（Young区），后面为冷数据区（Old区，占37%）。排除了全表扫描等类似的大数据量查询直接把热门数据淘汰出缓冲区的情况。</p>
+</li>
+<li><p>对冷链数据移动到热链上做了时间限定。限定时间内对冷链上数据的访问不会移动到热数据区，只有超过这个时间，再次访问冷链上的数据才会被移动到热数据区。避免了短时间内全表扫描等大数据量频繁刷新导致热数据被移出热链的情况。</p>
+</li>
+<li><p>热链部分并非每次访问都会向前移动，只有在热点的后四分之一内的数据才会在访问时移动到热链头部，减少移动带来的资源消耗，提升性能。</p>
+</li>
+<li><p>参数：</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">innodb_old_blocks_pct:</span> <span class="string">调整冷热数据区域占比，默认37%</span></span><br><span class="line"><span class="attr">innodb_old_blocks_time:</span> <span class="string">调整限定间隔时间，默认1秒</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+</li>
+<li><p>MySQL刷新数据落盘的途径</p>
+<p>MySQL后台会有一个定时器，定时将数据进行统一落盘，以不影响用户线程处理正常的请求。</p>
+<ul>
+<li><strong>BUF_FLUSH_LIST</strong>：从flush链表中刷新一部分页面到磁盘，刷新速率取决于当时系统是不是很繁忙。</li>
+<li><strong>BUF_FLUSH_LRU</strong>：从LRU链表的冷数据中刷新一部分页面到磁盘。后台线程会定时从LRU链表尾部开始扫描一些页面，扫描的页面数量可以通过系统变量<code>innodb_lru_scan_depth</code>来指定，如果从里面发现脏页，会将其刷新到磁盘。</li>
+<li><strong>BUF_FLUSH_SINGLE_PAGE</strong>：有时候后台线程刷新脏页的进度比较慢，导致用户线程在准备加载一个磁盘页到BufferPool时没有可用的缓存页，这时就会尝试看LRU链表尾部有没有可以直接释放掉的未修改页面，如果没有的话，会不得不将LRU链表尾部的一个脏页同步刷新到磁盘（会降低处理用户请求的速度）。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<h2 id="事务并发带来的问题"><a href="#事务并发带来的问题" class="headerlink" title="事务并发带来的问题"></a>事务并发带来的问题</h2><ol>
+<li><p><strong>脏读</strong>：事务中，修改了数据但<strong>没提交</strong>，从而导致前后两次读取数据不一致的情况。由未提交修改而产生的不一致结果称之为脏读。</p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090101441.png" alt="image-20230204151657235"></p>
+</li>
+<li><p><strong>不可重复读</strong>：发生在update和delete情形中。第一个事务查询到了一个数据，然后第二个事务进行了一个update操作，并通过commit<strong>提交了</strong>修改，之后第一个事务又进行了一次查询，出现了前后两次读取数据不一致的情况。由提交修改造成的不一致称为不可重复读。</p>
+<p><img src="https://gcore.jsdelivr.net/gh/iuning/meowimg@main/img/202302090101442.png" alt="image-20230204152033817"></p>
+</li>
+<li><p><strong>幻读</strong>：发生在INSERT情形。第一个事务执行了一个范围查询，然后第二个事务执行了一个插入操作并提交修改。第一个事务再去执行查询时，结果不一致。由插入数据造成的称为幻读。</p>
+</li>
+</ol>
+<h2 id="隔离级别"><a href="#隔离级别" class="headerlink" title="隔离级别"></a>隔离级别</h2><h3 id="SQL92标准"><a href="#SQL92标准" class="headerlink" title="SQL92标准"></a>SQL92标准</h3><ol>
+<li><p><strong>Read Uncommitted，未提交读</strong></p>
+<p>一个事务可以读取到其他事务未提交的数据，出现脏读。没有解决任何问题。</p>
+</li>
+<li><p><strong>Read Committed，已提交读</strong></p>
+<p>一个事务只能读取到其他事务已提交的数据，不能读取到未提交的数据，解决了脏读的问题，但会出现不可重复读的问题。</p>
+</li>
+<li><p><strong>Repeatable Read，可重复读</strong></p>
+<p>解决了不可重复读问题，即在同一个事务里面多次读取同样的数据结果是一样的，但在这个级别下没有解决幻读的问题。</p>
+</li>
+<li><p><strong>Serializable，串行化</strong></p>
+<p>所有事务都是串行执行的，也就是对数据的操作需要排队，已经不存在事务的并发操作了，所以解决了所有的问题。</p>
+</li>
+</ol>
+<h3 id="MySQL-InnoDB对隔离级别的支持"><a href="#MySQL-InnoDB对隔离级别的支持" class="headerlink" title="MySQL InnoDB对隔离级别的支持"></a>MySQL InnoDB对隔离级别的支持</h3><table>
+<thead>
+<tr>
+<th align="center">事务隔离级别</th>
+<th align="center">脏读</th>
+<th align="center">不可重复读</th>
+<th align="center">幻读</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">未提交读</td>
+<td align="center">可能</td>
+<td align="center">可能</td>
+<td align="center">可能</td>
+</tr>
+<tr>
+<td align="center">已提交读</td>
+<td align="center">不可能</td>
+<td align="center">可能</td>
+<td align="center">可能</td>
+</tr>
+<tr>
+<td align="center">可重复读</td>
+<td align="center">不可能</td>
+<td align="center">不可能</td>
+<td align="center">对InnoDB不可能</td>
+</tr>
+<tr>
+<td align="center">串行化</td>
+<td align="center">不可能</td>
+<td align="center">不可能</td>
+<td align="center">不可能</td>
+</tr>
+</tbody></table>
+<h3 id="两大实现方案"><a href="#两大实现方案" class="headerlink" title="两大实现方案"></a>两大实现方案</h3><ol>
+<li><p><strong>LBCC</strong></p>
+<p>读取数据的时候，锁定要操作的数据，不允许其他事务修改。这种方案称之为<strong>基于锁的并发控制（Lock Based Concurrency Control，LBCC）</strong>。</p>
+</li>
+<li><p><strong>MVCC</strong></p>
+<p>在修改数据的时候给他建立一个备份或者快照，后面再来读取这个快照就行了，这种方案称为<strong>多版本的并发控制（Multi Version Concurrency Control，MVCC）</strong>。其核心思想为：我可以查到我这个事务开始之前已经存在的已提交的数据，即使它在后面被修改或者删除了，在我这个事务之后新增的数据我是查不到的。</p>
+<p>InnoDB为每行记录都实现了两个隐藏字段，还要加上一个ROWID：</p>
+<ul>
+<li><p><strong>DB_TRX_ID</strong>：6字节，插入或更新行的最后一个事务的事务ID，事务编号是自动递增的。我们将其理解为<strong>创建版本号</strong>，在数据新增或者修改为新数据的时候，记录当前事务ID，即创建版本号被修改为当前事务ID。</p>
+</li>
+<li><p><strong>DB_ROLL_PTR</strong>：7字节，回滚指针。将其理解为<strong>删除版本号</strong>，数据被删除或记录为旧数据时，记录当前事务ID，即删除版本号被修改为当前事务ID。</p>
+</li>
+<li><p>将这两个事务ID理解为版本号。后面事务的创建版本号比当前事务ID大的修改无法被当前事务查询出，但是删除版本号大于当前ID的事务的修改操作会被查出来。查询操作的事务可被执行多次，且事务创建版本号不变。</p>
+</li>
+</ul>
+</li>
+</ol>
+
+  </div>
+
+</article>
+
+
+<div id="copyright" class="post-copyright-information">
+    <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
+
+  <!-- JS库 sweetalert 可修改路径 -->
+    <script src="https://cdn.bootcss.com/jquery/2.0.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+ 
+  <!-- 结束语 -->
+    <p id="easter-egg"></p>
+ 
+  <!-- post-copyright-information -->
+
+    <blockquote style="padding:0">
+        <p>作者：
+            Meow Mii
+        </p>
+        <p>本文链接：
+            
+                <a href="/p/e791ddba.html" target="_blank" title="MySQL学习笔记Ⅲ-事务">
+                https://blog.yiochin.top/p/e791ddba.html</a>
+            
+        </p>
+        <p>版权声明： 本博客所有文章除特别声明外,均采用
+             <a rel="license" href="https://creativecommons.org/licenses/by-nc-nd/4.0/" 
+             target="_blank" title="Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0)">
+             CC BY-NC-ND 4.0
+            </a> 许可协议，转载请注明出处！
+        </p>
+    </blockquote>
+    <hr>
+</div>
+
+
+
+
+
+
+<div id="comment_twikoo">
+    <p style="font-size: 1.5em; font-weight:700;">📝 Comment</p>
+    <div id="gitalk-container"></div>
+</div>
+<style>
+    #gitalk-container a{
+        background-image: none;
+    }
+</style>
+
+<script type="text/javascript">
+      var gitalk = new Gitalk({
+        proxy: 'https://vercel.prohibitorum.top/github_access_token',
+        clientID: '37aa963463a974f338bd',
+        clientSecret: '2dc9e5ef7ed915ee6c7bee00b90f299aa489deff',
+        repo: 'fshen0.github.io',
+        owner: 'fshen0',
+        admin: 'fshen0',
+        id: md5(location.pathname),      
+        labels: 'Gitalk'.split(',').filter(l => l),
+        perPage: 10,
+        pagerDirection: 'last',
+        createIssueManually: true,
+        distractionFreeMode: true
+      })
+      gitalk.render('gitalk-container')
+</script>
+
+
 
 
         <footer id="footer">
@@ -2358,6 +2462,29 @@
 
 
 <!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"Copy to clipboard!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "Copied!");
+      e.clearSelection();
+    })
+  })
+  </script>
 
 
 

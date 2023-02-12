@@ -16,17 +16,16 @@
     <script src="//cdn.bootcss.com/blueimp-md5/2.10.0/js/md5.js"></script>
     
 
-    <meta name="description" content="​	黄初三年，余朝京师，还济洛川。古人有言，斯水之神，名曰宓妃。感宋玉对楚王神女之事，遂作斯赋。其辞曰： ​	余从京域，言归东藩。背伊阙，越轘辕，经通谷，陵景山。日既西倾，车殆马烦。尔乃税驾乎蘅皋，秣驷乎芝田，容与乎阳林，流眄乎洛川。于是精移神骇，忽焉思散。俯则末察，仰以殊观，睹一丽人，于岩之畔。乃援御者而告之曰：“尔有觌于彼者乎?彼何人斯?若此之艳也!”御者对曰：“臣闻河洛之神，名曰宓妃。然则君">
+    <meta name="description" content="Redis.conf详解 单位注意事项：当需要内存大小时，可以指定 1234567891011# Note on units: when memory size is needed, it is possible to specify# it in the usual form of 1k 5GB 4M and so forth:## 1k &#x3D;&gt; 1000 bytes# 1kb &#x3D;&gt;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="洛神赋">
-<meta property="og:url" content="https://blog.yiochin.top/p/ba663a52.html">
+<meta property="og:title" content="Redis配置">
+<meta property="og:url" content="https://blog.yiochin.top/p/815cc3a1.html">
 <meta property="og:site_name" content="Meow Mii">
-<meta property="og:description" content="​	黄初三年，余朝京师，还济洛川。古人有言，斯水之神，名曰宓妃。感宋玉对楚王神女之事，遂作斯赋。其辞曰： ​	余从京域，言归东藩。背伊阙，越轘辕，经通谷，陵景山。日既西倾，车殆马烦。尔乃税驾乎蘅皋，秣驷乎芝田，容与乎阳林，流眄乎洛川。于是精移神骇，忽焉思散。俯则末察，仰以殊观，睹一丽人，于岩之畔。乃援御者而告之曰：“尔有觌于彼者乎?彼何人斯?若此之艳也!”御者对曰：“臣闻河洛之神，名曰宓妃。然则君">
+<meta property="og:description" content="Redis.conf详解 单位注意事项：当需要内存大小时，可以指定 1234567891011# Note on units: when memory size is needed, it is possible to specify# it in the usual form of 1k 5GB 4M and so forth:## 1k &#x3D;&gt; 1000 bytes# 1kb &#x3D;&gt;">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2022-09-07T12:38:46.017Z">
-<meta property="article:modified_time" content="2022-09-05T02:58:38.608Z">
+<meta property="article:published_time" content="2023-02-12T06:39:37.456Z">
+<meta property="article:modified_time" content="2023-02-12T06:49:04.800Z">
 <meta property="article:author" content="Meow Mii">
-<meta property="article:tag" content="赋">
 <meta name="twitter:card" content="summary">
 
     
@@ -50,7 +49,7 @@
       
     
     <!-- title -->
-    <title>洛神赋</title>
+    <title>Redis配置</title>
     <!-- styles -->
     
 <link rel="stylesheet" href="/css/style.css">
@@ -2022,7 +2021,7 @@
   <header>
     
     <h1 class="posttitle" itemprop="name headline">
-        洛神赋
+        Redis配置
     </h1>
 
 
@@ -2037,9 +2036,9 @@
       
     <div class="postdate">
       
-        <time datetime="2022-09-07T12:38:46.017Z" itemprop="datePublished">2022-09-07</time>
+        <time datetime="2023-02-12T06:39:37.456Z" itemprop="datePublished">2023-02-12</time>
         
-        (Updated: <time datetime="2022-09-05T02:58:38.608Z" itemprop="dateModified">2022-09-05</time>)
+        (Updated: <time datetime="2023-02-12T06:49:04.800Z" itemprop="dateModified">2023-02-12</time>)
         
       
     </div>
@@ -2048,16 +2047,11 @@
       
     <div class="article-category">
         <i class="fas fa-archive"></i>
-        <a class="category-link" href="/categories/%E5%8F%A4%E8%AF%97%E6%96%87/">古诗文</a>
+        <a class="category-link" href="/categories/Redis/">Redis</a>
     </div>
 
 
       
-    <div class="article-tag">
-        <i class="fas fa-tag"></i>
-        <a class="tag-link-link" href="/tags/%E8%B5%8B/" rel="tag">赋</a>
-    </div>
-
 
     </div>
   </header>
@@ -2068,8 +2062,10 @@
     <li><a data-pjax class="icon pjax" href="/search"><i class="fa fa-search" aria-hidden="true"></i></a></li>
     <li><a class="icon" href="#" onclick="$('#toc').toggle();return false;"><i class="fa fa-bars" aria-hidden="true"></i></a></li>
     
-    <li><a class="icon" aria-label="Previous post" href="/p/316feddf.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+    <li><a class="icon" aria-label="Previous post" href="/p/c328eac5.html"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
     
+    
+    <li><a class="icon" aria-label="Next post" href="/p/bf72778.html"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
     
     <li><a class="icon" aria-label="Back to top" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
     <li><a class="icon" id="share_do" aria-label="Share post" href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
@@ -2077,40 +2073,40 @@
 </div>
 <div id="share" style="display: none">
 <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/ba663a52.html&text=洛神赋"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=洛神赋&body=Check out this article: https://blog.yiochin.top/p/ba663a52.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/ba663a52.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/ba663a52.html&title=洛神赋"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/ba663a52.html&is_video=false&description=洛神赋"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" href="mailto:?subject=洛神赋&body=Check out this article: https://blog.yiochin.top/p/ba663a52.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/ba663a52.html&title=洛神赋"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/ba663a52.html&title=洛神赋"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/ba663a52.html&title=洛神赋"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/ba663a52.html&title=洛神赋"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/ba663a52.html&name=洛神赋&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/ba663a52.html&t=洛神赋"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/815cc3a1.html&text=Redis配置"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Redis配置&body=Check out this article: https://blog.yiochin.top/p/815cc3a1.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/815cc3a1.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/815cc3a1.html&title=Redis配置"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/815cc3a1.html&is_video=false&description=Redis配置"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=Redis配置&body=Check out this article: https://blog.yiochin.top/p/815cc3a1.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/815cc3a1.html&title=Redis配置"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/815cc3a1.html&title=Redis配置"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/815cc3a1.html&title=Redis配置"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/815cc3a1.html&title=Redis配置"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/815cc3a1.html&name=Redis配置&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/815cc3a1.html&t=Redis配置"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
 </ul>
 
 </div>
 <div id="share" style="display: none">
     <ul>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/ba663a52.html&text=洛神赋"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
-  <li><a class="icon" href="mailto:?subject=洛神赋&body=Check out this article: https://blog.yiochin.top/p/ba663a52.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/ba663a52.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
-  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/ba663a52.html&title=洛神赋"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/ba663a52.html&is_video=false&description=洛神赋"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" href="mailto:?subject=洛神赋&body=Check out this article: https://blog.yiochin.top/p/ba663a52.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/ba663a52.html&title=洛神赋"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/ba663a52.html&title=洛神赋"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/ba663a52.html&title=洛神赋"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/ba663a52.html&title=洛神赋"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/ba663a52.html&name=洛神赋&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
-  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/ba663a52.html&t=洛神赋"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
+  <li><a class="icon" target="_blank" rel="noopener" href="http://connect.qq.com/widget/shareqq/index.html?url=https://blog.yiochin.top/p/815cc3a1.html&text=Redis配置"><i class="fab fa-qq " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Redis配置&body=Check out this article: https://blog.yiochin.top/p/815cc3a1.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://blog.yiochin.top/p/815cc3a1.html"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://blog.yiochin.top/p/815cc3a1.html&title=Redis配置"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://blog.yiochin.top/p/815cc3a1.html&is_video=false&description=Redis配置"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" href="mailto:?subject=Redis配置&body=Check out this article: https://blog.yiochin.top/p/815cc3a1.html"><i class="fas fa-envelope " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://blog.yiochin.top/p/815cc3a1.html&title=Redis配置"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://blog.yiochin.top/p/815cc3a1.html&title=Redis配置"><i class="fab fa-reddit " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://blog.yiochin.top/p/815cc3a1.html&title=Redis配置"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://blog.yiochin.top/p/815cc3a1.html&title=Redis配置"><i class="fab fa-digg " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://blog.yiochin.top/p/815cc3a1.html&name=Redis配置&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li> -->
+  <!-- <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://blog.yiochin.top/p/815cc3a1.html&t=Redis配置"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li> -->
 </ul>
 
 </div>
 <div id="toc" style="display: none">
-
+<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis-conf%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.</span> <span class="toc-text">Redis.conf详解</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-number">2.</span> <span class="toc-text">Redis持久化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#RDB%EF%BC%88Redis-DataBase%EF%BC%89"><span class="toc-number">2.1.</span> <span class="toc-text">RDB（Redis DataBase）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Compress-string-objects-using-LZF-when-dump-rdb-databases-%E6%98%AF%E5%90%A6%E4%BD%BF%E7%94%A8%E5%8E%8B%E7%BC%A9%EF%BC%88compress%EF%BC%89"><span class="toc-number"></span> <span class="toc-text">Compress string objects using LZF when dump .rdb databases? 是否使用压缩（compress）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#For-default-that%E2%80%99s-set-to-%E2%80%98yes%E2%80%99-as-it%E2%80%99s-almost-always-a-win"><span class="toc-number"></span> <span class="toc-text">For default that’s set to ‘yes’ as it’s almost always a win.</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#If-you-want-to-save-some-CPU-in-the-saving-child-set-it-to-%E2%80%98no%E2%80%99-but-%E5%85%B3%E6%8E%89%E4%B9%8B%E5%90%8E%E6%8F%90%E9%AB%98%E6%80%A7%E8%83%BD%E4%BD%86%E6%98%AF%E6%B6%88%E8%80%97%E7%A9%BA%E9%97%B4"><span class="toc-number"></span> <span class="toc-text">If you want to save some CPU in the saving child set it to ‘no’ but  关掉之后提高性能但是消耗空间</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#the-dataset-will-likely-be-bigger-if-you-have-compressible-values-or-keys"><span class="toc-number"></span> <span class="toc-text">the dataset will likely be bigger if you have compressible values or keys.</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Since-version-5-of-RDB-a-CRC64-checksum-is-placed-at-the-end-of-the-file-%E6%98%AF%E5%90%A6%E5%85%B3%E9%97%ADCRC%E6%A0%A1%E9%AA%8C%E5%92%8C"><span class="toc-number"></span> <span class="toc-text">Since version 5 of RDB a CRC64 checksum is placed at the end of the file.  是否关闭CRC校验和</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#This-makes-the-format-more-resistant-to-corruption-but-there-is-a-performance-%E7%A1%AE%E4%BF%9D%E5%87%86%E7%A1%AE%E6%80%A7-%E4%BD%86%E6%98%AF%E6%B6%88%E8%80%97%E6%80%A7%E8%83%BD"><span class="toc-number"></span> <span class="toc-text">This makes the format more resistant to corruption but there is a performance  确保准确性 但是消耗性能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#hit-to-pay-around-10-when-saving-and-loading-RDB-files-so-you-can-disable-it"><span class="toc-number"></span> <span class="toc-text">hit to pay (around 10%) when saving and loading RDB files, so you can disable it</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#for-maximum-performances"><span class="toc-number"></span> <span class="toc-text">for maximum performances.</span></a></li><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number"></span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RDB-files-created-with-checksum-disabled-have-a-checksum-of-zero-that-will"><span class="toc-number"></span> <span class="toc-text">RDB files created with checksum disabled have a checksum of zero that will</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#tell-the-loading-code-to-skip-the-check"><span class="toc-number"></span> <span class="toc-text">tell the loading code to skip the check.</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#The-filename-where-to-dump-the-DB"><span class="toc-number"></span> <span class="toc-text">The filename where to dump the DB</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96%E6%96%87%E4%BB%B6%E5%90%8D"><span class="toc-number"></span> <span class="toc-text">持久化文件名</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#The-working-directory"><span class="toc-number"></span> <span class="toc-text">The working directory.</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-1"><span class="toc-number"></span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#The-DB-will-be-written-inside-this-directory-with-the-filename-specified"><span class="toc-number"></span> <span class="toc-text">The DB will be written inside this directory, with the filename specified</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#above-using-the-%E2%80%98dbfilename%E2%80%99-configuration-directive"><span class="toc-number"></span> <span class="toc-text">above using the ‘dbfilename’ configuration directive.</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-2"><span class="toc-number"></span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#The-Append-Only-File-will-also-be-created-inside-this-directory"><span class="toc-number"></span> <span class="toc-text">The Append Only File will also be created inside this directory.</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#-3"><span class="toc-number"></span> <span class="toc-text"></span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Note-that-you-must-specify-a-directory-here-not-a-file-name"><span class="toc-number"></span> <span class="toc-text">Note that you must specify a directory here, not a file name.</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8C%81%E4%B9%85%E5%8C%96%E6%96%87%E4%BB%B6%E7%9B%AE%E5%BD%95"><span class="toc-number"></span> <span class="toc-text">持久化文件目录</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AOF%E9%87%8D%E5%86%99"><span class="toc-number">0.1.</span> <span class="toc-text">AOF重写</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8B%93%E5%B1%95"><span class="toc-number">0.2.</span> <span class="toc-text">拓展</span></a></li></ol></li></ol>
 </div>
 
 
@@ -2197,16 +2193,132 @@
 
 </script>
   <div class="content" itemprop="articleBody">
-    <p>​	黄初三年，余朝京师，还济洛川。古人有言，斯水之神，名曰宓妃。感宋玉对楚王神女之事，遂作斯赋。其辞曰：</p>
-<p>​	余从京域，言归东藩。背伊阙，越轘辕，经通谷，陵景山。日既西倾，车殆马烦。尔乃税驾乎蘅皋，秣驷乎芝田，容与乎阳林，流眄乎洛川。于是精移神骇，忽焉思散。俯则末察，仰以殊观，睹一丽人，于岩之畔。乃援御者而告之曰：“尔有觌于彼者乎?彼何人斯?若此之艳也!”御者对曰：“臣闻河洛之神，名曰宓妃。然则君王所见，无乃日乎?其状若何?臣愿闻之。”</p>
-<p>​	余告之曰：“其形也，翩若惊鸿，婉若游龙。荣曜秋菊，华茂春松。仿佛兮若轻云之蔽月，飘飘兮若流风之回雪。远而望之，皎若太阳升朝霞;迫而察之，灼若芙蕖出渌波。襛纤得衷，修短合度。肩若削成，腰如约素。延颈秀项，皓质呈露。芳泽无加，铅华弗御。云髻峨峨，修眉联娟。丹唇外朗，皓齿内鲜，明眸善睐，靥辅承权。瑰姿艳逸，仪静体闲。柔情绰态，媚于语言。奇服旷世，骨像应图。披罗衣之璀粲兮，珥瑶碧之华琚。戴金翠之首饰，缀明珠以耀躯。践远游之文履，曳雾绡之轻裾。微幽兰之芳蔼兮，步踟蹰于山隅。于是忽焉纵体，以遨以嬉。左倚采旄，右荫桂旗。壤皓腕于神浒兮，采湍濑之玄芝。</p>
-<p>​	余情悦其淑美兮，心振荡而不怡。无良媒以接欢兮，托微波而通辞。愿诚素之先达兮，解玉佩以要之。嗟佳人之信修，羌习礼而明诗。抗琼珶以和予兮，指潜渊而为期。执眷眷之款实兮，惧斯灵之我欺。感交甫之弃言兮，怅犹豫而狐疑。收和颜而静志兮，申礼防以自持。</p>
-<p>​	于是洛灵感焉，徙倚彷徨，神光离合，乍阴乍阳。竦轻躯以鹤立，若将飞而未翔。践椒涂之郁烈，步蘅薄而流芳。超长吟以永慕兮，声哀厉而弥长。尔乃众灵杂遢，命俦啸侣，或戏清流，或翔神渚，或采明珠，或拾翠羽。从南湘之二妃，携汉滨之游女。叹匏瓜之无匹兮，咏牵牛之独处。扬轻袿之猗靡兮，翳修袖以延伫。休迅飞凫，飘忽若神，陵波微步，罗袜生尘。动无常则，若危若安。进止难期，若往若还。转眄流精，光润玉颜。含辞未吐，气若幽兰。华容婀娜，令我忘餐。</p>
-<p>​	于是屏翳收风，川后静波。冯夷鸣鼓，女娲清歌。腾文鱼以警乘，鸣玉鸾以偕逝。六龙俨其齐首，载云车之容裔，鲸鲵踊而夹毂，水禽翔而为卫。于是越北沚。过南冈，纡素领，回清阳，动朱唇以徐言，陈交接之大纲。恨人神之道殊兮，怨盛年之莫当。抗罗袂以掩涕兮，泪流襟之浪浪。悼良会之永绝兮。哀一逝而异乡。无微情以效爱兮，献江南之明珰。虽潜处于太阳，长寄心于君王。忽不悟其所舍，怅神宵而蔽光。</p>
-<p>​	于是背下陵高，足往神留，遗情想像，顾望怀愁。冀灵体之复形，御轻舟而上溯。浮长川而忘返，思绵绵督。夜耿耿而不寐，沾繁霜而至曙。命仆夫而就驾，吾将归乎东路。揽騑辔以抗策，怅盘桓而不能去。</p>
-<blockquote>
-<p>本文作为中文字符格式演示文</p>
+    <h2 id="Redis-conf详解"><a href="#Redis-conf详解" class="headerlink" title="Redis.conf详解"></a>Redis.conf详解</h2><ul>
+<li><p>单位注意事项：当需要内存大小时，可以指定</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Note on units: when memory size is needed, it is possible to specify</span></span><br><span class="line"><span class="comment"># it in the usual form of 1k 5GB 4M and so forth:</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># 1k =&gt; 1000 bytes</span></span><br><span class="line"><span class="comment"># 1kb =&gt; 1024 bytes</span></span><br><span class="line"><span class="comment"># 1m =&gt; 1000000 bytes</span></span><br><span class="line"><span class="comment"># 1mb =&gt; 1024*1024 bytes</span></span><br><span class="line"><span class="comment"># 1g =&gt; 1000000000 bytes</span></span><br><span class="line"><span class="comment"># 1gb =&gt; 1024*1024*1024 bytes</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># units are case insensitive so 1GB 1Gb 1gB are all the same.</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>包含：可以组合多个config文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">############################### INCLUDES ###################################</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Include one or more other config files here.  This is useful if you</span></span><br><span class="line"><span class="comment"># have a standard template that goes to all Redis servers but also need</span></span><br><span class="line"><span class="comment"># to customize a few per-server settings.  Include files can include</span></span><br><span class="line"><span class="comment"># other files, so use this wisely.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Notice option &quot;include&quot; won&#x27;t be rewritten by command &quot;CONFIG REWRITE&quot;</span></span><br><span class="line"><span class="comment"># from admin or Redis Sentinel. Since Redis always uses the last processed</span></span><br><span class="line"><span class="comment"># line as value of a configuration directive, you&#x27;d better put includes</span></span><br><span class="line"><span class="comment"># at the beginning of this file to avoid overwriting config change at runtime.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># If instead you are interested in using includes to override configuration</span></span><br><span class="line"><span class="comment"># options, it is better to use include as the last line.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># include .\path\to\local.conf</span></span><br><span class="line"><span class="comment"># include c:\path\to\other.conf</span></span><br></pre></td></tr></table></figure>
+
+
+</li>
+<li><p>网络</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">bind</span> 127.0.0.1 <span class="comment">#绑定的ip</span></span><br><span class="line">port 6379 <span class="comment">#端口号</span></span><br><span class="line">protected-mode <span class="comment">#保护模式</span></span><br><span class="line">*<span class="comment">#rotected-mode 是为了禁止公网访问redis cache，加强redis安全的。</span></span><br><span class="line"><span class="comment">#它启用的条件，有两个：</span></span><br><span class="line"><span class="comment">#1） 没有bind IP</span></span><br><span class="line"><span class="comment">#2） 没有设置访问密码</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">daemonize <span class="built_in">yes</span> <span class="comment">#守护进程</span></span><br><span class="line">pidfile /var/run/redis_6379.pid <span class="comment">#如果以后台的方式运行就需要一个pid文件</span></span><br><span class="line"><span class="comment"># 日志功能</span></span><br><span class="line"><span class="comment"># Specify the server verbosity level.</span></span><br><span class="line"><span class="comment"># This can be one of:</span></span><br><span class="line"><span class="comment"># debug (a lot of information, useful for development/testing)</span></span><br><span class="line"><span class="comment"># verbose (many rarely useful info, but not a mess like the debug level)</span></span><br><span class="line"><span class="comment"># notice (moderately verbose, what you want in production probably)  生产环境</span></span><br><span class="line"><span class="comment"># warning (only very important / critical messages are logged)   重要的关键的</span></span><br><span class="line">loglevel notice</span><br><span class="line"><span class="comment"># Specify the log file name. Also &#x27;stdout&#x27; can be used to force</span></span><br><span class="line"><span class="comment"># Redis to log on the standard output. </span></span><br><span class="line">logfile <span class="string">&quot;&quot;</span></span><br><span class="line"><span class="comment"># Set the number of databases. The default database is DB 0, you can select</span></span><br><span class="line"><span class="comment"># a different one on a per-connection basis using SELECT &lt;dbid&gt; where</span></span><br><span class="line"><span class="comment"># dbid is a number between 0 and &#x27;databases&#x27;-1</span></span><br><span class="line">databases 16</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>快照（SNAPSHOTTING）：</p>
+<p>做持久化的时候会用到，在规定时间内执行了多少次操作就会持久化到文件 .rdb .aof</p>
+<p>因为是内存数据库，如果没有持久化，数据就会断电即失</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">################################ SNAPSHOTTING  ################################</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Save the DB on disk:</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#   save &lt;seconds&gt; &lt;changes&gt;</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#   Will save the DB if both the given number of seconds and the given</span></span><br><span class="line"><span class="comment">#   number of write operations against the DB occurred.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#   In the example below the behaviour will be to save:</span></span><br><span class="line"><span class="comment">#   after 900 sec (15 min) if at least 1 key changed</span></span><br><span class="line"><span class="comment">#   after 300 sec (5 min) if at least 10 keys changed</span></span><br><span class="line"><span class="comment">#   after 60 sec if at least 10000 keys changed</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#   Note: you can disable saving completely by commenting out all &quot;save&quot; lines.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#   It is also possible to remove all the previously configured save</span></span><br><span class="line"><span class="comment">#   points by adding a save directive with a single empty string argument</span></span><br><span class="line"><span class="comment">#   like in the following example:</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#   save &quot;&quot;</span></span><br><span class="line"><span class="comment">#持久化时 自己定义</span></span><br><span class="line">save 900 1</span><br><span class="line">save 300 10</span><br><span class="line">save 60 10000</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">#持久化失败是否会继续工作</span></span><br><span class="line">stop-writes-on-bgsave-error <span class="built_in">yes</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#是否压缩rdb文件 需要消耗一些cpu资源</span></span><br><span class="line">rdbcompression <span class="built_in">yes</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># The DB will be written inside this directory, with the filename specified</span></span><br><span class="line"><span class="comment"># above using the &#x27;dbfilename&#x27; configuration directive.</span></span><br><span class="line"><span class="comment"># </span></span><br><span class="line"><span class="comment"># The Append Only File will also be created inside this directory.</span></span><br><span class="line"><span class="comment"># </span></span><br><span class="line"><span class="comment"># Note that you must specify a directory here, not a file name.</span></span><br><span class="line"><span class="comment">#RDB 文件的保存目录</span></span><br><span class="line"><span class="built_in">dir</span> ./</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>复制（REPLICATION）</p>
+<p>见下文主从复制</p>
+</li>
+<li><p>安全 （SECURITY）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"> requirepass 123456</span><br><span class="line"> </span><br><span class="line"> <span class="comment">#在命令行设置密码</span></span><br><span class="line"> config <span class="built_in">set</span> requirepass <span class="string">&quot;123456&quot;</span></span><br><span class="line"> </span><br><span class="line"> <span class="comment"># It is possible to change the name of dangerous commands in a shared</span></span><br><span class="line"><span class="comment"># environment. For instance the CONFIG command may be renamed into something</span></span><br><span class="line"><span class="comment"># hard to guess so that it will still be available for internal-use tools</span></span><br><span class="line"><span class="comment"># but not available for general clients.</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment"># Example:</span></span><br><span class="line">rename-command CONFIG b840fc02d524045429941cc15f59e41cb7be6c52</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+</li>
+<li><p>限制（LIMITS）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">maxclients 10000 <span class="comment">#</span></span><br><span class="line">maxmemory &lt;bytes&gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">#MAXMEMORY POLICY: how Redis will select what to remove when maxmemory is reached. You can select among five behaviors:</span></span><br><span class="line"><span class="comment">#内存到达上限之后的处理操作</span></span><br><span class="line"><span class="comment"># volatile-lru -&gt; remove the key with an expire set using an LRU algorithm 使用 LRU 算法删除设置了过期时间的key</span></span><br><span class="line"><span class="comment"># allkeys-lru -&gt; remove any key according to the LRU algorithm   根据 LRU 算法删除任意键</span></span><br><span class="line"><span class="comment"># volatile-random -&gt; remove a random key with an expire set   删除带有过期集的随机key</span></span><br><span class="line"><span class="comment"># allkeys-random -&gt; remove a random key, any key</span></span><br><span class="line"><span class="comment"># volatile-ttl -&gt; remove the key with the nearest expire time (minor TTL )删除过期时间最近的key（次要 TTL）</span></span><br><span class="line"><span class="comment"># noeviction -&gt; don&#x27;t expire at all, just return an error on write operations  根本不会过期，只是在写操作时返回一个错误</span></span><br><span class="line"><span class="comment">#The default is:</span></span><br><span class="line">maxmemory-policy noeviction</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>APPEND ONLY MODE (aof配置)</p>
+</li>
+</ul>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">appendonly no   <span class="comment">#默认不开启 默认使用RDB方式持久化 大部分rdb够用了</span></span><br><span class="line">appendfilename <span class="string">&quot;appendonly.aof&quot;</span> <span class="comment">#持久化的文件名</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># appendfsync always # 每次修改都会 sync 消耗性能</span></span><br><span class="line">appendfsync everysec <span class="comment"># 每一秒都会执行一次sync 可能会丢失这1秒的数据</span></span><br><span class="line"><span class="comment"># appendfsync no # 不执行 sync， 这个时候操作系统自己同步数据，速度最快 </span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Redis持久化"><a href="#Redis持久化" class="headerlink" title="Redis持久化"></a>Redis持久化</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.redis.com.cn/redis-persistence.html">Redis 持久化</a></p>
 </blockquote>
+<p>解决因为是内存数据库断电即失的问题，提供一个数据的持久化保存的功能</p>
+<p>RDB，简而言之，就是在不同的时间点，将 redis 存储的数据生成快照并存储到磁盘等介质上；</p>
+<p>AOF，则是换了一个角度来实现持久化，那就是将 redis 执行过的所有写指令记录下来，在下次 redis 重新启动时，只要把这些写指令从前到后再重复执行一遍，就可以实现数据恢复了。</p>
+<p>其实 RDB 和 AOF 两种方式也可以同时使用，在这种情况下，如果 redis 重启的话，则会优先采用 AOF 方式来进行数据恢复，这是因为 AOF 方式的数据恢复完整度更高。</p>
+<h3 id="RDB（Redis-DataBase）"><a href="#RDB（Redis-DataBase）" class="headerlink" title="RDB（Redis DataBase）"></a>RDB（Redis DataBase）</h3><ul>
+<li><p>是什么</p>
+<p>RDB 方式，是将 redis 某一时刻的数据持久化到磁盘中，是一种快照式的持久化方法。默认的持久化方式。</p>
+<p>redis 在进行数据持久化的过程中，会先将数据写入到一个<strong>临时文件</strong>中，待持久化过程都结束了，才会用这个临时文件替换上次持久化好的文件。正是这种特性，让我们可以随时来进行备份，因为快照文件总是完整可用的。</p>
+<p><strong>优点：</strong></p>
+<ul>
+<li><p><strong>对于 RDB 方式，redis 会单独创建（fork）一个子进程来进行持久化，而主进程是不会进行任何 IO 操作的，这样就确保了 redis 极高的性能。</strong></p>
+</li>
+<li><p>如果需要进行<strong>大规模数据</strong>的恢复，且对于数据恢复的完整性不是非常敏感，那 RDB 方式要比 AOF 方式<strong>更加的高效</strong>。</p>
+</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li>虽然 RDB 有不少优点，但它的缺点也是不容忽视的。<strong>如果你对数据的完整性非常敏感，那么 RDB 方式就不太适合你，</strong>因为即使你每 5 分钟都持久化一次，当 redis 故障时，仍然会有近 5 分钟的数据丢失。</li>
+<li>需要一定的时间修改。</li>
+<li>fork进程的时候会占用一定的内存空间。</li>
+</ul>
+</li>
+<li><p>执行条件</p>
+<ul>
+<li><p>save的规则满足的条件下 就会生成rdb文件</p>
+</li>
+<li><p>执行flushall命令，也会触发rdb规则</p>
+</li>
+<li><p>退出redis，也会产生rdb文件</p>
+<p>备份就自动生成一个dump.rdb</p>
+</li>
+</ul>
+</li>
+<li><p>如何恢复rdb文件</p>
+<ul>
+<li><p>只需要将rdb文件放到redis启动目录就行，redis启动的时候hi自动检查dump.rdb文件来恢复其中的数据。</p>
+</li>
+<li><p>查看需要存在的位置：<code>config get dir</code></p>
+<blockquote>
+<p>几乎它的默认配置就足够使用了</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>&#96;&#96;&#96;bash</p>
+<h1 id="Compress-string-objects-using-LZF-when-dump-rdb-databases-是否使用压缩（compress）"><a href="#Compress-string-objects-using-LZF-when-dump-rdb-databases-是否使用压缩（compress）" class="headerlink" title="Compress string objects using LZF when dump .rdb databases? 是否使用压缩（compress）"></a>Compress string objects using LZF when dump .rdb databases? 是否使用压缩（compress）</h1><h1 id="For-default-that’s-set-to-‘yes’-as-it’s-almost-always-a-win"><a href="#For-default-that’s-set-to-‘yes’-as-it’s-almost-always-a-win" class="headerlink" title="For default that’s set to ‘yes’ as it’s almost always a win."></a>For default that’s set to ‘yes’ as it’s almost always a win.</h1><h1 id="If-you-want-to-save-some-CPU-in-the-saving-child-set-it-to-‘no’-but-关掉之后提高性能但是消耗空间"><a href="#If-you-want-to-save-some-CPU-in-the-saving-child-set-it-to-‘no’-but-关掉之后提高性能但是消耗空间" class="headerlink" title="If you want to save some CPU in the saving child set it to ‘no’ but  关掉之后提高性能但是消耗空间"></a>If you want to save some CPU in the saving child set it to ‘no’ but  关掉之后提高性能但是消耗空间</h1><h1 id="the-dataset-will-likely-be-bigger-if-you-have-compressible-values-or-keys"><a href="#the-dataset-will-likely-be-bigger-if-you-have-compressible-values-or-keys" class="headerlink" title="the dataset will likely be bigger if you have compressible values or keys."></a>the dataset will likely be bigger if you have compressible values or keys.</h1><p>rdbcompression yes</p>
+<h1 id="Since-version-5-of-RDB-a-CRC64-checksum-is-placed-at-the-end-of-the-file-是否关闭CRC校验和"><a href="#Since-version-5-of-RDB-a-CRC64-checksum-is-placed-at-the-end-of-the-file-是否关闭CRC校验和" class="headerlink" title="Since version 5 of RDB a CRC64 checksum is placed at the end of the file.  是否关闭CRC校验和"></a>Since version 5 of RDB a CRC64 checksum is placed at the end of the file.  是否关闭CRC校验和</h1><h1 id="This-makes-the-format-more-resistant-to-corruption-but-there-is-a-performance-确保准确性-但是消耗性能"><a href="#This-makes-the-format-more-resistant-to-corruption-but-there-is-a-performance-确保准确性-但是消耗性能" class="headerlink" title="This makes the format more resistant to corruption but there is a performance  确保准确性 但是消耗性能"></a>This makes the format more resistant to corruption but there is a performance  确保准确性 但是消耗性能</h1><h1 id="hit-to-pay-around-10-when-saving-and-loading-RDB-files-so-you-can-disable-it"><a href="#hit-to-pay-around-10-when-saving-and-loading-RDB-files-so-you-can-disable-it" class="headerlink" title="hit to pay (around 10%) when saving and loading RDB files, so you can disable it"></a>hit to pay (around 10%) when saving and loading RDB files, so you can disable it</h1><h1 id="for-maximum-performances"><a href="#for-maximum-performances" class="headerlink" title="for maximum performances."></a>for maximum performances.</h1><h1 id=""><a href="#" class="headerlink" title=""></a></h1><h1 id="RDB-files-created-with-checksum-disabled-have-a-checksum-of-zero-that-will"><a href="#RDB-files-created-with-checksum-disabled-have-a-checksum-of-zero-that-will" class="headerlink" title="RDB files created with checksum disabled have a checksum of zero that will"></a>RDB files created with checksum disabled have a checksum of zero that will</h1><h1 id="tell-the-loading-code-to-skip-the-check"><a href="#tell-the-loading-code-to-skip-the-check" class="headerlink" title="tell the loading code to skip the check."></a>tell the loading code to skip the check.</h1><p>rdbchecksum yes</p>
+<h1 id="The-filename-where-to-dump-the-DB"><a href="#The-filename-where-to-dump-the-DB" class="headerlink" title="The filename where to dump the DB"></a>The filename where to dump the DB</h1><h1 id="持久化文件名"><a href="#持久化文件名" class="headerlink" title="持久化文件名"></a>持久化文件名</h1><p>dbfilename dump.rdb</p>
+<h1 id="The-working-directory"><a href="#The-working-directory" class="headerlink" title="The working directory."></a>The working directory.</h1><h1 id="-1"><a href="#-1" class="headerlink" title=""></a></h1><h1 id="The-DB-will-be-written-inside-this-directory-with-the-filename-specified"><a href="#The-DB-will-be-written-inside-this-directory-with-the-filename-specified" class="headerlink" title="The DB will be written inside this directory, with the filename specified"></a>The DB will be written inside this directory, with the filename specified</h1><h1 id="above-using-the-‘dbfilename’-configuration-directive"><a href="#above-using-the-‘dbfilename’-configuration-directive" class="headerlink" title="above using the ‘dbfilename’ configuration directive."></a>above using the ‘dbfilename’ configuration directive.</h1><h1 id="-2"><a href="#-2" class="headerlink" title=""></a></h1><h1 id="The-Append-Only-File-will-also-be-created-inside-this-directory"><a href="#The-Append-Only-File-will-also-be-created-inside-this-directory" class="headerlink" title="The Append Only File will also be created inside this directory."></a>The Append Only File will also be created inside this directory.</h1><h1 id="-3"><a href="#-3" class="headerlink" title=""></a></h1><h1 id="Note-that-you-must-specify-a-directory-here-not-a-file-name"><a href="#Note-that-you-must-specify-a-directory-here-not-a-file-name" class="headerlink" title="Note that you must specify a directory here, not a file name."></a>Note that you must specify a directory here, not a file name.</h1><h1 id="持久化文件目录"><a href="#持久化文件目录" class="headerlink" title="持久化文件目录"></a>持久化文件目录</h1><p>dir .&#x2F;</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">### AOF（Append Only File）</span><br><span class="line"></span><br><span class="line">- 是什么</span><br><span class="line"></span><br><span class="line">  AOF，英文是 Append Only File，即**只允许追加不允许改写的文件**。</span><br><span class="line"></span><br><span class="line">  AOF 方式是将**执行过的写指令记录下来**，在数据恢复时按照从前到后的顺序再将指令都执行一遍，就这么简单。</span><br><span class="line"></span><br><span class="line">  我们通过配置 redis.conf 中的 `appendonly yes ` 就可以打开 AOF 功能。如果有写操作（如 SET 等），redis 就会被追加到 AOF 文件的末尾。</span><br><span class="line"></span><br><span class="line">  **优点：**</span><br><span class="line"></span><br><span class="line">  - 默认的 AOF 持久化策略是每秒钟 `fsync ` 一次（fsync 是指把缓存中的写指令记录到磁盘中），因为在这种情况下，redis 仍然可以保持很好的处理性能，即使 redis 故障，也只会丢失最近 1 秒钟的数据。</span><br><span class="line"></span><br><span class="line">    ```bash</span><br><span class="line">    # appendfsync always # 每次修改都会 sync 消耗性能</span><br><span class="line">    appendfsync everysec # 每一秒都会执行一次sync 可能会丢失这1秒的数据</span><br><span class="line">    # appendfsync no # 不执行 sync， 这个时候操作系统自己同步数据，速度最快 </span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><strong>良好的修复能力</strong>。如果在追加日志时，恰好遇到磁盘空间满、inode 满或断电等情况导致日志写入不完整，也没有关系，<strong>redis 提供了 redis-check-aof 工具</strong>，可以用来进行<strong>日志</strong>修复。</p>
+<p><code>redis-check-aof --fix appendonly.aof</code></p>
+<blockquote>
+<p>因为采用了追加方式，如果不做任何处理的话，AOF 文件会变得越来越大，为此，<strong>redis 提供了 AOF 文件重写（rewrite）机制，即当 AOF 文件的大小超过所设定的阈值时，redis 就会启动 AOF 文件的内容压缩，只保留可以恢复数据的最小指令集</strong>。举个例子或许更形象，假如我们调用了 100 次 INCR 指令，在 AOF 文件中就要存储 100 条指令，但这明显是很低效的，完全可以把这 100 条指令合并成一条 SET 指令，这就是重写机制的原理。</p>
+<p>在进行 AOF 重写时，仍然是采用先写临时文件，全部完成后再替换的流程，所以断电、磁盘满等问题都不会影响 AOF 文件的可用性，这点大家可以放心。</p>
+</blockquote>
+</li>
+<li><p>AOF 方式的另一个好处，我们通过一个“场景再现”来说明。某同学在操作 redis 时，不小心执行了 FLUSHALL，导致 redis 内存中的数据全部被清空了，这是很悲剧的事情。不过这也不是世界末日，只要 redis 配置了 AOF 持久化方式，且 AOF 文件还没有被重写（rewrite），我们就可以用最快的速度暂停 redis 并编辑 AOF 文件，将最后一行的 FLUSHALL 命令删除，然后重启 redis，就可以恢复 redis 的所有数据到 FLUSHALL 之前的状态了。是不是很神奇，这就是 AOF 持久化方式的好处之一。但是如果 AOF 文件已经被重写了，那就无法通过这种方法来恢复数据了。</p>
+</li>
+</ul>
+<p><strong>缺点：</strong></p>
+<ul>
+<li><strong>在同样数据规模的情况下，AOF 文件要比 RDB 文件的体积大。</strong></li>
+<li><strong>AOF 方式的恢复速度也要慢于 RDB 方式。</strong></li>
+<li>运行效率也没有 RDB 好，所以默认使用 RDB 的。</li>
+</ul>
+<p>如果你直接执行 <code>BGREWRITEAOF</code> 命令，那么 redis 会生成一个全新的 AOF 文件，其中便包括了可以恢复现有数据的最少的命令集。</p>
+<p>如果运气比较差，AOF 文件出现了被写坏的情况，也不必过分担忧，redis 并不会贸然加载这个有问题的 AOF 文件，而是报错退出。<strong>这时可以通过以下步骤来修复出错的文件</strong>：</p>
+<ol>
+<li>备份被写坏的 AOF 文件\ </li>
+<li>运行 redis-check-aof –fix 进行修复\ </li>
+<li>用 diff -u 来看下两个文件的差异，确认问题点\</li>
+<li>重启 redis，加载修复后的 AOF 文件</li>
+</ol>
+</li>
+</ul>
+<h3 id="AOF重写"><a href="#AOF重写" class="headerlink" title="AOF重写"></a>AOF重写</h3><p>解决aof文件越来越大的问题</p>
+<p>开始前，<strong>redis 会创建（fork）一个“重写子进程”，</strong>这个子进程会<strong>首先读取现有的 AOF 文件</strong>，并将其包含的指令进行<strong>分析压缩</strong>并<strong>写入到一个临时文件</strong>中。</p>
+<p>与此同时，<strong>主工作进程会将新接收到的写指令一边累积到内存缓冲区中，一边继续写入到原有的 AOF 文件中</strong>，这样做是保证原有的 AOF 文件的可用性，避免在重写过程中出现意外。</p>
+<p>当“重写子进程”完成重写工作后，它会给父进程发一个信号，<strong>父进程收到信号</strong>后就会<strong>将内存中缓存的写指令追加到新 AOF 文件</strong>中。</p>
+<p>当追加结束后，redis 就会用新 AOF 文件来代替旧 AOF 文件，之后再有新的写指令，就都会追加到新的 AOF 文件中了。</p>
+<h3 id="拓展"><a href="#拓展" class="headerlink" title="拓展"></a>拓展</h3><p>其实 RDB 和 AOF 两种方式也可以同时使用，在这种情况下，如果 redis 重启的话，则会优先采用 AOF 方式来进行数据恢复，这是因为 AOF 方式的数据恢复完整度更高。</p>
+<p>如果你没有数据持久化的需求，也完全可以关闭 RDB 和 AOF 方式，这样的话，redis 将变成一个纯内存数据库，就像 memcache 一样。</p>
+<p>对于我们应该选择 RDB 还是 AOF，官方的建议是两个同时使用。这样可以提供更可靠的持久化方案。</p>
+<p>双选时，<strong>RDB可以作为备份</strong>，只需要在slave上每十五分钟保存一次即可。AOF可以保证丢失的数据不至于太大，但是默认的64M就会重写的机制带来了较大的IO，可以将其修改到5G以上，默认超过原大小100%大小重写可以改到适当的数值。</p>
 
   </div>
 
@@ -2231,8 +2343,8 @@
         </p>
         <p>本文链接：
             
-                <a href="/p/ba663a52.html" target="_blank" title="洛神赋">
-                https://blog.yiochin.top/p/ba663a52.html</a>
+                <a href="/p/815cc3a1.html" target="_blank" title="Redis配置">
+                https://blog.yiochin.top/p/815cc3a1.html</a>
             
         </p>
         <p>版权声明： 本博客所有文章除特别声明外,均采用
